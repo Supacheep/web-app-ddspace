@@ -1,0 +1,12 @@
+version: '2'
+services:
+    node:
+        image: node:12.16
+        working_dir: /usr/src/app
+        ports:
+            - "3000:3000"
+        volumes:
+            - .:/usr/src/app
+        env_file:
+            - .env
+        command: ['/bin/sh', '-c', 'yarn install && yarn dev:node']
