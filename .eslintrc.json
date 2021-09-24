@@ -1,7 +1,4 @@
 {
-  "plugins": [
-    "babel-eslint"
-  ],
   "extends": "airbnb",
   "rules": {
     "semi": ["error", "never"],
@@ -12,6 +9,9 @@
     "max-len": [2, {"code": 200, "tabWidth": 4, "ignoreUrls": true}],
     "no-tabs": 0,
     "no-nested-ternary": 0,
-    "react/jsx-closing-tag-location": 0
-  }
+    "react/jsx-closing-tag-location": 0,
+    "import/prefer-default-export": 0,
+    "react/jsx-props-no-spreading": 0
+  },
+  "parser": "@babel/eslint-parser"
 }

@@ -1,12 +1,12 @@
-const UrlPrettifier = require('next-url-prettifier').default;
- 
+const UrlPrettifier = require('next-url-prettifier').default
+
 const routes = [
   {
     page: 'index',
-    prettyUrl: '/home'
+    prettyUrl: '/home',
   },
 ]
- 
-const urlPrettifier = new UrlPrettifier(routes);
-exports.default = routes;
-exports.Router = urlPrettifier;
+
+const urlPrettifier = new UrlPrettifier(routes)
+exports.default = routes
+exports.Router = urlPrettifier

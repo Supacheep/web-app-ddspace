@@ -6,11 +6,10 @@ const lessToJS = require('less-vars-to-js')
 const fs = require('fs')
 const path = require('path')
 const Dotenv = require('dotenv-webpack')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 // Where your antd-custom.less file lives
 const themeVariables = lessToJS(
-  fs.readFileSync(path.resolve(__dirname, './src/styles/antd.less'), 'utf8')
+  fs.readFileSync(path.resolve(__dirname, './src/styles/antd.less'), 'utf8'),
 )
 
 module.exports = withCss(
@@ -19,8 +18,8 @@ module.exports = withCss(
       javascriptEnabled: true,
       modifyVars: themeVariables, // make your antd custom effective
     },
-    webpack: (config, {isServer}) => {
-      config.plugins.push(new Dotenv({silent: true}))
+    webpack: (config, { isServer }) => {
+      config.plugins.push(new Dotenv({ silent: true }))
       config.module.rules.push({
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         use: [
@@ -66,5 +65,5 @@ module.exports = withCss(
       return config
     },
     webpack5: false,
-  })
+  }),
 )
