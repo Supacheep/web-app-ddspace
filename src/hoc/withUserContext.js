@@ -19,6 +19,7 @@ const withUserContext = (Component) => (
       this.setUser = this.setUser.bind(this)
       this.fetchUser = this.fetchUser.bind(this)
       this.logout = this.logout.bind(this)
+      this.setAdmin = this.setAdmin.bind(this)
     }
 
     componentDidMount() {
@@ -29,21 +30,29 @@ const withUserContext = (Component) => (
       this.setState({ isLoading: true })
       return axios.post('/auth/login', user)
         .then((data) => {
-          console.log('setUser::', data)
           const { userData } = data?.data || {}
           this.setState({ userData, isLoading: false })
         })
-        .catch((err) => { console.log('err:::', err) })
+        .catch((err) => {
+          console.warn(err)
+          this.setState({ userData: undefined, isLoading: false })
+        })
+    }
+
+    setAdmin(user) {
+      this.setState({ adminData: user })
     }
 
     fetchUser() {
       return axios.get('/auth/user')
         .then((data) => {
           const { userData } = data.data
-          console.log('fetchUser::', userData)
           this.setState({ userData, isLoading: false })
         })
-        .catch((err) => { console.log('err:::', err) })
+        .catch((err) => {
+          console.warn(err)
+          this.setState({ userData: undefined, isLoading: false })
+        })
     }
 
     logout(callback) {
@@ -56,13 +65,15 @@ const withUserContext = (Component) => (
     }
 
     render() {
-      const { userData, isLoading } = this.state
+      const { userData, isLoading, adminData } = this.state
       const contextValue = {
         userData,
         isLoading,
+        adminData,
         setUser: this.setUser,
         fetchUser: this.fetchUser,
         logout: this.logout,
+        setAdmin: this.setAdmin,
       }
 
       return (
