@@ -144,6 +144,7 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     onResize()
+    document.getElementById('holderStyle')?.remove()
   }, [])
 
   const dropdownMenu = (
