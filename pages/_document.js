@@ -11,22 +11,8 @@ export default class MyDocument extends Document {
     return { ...page, styleTags }
   }
 
-  script = () => ({
-    __html: `
-      if (typeof window !== "undefined") {
-        window.onload = () => {
-          document.getElementById("holderStyle").remove();
-        };
-      }
-    `,
-  })
-
   style = () => ({
-    __html: `
-      *, *::before, *::after {
-        transition: none !important;
-      }
-    `,
+    __html: '*, *::before, *::after { transition: none !important; }',
   })
 
   render() {
@@ -42,7 +28,6 @@ export default class MyDocument extends Document {
           <style id="holderStyle" dangerouslySetInnerHTML={this.style()} />
         </Head>
         <body>
-          <script dangerouslySetInnerHTML={this.script()} />
           <Main />
           <NextScript />
         </body>
