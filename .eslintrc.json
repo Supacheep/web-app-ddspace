@@ -16,7 +16,8 @@
     //   "enabled",
     //   { "ignore": "ignore", "customValidators": "customValidator" }
     // ],
-    "prefer-promise-reject-errors": "off"
+    "prefer-promise-reject-errors": "off",
+    "react/no-danger": "off"
   },
   "parser": "@babel/eslint-parser",
   "env": {
