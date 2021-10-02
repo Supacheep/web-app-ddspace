@@ -8,7 +8,8 @@
     "lint": "next lint",
     "dev:server": "nodemon -L server.js",
     "dev:node": "node server.js",
-    "start": "NODE_ENV=production node server.js"
+    "start": "NODE_ENV=production node server.js",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
@@ -50,5 +51,9 @@
     "nodemon": "2.0.2",
     "null-loader": "4.0.1",
     "webpack": "4.46.0"
+  },
+  "engines": {
+    "node": "14.16.1",
+    "npm": "7.10.0"
   }
 }
