@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { colors } from '../configs/color'
 
 const Avatar = styled.div`
@@ -35,6 +36,14 @@ const ProfileComponent = ({ name }) => {
       <Name>{name}</Name>
     </ProfileContainer>
   )
+}
+
+ProfileComponent.propTypes = {
+  name: PropTypes.string,
+}
+
+ProfileComponent.defaultProps = {
+  name: undefined,
 }
 
 export default ProfileComponent

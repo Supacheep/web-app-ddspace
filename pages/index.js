@@ -1,23 +1,22 @@
 import {
   useContext,
-  useEffect,
-  useState,
-  useRef,
 } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import PropTypes from 'prop-types'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import styles from '../styles/Home.module.css'
 import userContext from '../src/context/userContext'
 import { ModalLogin, YoutubePlayer } from '../src/components'
 import { colors } from '../src/configs/color'
 import { TitleH3 } from '../src/components/common'
+import useCalculateSize from '../src/libs/useCalculateSize'
 
 const Container = styled.div`
   position: relative;
 `
 
-const Image = styled.img`
+const Image = styled(LazyLoadImage)`
   height: 100%;
   Width: 100%;
   object-fit: cover;
@@ -47,7 +46,7 @@ const ButtonImg = styled.img`
 const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: #A9A699;
+  background-color: ${colors.tan};
   margin-top: -65px;
   display: flex;
   align-items: center;
@@ -55,37 +54,7 @@ const Wrapper = styled.div`
 `
 
 const Desktop = ({ user }) => {
-  const [eleHeight, setHeight] = useState()
-  const image = useRef()
-
-  const onResize = () => {
-    const box = document.querySelector('#container')
-    setHeight(box.offsetHeight)
-  }
-
-  useEffect(() => {
-    window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
-  })
-
-  useEffect(() => {
-    onResize()
-  }, [])
-
-  useEffect(() => {
-    if (image.current.complete) onResize()
-  }, [])
-
-  const getPosition = (val) => {
-    if (!eleHeight) return {}
-    const top = (eleHeight * val.topValue) / 100
-    const height = (eleHeight * val.heightValue) / 100
-    return {
-      top: `${top}px`,
-      height,
-      width: val.width,
-    }
-  }
+  const [containerRef, getPosition, onResize] = useCalculateSize()
 
   const basePosition = {
     topValue: 34,
@@ -96,12 +65,12 @@ const Desktop = ({ user }) => {
   return (
     <div className={styles.container}>
       <Wrapper>
-        <Container id="container">
+        <Container ref={containerRef} id="container">
           <Image
-            ref={image}
             src="/images/lobby.png"
             alt="lobby-bg"
-            onLoad={onResize}
+            effect="blur"
+            afterLoad={onResize}
           />
           <Box
             style={{
@@ -113,6 +82,7 @@ const Desktop = ({ user }) => {
               <ButtonImg
                 src="/images/exhibition_btn.svg"
                 alt="exhibition_btn"
+                effect="blur"
               />
             </Link>
           </Box>
@@ -129,6 +99,7 @@ const Desktop = ({ user }) => {
               <ButtonImg
                 src="/images/conference_btn.svg"
                 alt="conference_btn"
+                effect="blur"
               />
             </Link>
           </Box>
@@ -141,7 +112,7 @@ const Desktop = ({ user }) => {
               }),
               right: '31.8%',
               border: 0,
-              backgroundColor: '#000',
+              backgroundColor: colors.black,
             }}
           >
             {
@@ -159,6 +130,16 @@ const Desktop = ({ user }) => {
       </Wrapper>
     </div>
   )
+}
+
+Desktop.propTypes = {
+  user: PropTypes.shape({
+    userData: PropTypes.shape({}),
+  }),
+}
+
+Desktop.defaultProps = {
+  user: {},
 }
 
 const MobileContainer = styled.div`
@@ -212,6 +193,7 @@ const Mobile = ({ user }) => (
       <Image
         src="/images/pagelobbyMobile.png"
         alt="pagelobbyMobile-bg"
+        effect="blur"
       />
     </div>
     <ButtonContainer>
@@ -221,6 +203,7 @@ const Mobile = ({ user }) => (
             className="img-btn"
             src="/images/conference_btn.svg"
             alt="conference_btn"
+            effect="blur"
           />
         </div>
       </Link>
@@ -230,6 +213,7 @@ const Mobile = ({ user }) => (
             className="img-btn"
             src="/images/exhibition_btn.svg"
             alt="exhibition_btn"
+            effect="blur"
           />
         </div>
       </Link>
@@ -251,6 +235,16 @@ const Mobile = ({ user }) => (
   </MobileContainer>
 )
 
+Mobile.propTypes = {
+  user: PropTypes.shape({
+    userData: PropTypes.shape({}),
+  }),
+}
+
+Mobile.defaultProps = {
+  user: false,
+}
+
 const Lobby = ({ isMobile }) => {
   const user = useContext(userContext)
   return (
@@ -266,11 +260,11 @@ const Lobby = ({ isMobile }) => {
   )
 }
 
-ModalLogin.propTypes = {
+Lobby.propTypes = {
   isMobile: PropTypes.bool,
 }
 
-ModalLogin.defaultProps = {
+Lobby.defaultProps = {
   isMobile: false,
 }
 

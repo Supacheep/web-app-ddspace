@@ -12,10 +12,11 @@
     "react/jsx-closing-tag-location": 0,
     "import/prefer-default-export": 0,
     "react/jsx-props-no-spreading": 0,
-    "react/prop-types": [
-      "enabled",
-      { "ignore": "ignore", "customValidators": "customValidator" }
-    ]
+    // "react/prop-types": [
+    //   "enabled",
+    //   { "ignore": "ignore", "customValidators": "customValidator" }
+    // ],
+    "prefer-promise-reject-errors": "off"
   },
   "parser": "@babel/eslint-parser",
   "env": {

@@ -146,10 +146,11 @@ const Admin = () => {
     // fileList = fileList.slice(-2)
 
     list = list.map((file) => {
-      if (file.response) {
-        file.url = file.response.url
+      const returnFile = file
+      if (returnFile.response) {
+        returnFile.url = returnFile.response.url
       }
-      return file
+      return returnFile
     })
     setFile(list)
   }
