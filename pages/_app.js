@@ -1,4 +1,8 @@
-import { useContext, useState, useEffect } from 'react'
+import {
+  useContext,
+  useState,
+  useEffect,
+} from 'react'
 import {
   Layout,
   Menu,
@@ -8,8 +12,8 @@ import {
 } from 'antd'
 import Link from 'next/link'
 import '../styles/globals.css'
-import styled, { ThemeProvider } from 'styled-components'
-import { useRouter } from 'next/router'
+import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
+import Router, { useRouter } from 'next/router'
 import Head from 'next/head'
 import withUserContext from '../src/hoc/withUserContext'
 import userContext from '../src/context/userContext'
@@ -23,6 +27,13 @@ const { Header, Content, Footer } = Layout
 const theme = {
   colors: {},
 }
+
+const GlobalStyle = createGlobalStyle`
+  .ant-dropdown-menu {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+`
 
 const hideHeaderList = ['/admin']
 
@@ -77,6 +88,7 @@ const PaddingTop = styled.div`
 const CustomLayout = styled.div`
   #desktop-header {
     display: flex;
+    padding: 0 20px;
   }
   #mobile-header {
     display: none;
@@ -98,6 +110,7 @@ const ProfileButton = styled(Button)`
   height: auto;
   padding: 0;
   border: 0;
+  box-shadow: none;
 `
 
 function MyApp({ Component, pageProps }) {
@@ -105,7 +118,6 @@ function MyApp({ Component, pageProps }) {
   const [drawerVisible, setDrawerVisible] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const user = useContext(userContext)
-  console.log({ asPath, pathname })
 
   const onResize = () => {
     const nextIsMobile = window.innerWidth <= MOBILE_WINDOW_WIDTH
@@ -113,6 +125,16 @@ function MyApp({ Component, pageProps }) {
       setIsMobile(nextIsMobile)
     }
   }
+
+  useEffect(() => {
+    if (!exceptLoginPath.includes(asPath)) {
+      user.fetchUser().then(({ userData }) => {
+        if (!userData) {
+          Router.push('/')
+        }
+      })
+    }
+  }, [asPath])
 
   useEffect(() => {
     window.addEventListener('resize', onResize)
@@ -216,6 +238,11 @@ function MyApp({ Component, pageProps }) {
         onClose={() => setDrawerVisible(false)}
         visible={drawerVisible}
       >
+        <Dropdown overlay={dropdownMenu} trigger={['click']}>
+          <ProfileButton>
+            <ProfileComponent name={user?.userData?.email} />
+          </ProfileButton>
+        </Dropdown>
         <Link href={{ pathname: '/' }}>
           <LinkButtonMobile>Lobby</LinkButtonMobile>
         </Link>
@@ -229,6 +256,7 @@ function MyApp({ Component, pageProps }) {
       <ThemeProvider theme={theme}>
         <Component {...pageProps} isMobile={isMobile} />
       </ThemeProvider>
+      <GlobalStyle />
     </CustomLayout>
   )
 }

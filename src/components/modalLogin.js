@@ -6,7 +6,6 @@ import {
 } from 'antd'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { colors } from '../configs/color'
 import { PATTERN_EMAIL } from '../constants/validateValue'
 import { TitleH3 } from './common'
 
@@ -19,13 +18,15 @@ const LoginButton = styled(Button)`
 `
 
 const LogoContainer = styled.div`
+  display: -webkit-flex;
   display: flex;
   justify-content: center;
+  flex-direction: row;
+  align-items: center;
 `
 
 const Logo = styled.img`
   width: 15%;
-  height: auto;
   margin: 10px;
 `
 

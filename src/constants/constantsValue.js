@@ -1,1 +1,1 @@
-export const MOBILE_WINDOW_WIDTH = 991
+export const MOBILE_WINDOW_WIDTH = 930

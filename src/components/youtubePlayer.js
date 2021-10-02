@@ -1,31 +1,67 @@
 import { useMemo } from 'react'
+import YouTube from 'react-youtube'
+import styled from 'styled-components'
+import PropTypes from 'prop-types'
+
+const Container = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  .youtube-container {
+    width: 100%;
+    height: 100%; 
+    align-items: stretch;
+  }
+
+  iframe {
+    width: 100%;
+    height: 100%; 
+  }
+`
 
 const YoutubePlayer = ({
-  videoID, autoplay, mute, loop,
+  videoID, autoplay, mute, loop, onStateChange,
 }) => {
-  const src = useMemo(() => {
-    let resultUrl = `https://www.youtube.com/embed/${videoID}?`
+  const playerVars = useMemo(() => {
+    const vars = {}
     if (autoplay) {
-      resultUrl = `${resultUrl}&autoplay=1`
+      Object.assign(vars, { autoplay: 1 })
     }
     if (mute) {
-      resultUrl = `${resultUrl}&mute=1`
+      Object.assign(vars, { mute: 1 })
     }
     if (loop) {
-      resultUrl = `${resultUrl}&loop=1&playlist=6FIJfRINVLE`
+      Object.assign(vars, { loop: 1, playlist: videoID })
     }
-    return resultUrl
+    return vars
   }, [autoplay, mute, loop])
 
   return (
-    <iframe
-      src={src}
-      frameBorder="0"
-      title="YouTube video player"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    />
+    <Container>
+      <YouTube
+        containerClassName="youtube-container"
+        videoId={videoID}
+        onStateChange={onStateChange}
+        opts={{ playerVars }}
+      />
+    </Container>
   )
+}
+
+YoutubePlayer.propTypes = {
+  videoID: PropTypes.string.isRequired,
+  autoplay: PropTypes.bool,
+  mute: PropTypes.bool,
+  loop: PropTypes.bool,
+  onStateChange: PropTypes.func,
+}
+
+YoutubePlayer.defaultProps = {
+  autoplay: false,
+  mute: false,
+  loop: false,
+  onStateChange: () => {},
 }
 
 export default YoutubePlayer

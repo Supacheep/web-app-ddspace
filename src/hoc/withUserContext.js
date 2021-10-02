@@ -48,10 +48,12 @@ const withUserContext = (Component) => (
         .then((data) => {
           const { userData } = data.data
           this.setState({ userData, isLoading: false })
+          return { userData }
         })
         .catch((err) => {
           console.warn(err)
           this.setState({ userData: undefined, isLoading: false })
+          return {}
         })
     }
 
@@ -60,6 +62,7 @@ const withUserContext = (Component) => (
         .then(() => {
           this.setState({ userData: undefined }, () => {
             if (callback) callback()
+            Router.push('/')
           })
         })
     }

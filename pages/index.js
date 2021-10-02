@@ -5,8 +5,8 @@ import {
   useRef,
 } from 'react'
 import styled from 'styled-components'
-import Router from 'next/router'
-import { Button } from 'antd'
+import Link from 'next/link'
+import PropTypes from 'prop-types'
 import styles from '../styles/Home.module.css'
 import userContext from '../src/context/userContext'
 import { ModalLogin, YoutubePlayer } from '../src/components'
@@ -26,6 +26,7 @@ const Image = styled.img`
 const Box = styled.div`
   position: absolute;
   cursor: pointer;
+  overflow: hidden;
 
   iframe {
     width: 100%;
@@ -53,8 +54,7 @@ const Wrapper = styled.div`
   justify-content: center;
 `
 
-const Desktop = () => {
-  const user = useContext(userContext)
+const Desktop = ({ user }) => {
   const [eleHeight, setHeight] = useState()
   const image = useRef()
 
@@ -108,23 +108,29 @@ const Desktop = () => {
               ...getPosition(basePosition),
               right: '3%',
             }}
-            onClick={() => { Router.push('/exhibition') }}
           >
-            <ButtonImg
-              src="/images/exhibition_btn.svg"
-              alt="exhibition_btn"
-            />
+            <Link href={{ pathname: '/exhibition' }}>
+              <ButtonImg
+                src="/images/exhibition_btn.svg"
+                alt="exhibition_btn"
+              />
+            </Link>
           </Box>
           <Box
             style={{
-              ...getPosition(basePosition),
-              left: '2.5%',
+              ...getPosition({
+                ...basePosition,
+                topValue: 33,
+              }),
+              left: '2.8%',
             }}
           >
-            <ButtonImg
-              src="/images/conference_btn.svg"
-              alt="conference_btn"
-            />
+            <Link href={{ pathname: '/conference' }}>
+              <ButtonImg
+                src="/images/conference_btn.svg"
+                alt="conference_btn"
+              />
+            </Link>
           </Box>
           <Box
             style={{
@@ -140,32 +146,24 @@ const Desktop = () => {
           >
             {
               user.userData && (
-                <iframe
-                  src="https://www.youtube.com/embed/6FIJfRINVLE?autoplay=1&mute=1&loop=1&playlist=6FIJfRINVLE"
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
+                <YoutubePlayer
+                  videoID="6FIJfRINVLE"
+                  autoplay
+                  mute
+                  loop
                 />
               )
             }
           </Box>
         </Container>
       </Wrapper>
-      <ModalLogin
-        visible={!user.userData && !user.isLoading}
-        onFinish={(data) => {
-          user.setUser(data)
-          console.log('onFinish', data)
-        }}
-      />
     </div>
   )
 }
 
 const MobileContainer = styled.div`
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   background-color: ${colors.themeColor};
 
   .title {
@@ -181,7 +179,7 @@ const ButtonContainer = styled.div`
   grid-template-columns: auto auto;
   padding: 15px;
   max-width: 570px;
-  margin: auto;
+  margin: 20px auto;
 
   .img-btn {
     width: 95%;
@@ -189,7 +187,23 @@ const ButtonContainer = styled.div`
   }
 `
 
-const Mobile = () => (
+const VideoSection = styled.div`
+  width: 100%;
+  height: 55vw;
+  max-width: 540px;
+  max-height: 310px;
+  border: 5px solid ${colors.white};
+  border-radius: 10px;
+  background-color: ${colors.white};
+  margin: 0 15px;
+`
+
+const YoutubeBox = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
+const Mobile = ({ user }) => (
   <MobileContainer>
     <TitleH3 className="title">
       {'Annual Meeting of\nThe Society of Plastic and Reconstructive Surgeons of Thailand\nThe Society of Aesthetic Plastic Surgeons of Thailand'}
@@ -201,24 +215,63 @@ const Mobile = () => (
       />
     </div>
     <ButtonContainer>
-      <ButtonImg
-        className="img-btn"
-        src="/images/conference_btn.svg"
-        alt="conference_btn"
-      />
-      <ButtonImg
-        className="img-btn"
-        src="/images/exhibition_btn.svg"
-        alt="exhibition_btn"
-      />
+      <Link href={{ pathname: '/exhibition' }}>
+        <div style={{ textAlign: 'left' }}>
+          <ButtonImg
+            className="img-btn"
+            src="/images/conference_btn.svg"
+            alt="conference_btn"
+          />
+        </div>
+      </Link>
+      <Link href={{ pathname: '/exhibition' }}>
+        <div style={{ textAlign: 'right' }}>
+          <ButtonImg
+            className="img-btn"
+            src="/images/exhibition_btn.svg"
+            alt="exhibition_btn"
+          />
+        </div>
+      </Link>
     </ButtonContainer>
-    <YoutubePlayer
-      videoID="6FIJfRINVLE"
-      autoplay
-      mute
-      loop
-    />
+    {
+      user.userData && (
+        <YoutubeBox>
+          <VideoSection>
+            <YoutubePlayer
+              videoID="6FIJfRINVLE"
+              autoplay
+              mute
+              loop
+            />
+          </VideoSection>
+        </YoutubeBox>
+      )
+    }
   </MobileContainer>
 )
 
-export default ({ isMobile }) => (isMobile ? <Mobile /> : <Desktop />)
+const Lobby = ({ isMobile }) => {
+  const user = useContext(userContext)
+  return (
+    <>
+      {isMobile ? <Mobile user={user} /> : <Desktop user={user} />}
+      <ModalLogin
+        visible={!user.userData && !user.isLoading}
+        onFinish={(data) => {
+          user.setUser(data)
+        }}
+      />
+    </>
+  )
+}
+
+ModalLogin.propTypes = {
+  isMobile: PropTypes.bool,
+}
+
+ModalLogin.defaultProps = {
+  isMobile: false,
+}
+
+export default Lobby
