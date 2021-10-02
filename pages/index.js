@@ -69,8 +69,8 @@ const Desktop = ({ user }) => {
           <Image
             src="/images/lobby.png"
             alt="lobby-bg"
-            effect="blur"
             afterLoad={onResize}
+            placeholderSrc="/images/lobby-lowres.png"
           />
           <Box
             style={{
@@ -146,6 +146,7 @@ const MobileContainer = styled.div`
   width: 100vw;
   min-height: 100vh;
   background-color: ${colors.themeColor};
+  padding-bottom: 15px;
 
   .title {
     color: ${colors.white};
@@ -197,7 +198,7 @@ const Mobile = ({ user }) => (
       />
     </div>
     <ButtonContainer>
-      <Link href={{ pathname: '/exhibition' }}>
+      <Link href={{ pathname: '/conference' }}>
         <div style={{ textAlign: 'left' }}>
           <ButtonImg
             className="img-btn"
