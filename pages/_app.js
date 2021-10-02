@@ -21,6 +21,7 @@ import { colors } from '../src/configs/color'
 import { Burger, ProfileComponent } from '../src/components'
 import { HeaderLogo } from '../src/components/common'
 import { MOBILE_WINDOW_WIDTH } from '../src/constants/constantsValue'
+import 'react-lazy-load-image-component/src/effects/blur.css'
 
 const { Header } = Layout
 

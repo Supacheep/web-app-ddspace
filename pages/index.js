@@ -4,6 +4,7 @@ import {
 import styled from 'styled-components'
 import Link from 'next/link'
 import PropTypes from 'prop-types'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import styles from '../styles/Home.module.css'
 import userContext from '../src/context/userContext'
 import { ModalLogin, YoutubePlayer } from '../src/components'
@@ -15,7 +16,7 @@ const Container = styled.div`
   position: relative;
 `
 
-const Image = styled.img`
+const Image = styled(LazyLoadImage)`
   height: 100%;
   Width: 100%;
   object-fit: cover;
@@ -68,7 +69,8 @@ const Desktop = ({ user }) => {
           <Image
             src="/images/lobby.png"
             alt="lobby-bg"
-            onLoad={onResize}
+            effect="blur"
+            afterLoad={onResize}
           />
           <Box
             style={{
@@ -80,6 +82,7 @@ const Desktop = ({ user }) => {
               <ButtonImg
                 src="/images/exhibition_btn.svg"
                 alt="exhibition_btn"
+                effect="blur"
               />
             </Link>
           </Box>
@@ -96,6 +99,7 @@ const Desktop = ({ user }) => {
               <ButtonImg
                 src="/images/conference_btn.svg"
                 alt="conference_btn"
+                effect="blur"
               />
             </Link>
           </Box>
@@ -189,6 +193,7 @@ const Mobile = ({ user }) => (
       <Image
         src="/images/pagelobbyMobile.png"
         alt="pagelobbyMobile-bg"
+        effect="blur"
       />
     </div>
     <ButtonContainer>
@@ -198,6 +203,7 @@ const Mobile = ({ user }) => (
             className="img-btn"
             src="/images/conference_btn.svg"
             alt="conference_btn"
+            effect="blur"
           />
         </div>
       </Link>
@@ -207,6 +213,7 @@ const Mobile = ({ user }) => (
             className="img-btn"
             src="/images/exhibition_btn.svg"
             alt="exhibition_btn"
+            effect="blur"
           />
         </div>
       </Link>
