@@ -1,3 +1,3 @@
-const Conference = ({ isMobile }) => <div>Conference Hall</div>
+const Conference = () => <div>Conference Hall</div>
 
 export default Conference

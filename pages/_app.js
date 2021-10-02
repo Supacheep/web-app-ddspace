@@ -22,7 +22,7 @@ import { Burger, ProfileComponent } from '../src/components'
 import { HeaderLogo } from '../src/components/common'
 import { MOBILE_WINDOW_WIDTH } from '../src/constants/constantsValue'
 
-const { Header, Content, Footer } = Layout
+const { Header } = Layout
 
 const theme = {
   colors: {},
@@ -113,6 +113,7 @@ const ProfileButton = styled(Button)`
   box-shadow: none;
 `
 
+// eslint-disable-next-line react/prop-types
 function MyApp({ Component, pageProps }) {
   const { asPath, pathname } = useRouter()
   const [drawerVisible, setDrawerVisible] = useState(false)
@@ -127,7 +128,7 @@ function MyApp({ Component, pageProps }) {
   }
 
   useEffect(() => {
-    if (!exceptLoginPath.includes(asPath)) {
+    if (!hideHeaderList.includes(pathname)) {
       user.fetchUser().then(({ userData }) => {
         if (!userData) {
           Router.push('/')
