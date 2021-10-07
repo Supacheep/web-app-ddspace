@@ -65,6 +65,17 @@ const CompanyCard = ({
   </Link>
 )
 
+CompanyCard.propTypes = {
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  logo: PropTypes.string.isRequired,
+  style: PropTypes.shape({}),
+}
+
+CompanyCard.defaultProps = {
+  style: {},
+}
+
 const data = [
   {
     id: 1,

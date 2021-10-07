@@ -1,7 +1,8 @@
-import { useEffect, useState, useRef } from 'react'
-import { useRouter } from 'next/router'
-import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-component'
+import { useState } from 'react'
+// import { useRouter } from 'next/router'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { MobileLayout, YoutubePlayer, Swiper } from '../../src/components'
 import { colors } from '../../src/configs/color'
 
@@ -38,8 +39,8 @@ const Box = styled.div`
 `
 
 const Mobile = () => {
-  const router = useRouter()
-  const { id } = router.query
+  // const router = useRouter()
+  // const { id } = router.query
   const [swiperRef, setSwiperRef] = useState(null)
 
   return (
@@ -82,4 +83,11 @@ const Mobile = () => {
 
 const Booth = ({ isMobile }) => (isMobile ? <Mobile /> : <div>Booth</div>)
 
+Booth.propTypes = {
+  isMobile: PropTypes.bool,
+}
+
+Booth.defaultProps = {
+  isMobile: false,
+}
 export default Booth
