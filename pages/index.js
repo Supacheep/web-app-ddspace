@@ -4,12 +4,11 @@ import {
 import styled from 'styled-components'
 import Link from 'next/link'
 import PropTypes from 'prop-types'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-component'
 import styles from '../styles/Home.module.css'
 import userContext from '../src/context/userContext'
-import { ModalLogin, YoutubePlayer } from '../src/components'
+import { ModalLogin, YoutubePlayer, MobileLayout } from '../src/components'
 import { colors } from '../src/configs/color'
-import { TitleH3 } from '../src/components/common'
 import useCalculateSize from '../src/libs/useCalculateSize'
 
 const Container = styled.div`
@@ -53,7 +52,7 @@ const Wrapper = styled.div`
   justify-content: center;
 `
 
-const Desktop = ({ user }) => {
+const Desktop = ({ user, scrollPosition }) => {
   const [containerRef, getPosition, onResize] = useCalculateSize()
 
   const basePosition = {
@@ -67,10 +66,11 @@ const Desktop = ({ user }) => {
       <Wrapper>
         <Container ref={containerRef} id="container">
           <Image
-            src="/images/lobby.png"
+            src="/images/lobby/pagelobbyFinal.jpeg"
             alt="lobby-bg"
             afterLoad={onResize}
-            placeholderSrc="/images/lobby-lowres.png"
+            // placeholderSrc="/images/lobby-lowres.png"
+            scrollPosition={scrollPosition}
           />
           <Box
             style={{
@@ -82,7 +82,6 @@ const Desktop = ({ user }) => {
               <ButtonImg
                 src="/images/exhibition_btn.svg"
                 alt="exhibition_btn"
-                effect="blur"
               />
             </Link>
           </Box>
@@ -99,18 +98,17 @@ const Desktop = ({ user }) => {
               <ButtonImg
                 src="/images/conference_btn.svg"
                 alt="conference_btn"
-                effect="blur"
               />
             </Link>
           </Box>
           <Box
             style={{
               ...getPosition({
-                topValue: 20.3,
-                heightValue: 35.3,
-                width: '36%',
+                topValue: 19.3,
+                heightValue: 37.5,
+                width: '37.6%',
               }),
-              right: '31.8%',
+              right: '30.8%',
               border: 0,
               backgroundColor: colors.black,
             }}
@@ -136,25 +134,13 @@ Desktop.propTypes = {
   user: PropTypes.shape({
     userData: PropTypes.shape({}),
   }),
+  scrollPosition: PropTypes.shape({}),
 }
 
 Desktop.defaultProps = {
   user: {},
+  scrollPosition: {},
 }
-
-const MobileContainer = styled.div`
-  width: 100vw;
-  min-height: 100vh;
-  background-color: ${colors.themeColor};
-  padding-bottom: 15px;
-
-  .title {
-    color: ${colors.white};
-    background-color: ${colors.themeColor};
-    margin: 0;
-    padding: 1.5em;
-  }
-`
 
 const ButtonContainer = styled.div`
   display: grid;
@@ -185,16 +171,14 @@ const YoutubeBox = styled.div`
   justify-content: center;
 `
 
-const Mobile = ({ user }) => (
-  <MobileContainer>
-    <TitleH3 className="title">
-      {'Annual Meeting of\nThe Society of Plastic and Reconstructive Surgeons of Thailand\nThe Society of Aesthetic Plastic Surgeons of Thailand'}
-    </TitleH3>
+const Mobile = ({ user, scrollPosition }) => (
+  <MobileLayout isShowTitle>
     <div>
       <Image
-        src="/images/pagelobbyMobile.png"
+        src="/images/lobby/pagelobbyFinaMobile.jpeg"
         alt="pagelobbyMobile-bg"
-        effect="blur"
+        // placeholderSrc="/images/lobby-lowres.png"
+        scrollPosition={scrollPosition}
       />
     </div>
     <ButtonContainer>
@@ -204,7 +188,6 @@ const Mobile = ({ user }) => (
             className="img-btn"
             src="/images/conference_btn.svg"
             alt="conference_btn"
-            effect="blur"
           />
         </div>
       </Link>
@@ -214,7 +197,6 @@ const Mobile = ({ user }) => (
             className="img-btn"
             src="/images/exhibition_btn.svg"
             alt="exhibition_btn"
-            effect="blur"
           />
         </div>
       </Link>
@@ -233,24 +215,26 @@ const Mobile = ({ user }) => (
         </YoutubeBox>
       )
     }
-  </MobileContainer>
+  </MobileLayout>
 )
 
 Mobile.propTypes = {
   user: PropTypes.shape({
     userData: PropTypes.shape({}),
   }),
+  scrollPosition: PropTypes.shape({}),
 }
 
 Mobile.defaultProps = {
-  user: false,
+  user: undefined,
+  scrollPosition: {},
 }
 
-const Lobby = ({ isMobile }) => {
+const Lobby = ({ isMobile, ...props }) => {
   const user = useContext(userContext)
   return (
     <>
-      {isMobile ? <Mobile user={user} /> : <Desktop user={user} />}
+      {isMobile ? <Mobile user={user} {...props} /> : <Desktop user={user} {...props} />}
       <ModalLogin
         visible={!user.userData && !user.isLoading}
         onFinish={(data) => {
@@ -269,4 +253,4 @@ Lobby.defaultProps = {
   isMobile: false,
 }
 
-export default Lobby
+export default trackWindowScroll(Lobby)

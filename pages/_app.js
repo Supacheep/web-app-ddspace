@@ -14,6 +14,7 @@ import Link from 'next/link'
 import '../styles/globals.css'
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
 import Router, { useRouter } from 'next/router'
+import Head from 'next/head'
 import withUserContext from '../src/hoc/withUserContext'
 import userContext from '../src/context/userContext'
 import { colors } from '../src/configs/color'
@@ -61,17 +62,21 @@ const LinkButton = styled.a`
   border-radius: 8px;
   font-size: 18px;
   white-space: nowrap;
-  :hover {
-    background-color: ${colors.grey200};
-  }
-`
-
-const LinkButtonMobile = styled.div`
-  padding: 10px;
   cursor: pointer;
   :hover {
     background-color: ${colors.grey200};
   }
+  ${(props) => (props.active ? `background-color: ${colors.greyF3}` : '')}
+`
+
+const LinkButtonMobile = styled.div`
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  :hover {
+    background-color: ${colors.grey200};
+  }
+  ${(props) => (props.active ? `background-color: ${colors.greyF3}` : '')}
 `
 
 const MenuContainer = styled.div`
@@ -138,6 +143,10 @@ function MyApp({ Component, pageProps }) {
   }, [asPath])
 
   useEffect(() => {
+    document.body.scrollTo(0, 0)
+  }, [pathname])
+
+  useEffect(() => {
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   })
@@ -174,13 +183,13 @@ function MyApp({ Component, pageProps }) {
       <MenuContainer justify="center">
         <div>
           <Link href={{ pathname: '/' }}>
-            <LinkButton href="/">Lobby</LinkButton>
+            <LinkButton active={asPath === '/'} href="/">Lobby</LinkButton>
           </Link>
           <Link href={{ pathname: '/conference' }}>
-            <LinkButton href="/conference">Conference Hall</LinkButton>
+            <LinkButton active={asPath === '/conference'} href="/conference">Conference Hall</LinkButton>
           </Link>
           <Link href={{ pathname: '/exhibition' }}>
-            <LinkButton href="/exhibition">Exhibition Hall</LinkButton>
+            <LinkButton active={asPath === '/exhibition'} href="/exhibition">Exhibition Hall</LinkButton>
           </Link>
         </div>
       </MenuContainer>
@@ -217,6 +226,9 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <CustomLayout>
+      <Head>
+        <title>thprsmeeting2021</title>
+      </Head>
       {
         !hideHeaderList.includes(pathname) && (
           <>
@@ -238,13 +250,13 @@ function MyApp({ Component, pageProps }) {
           </ProfileButton>
         </Dropdown>
         <Link href={{ pathname: '/' }}>
-          <LinkButtonMobile>Lobby</LinkButtonMobile>
+          <LinkButtonMobile active={asPath === '/'}>Lobby</LinkButtonMobile>
         </Link>
         <Link href={{ pathname: '/conference' }}>
-          <LinkButtonMobile>Conference Hall</LinkButtonMobile>
+          <LinkButtonMobile active={asPath === '/conference'}>Conference Hall</LinkButtonMobile>
         </Link>
         <Link href={{ pathname: '/exhibition' }}>
-          <LinkButtonMobile>Exhibition Hall</LinkButtonMobile>
+          <LinkButtonMobile active={asPath === '/exhibition'}>Exhibition Hall</LinkButtonMobile>
         </Link>
       </Drawer>
       <ThemeProvider theme={theme}>

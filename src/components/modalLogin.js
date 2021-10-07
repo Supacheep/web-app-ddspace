@@ -15,6 +15,9 @@ const Container = styled.div`
 
 const LoginButton = styled(Button)`
   font-weight: bold;
+  height: 40px;
+  padding: 0 30px;
+  font-size: 18px;
 `
 
 const LogoContainer = styled.div`
