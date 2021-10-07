@@ -6,6 +6,7 @@ const lessToJS = require('less-vars-to-js')
 const fs = require('fs')
 const path = require('path')
 const Dotenv = require('dotenv-webpack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 // Where your antd-custom.less file lives
 const themeVariables = lessToJS(
@@ -56,12 +57,15 @@ module.exports = withCss(
           use: 'null-loader',
         })
       }
-      // config.module.rules.push({
-      //   test: /\.css$/,
-      //   exclude: [
-      //   ],
-      //   use: [MiniCssExtractPlugin.loader, 'css-loader'],
-      // })
+      config.module.rules.push({
+        test: /\.css$/,
+        exclude: [
+          /styles/,
+          /node_modules\/swiper/,
+          /node_modules\/react-lazy-load-image-component/,
+        ],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      })
       return config
     },
     webpack5: false,
