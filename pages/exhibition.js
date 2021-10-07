@@ -1,5 +1,7 @@
+import PropTypes from 'prop-types'
 import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-component'
 import styled from 'styled-components'
+import Link from 'next/link'
 import { MobileLayout } from '../src/components'
 import { colors } from '../src/configs/color'
 
@@ -52,13 +54,15 @@ const CompanyListContainer = styled.div`
 const CompanyCard = ({
   id, name, logo, style,
 }) => (
-  <CardContainer style={style}>
-    <Logo
-      src={logo}
-      alt="company-logo"
-    />
-    <CompanyName>{name}</CompanyName>
-  </CardContainer>
+  <Link href={{ pathname: `/booth/${id}` }}>
+    <CardContainer style={style}>
+      <Logo
+        src={logo}
+        alt="company-logo"
+      />
+      <CompanyName>{name}</CompanyName>
+    </CardContainer>
+  </Link>
 )
 
 const data = [
@@ -82,9 +86,8 @@ const data = [
 const Mobile = ({ scrollPosition }) => (
   <MobileLayout isShowTitle>
     <Image
-      src="/images/lobby.png"
+      src="/images/lobby/pagelobbyFinaMobile.jpeg"
       alt="lobby-bg"
-      placeholderSrc="/images/lobby-lowres.png"
       scrollPosition={scrollPosition}
     />
     <Content>
@@ -113,6 +116,22 @@ const Mobile = ({ scrollPosition }) => (
   </MobileLayout>
 )
 
+Mobile.propTypes = {
+  scrollPosition: PropTypes.shape({}),
+}
+
+Mobile.defaultProps = {
+  scrollPosition: {},
+}
+
 const Exhibition = ({ isMobile, ...props }) => (isMobile ? <Mobile {...props} /> : <div>Exhibition Hall</div>)
+
+Exhibition.propTypes = {
+  isMobile: PropTypes.bool,
+}
+
+Exhibition.defaultProps = {
+  isMobile: false,
+}
 
 export default trackWindowScroll(Exhibition)

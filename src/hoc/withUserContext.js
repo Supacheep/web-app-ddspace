@@ -2,7 +2,6 @@ import React from 'react'
 import Router from 'next/router'
 import axios from 'axios'
 import UserContext from '../context/userContext'
-import { TEST } from '../configs'
 
 const withUserContext = (Component) => (
   class WithUserData extends React.PureComponent {

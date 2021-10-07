@@ -14,6 +14,7 @@ import Link from 'next/link'
 import '../styles/globals.css'
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
 import Router, { useRouter } from 'next/router'
+import Head from 'next/head'
 import withUserContext from '../src/hoc/withUserContext'
 import userContext from '../src/context/userContext'
 import { colors } from '../src/configs/color'
@@ -142,6 +143,10 @@ function MyApp({ Component, pageProps }) {
   }, [asPath])
 
   useEffect(() => {
+    document.body.scrollTo(0, 0)
+  }, [pathname])
+
+  useEffect(() => {
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   })
@@ -221,6 +226,9 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <CustomLayout>
+      <Head>
+        <title>thprsmeeting2021</title>
+      </Head>
       {
         !hideHeaderList.includes(pathname) && (
           <>

@@ -66,10 +66,10 @@ const Desktop = ({ user, scrollPosition }) => {
       <Wrapper>
         <Container ref={containerRef} id="container">
           <Image
-            src="/images/lobby.png"
+            src="/images/lobby/pagelobbyFinal.jpeg"
             alt="lobby-bg"
             afterLoad={onResize}
-            placeholderSrc="/images/lobby-lowres.png"
+            // placeholderSrc="/images/lobby-lowres.png"
             scrollPosition={scrollPosition}
           />
           <Box
@@ -175,9 +175,9 @@ const Mobile = ({ user, scrollPosition }) => (
   <MobileLayout isShowTitle>
     <div>
       <Image
-        src="/images/pagelobbyMobile.png"
+        src="/images/lobby/pagelobbyFinaMobile.jpeg"
         alt="pagelobbyMobile-bg"
-        placeholderSrc="/images/lobby-lowres.png"
+        // placeholderSrc="/images/lobby-lowres.png"
         scrollPosition={scrollPosition}
       />
     </div>
@@ -226,7 +226,7 @@ Mobile.propTypes = {
 }
 
 Mobile.defaultProps = {
-  user: false,
+  user: undefined,
   scrollPosition: {},
 }
 
