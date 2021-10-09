@@ -184,6 +184,9 @@ const ButtonContainer = styled.div`
   padding: 15px;
   max-width: 570px;
   margin: 20px auto;
+  @media screen and (max-width: 345px) {
+    grid-template-columns: auto;
+  }
 `
 
 const MobileButton = styled.a`
@@ -195,9 +198,13 @@ const MobileButton = styled.a`
   h3 {
     margin: 0;
     margin-left: 10px;
+    line-height: normal;
   }
   :hover {
     opacity: 0.8;
+  }
+  @media screen and (max-width: 345px) {
+    margin: 5px 0 !important;
   }
 `
 
