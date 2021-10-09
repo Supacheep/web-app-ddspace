@@ -25,3 +25,13 @@ export const TitleH3 = styled.h3`
     font-size: 14px;
   }
 `
+
+export const FullImageWrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-color: ${colors.tan};
+  margin-top: -65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
