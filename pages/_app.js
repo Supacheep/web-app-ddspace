@@ -46,7 +46,7 @@ const exceptLoginPath = [
 
 const CustomHeader = styled(Header)`
   position: fixed;
-  z-index: 1; 
+  z-index: 100; 
   width: 100%; 
   background-color: ${colors.white};
   display: flex;
