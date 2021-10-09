@@ -5,8 +5,8 @@ export const StyledBurger = styled.button`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.3rem;
   background: transparent;
   border: none;
   cursor: pointer;

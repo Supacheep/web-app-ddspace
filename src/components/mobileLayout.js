@@ -24,6 +24,9 @@ const BackButton = styled.div`
   padding: 10px;
   font-weight: bold;
   cursor: pointer;
+  :hover {
+    opacity: 0.8;
+  }
 `
 
 const MobileLayout = ({
