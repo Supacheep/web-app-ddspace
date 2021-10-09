@@ -78,6 +78,9 @@ const LinkButton = styled.a`
     margin-left: 5px;
     font-size: 10px;
   }
+  :hover {
+    opacity: 0.8;
+  }
 `
 
 const LinkContainer = styled.div`

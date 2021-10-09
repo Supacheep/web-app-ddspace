@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-component'
 import PropTypes from 'prop-types'
 import { Image as ImageAntd } from 'antd'
 import useCalculateSize from '../src/libs/useCalculateSize'
 import { colors } from '../src/configs/color'
 import styles from '../styles/Home.module.css'
 import { FullImageWrapper } from '../src/components/common'
+import { MobileLayout } from '../src/components'
 
 const Container = styled.div`
   position: relative;
@@ -48,6 +49,12 @@ const ButtonBox = styled.div`
   overflow: hidden;
 `
 
+const conferencePreviewImages = [
+  '/images/conference/program-01.jpeg',
+  '/images/conference/program-02.jpeg',
+  '/images/conference/program-03.jpeg',
+]
+
 const Desktop = () => {
   const [containerRef, getPosition, onResize] = useCalculateSize()
   const [visible, setVisible] = useState(false)
@@ -57,12 +64,6 @@ const Desktop = () => {
     topValue: 42,
     heightValue: 50.5,
   }
-
-  const conferencePreviewImages = [
-    '/images/conference/program-01.jpeg',
-    '/images/conference/program-02.jpeg',
-    '/images/conference/program-03.jpeg',
-  ]
 
   return (
     <div className={styles.container}>
@@ -168,7 +169,94 @@ const Desktop = () => {
   )
 }
 
-const Conference = ({ isMobile }) => (isMobile ? <div>Conference Hall</div> : <Desktop />)
+const MobileImageContainer = styled.div`
+  margin: 10px;
+`
+
+const H2 = styled.h2`
+  text-align: center;
+  color: ${colors.white};
+`
+
+const ButtonContainer = styled.div`
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 15px;
+  max-width: 570px;
+  margin: 20px auto;
+`
+
+const MobileButton = styled.a`
+  border-radius: 10px;
+  background-color: ${colors.white};
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  h3 {
+    margin: 0;
+    margin-left: 10px;
+  }
+  :hover {
+    opacity: 0.8;
+  }
+`
+
+const ConferenceLogo = styled.img`
+  width: 20%;
+`
+
+const Mobile = ({ scrollPosition }) => (
+  <MobileLayout isShowTitle>
+    <Image
+      src="/images/conference/BGconferencePre.jpeg"
+      alt="conference-bg"
+      scrollPosition={scrollPosition}
+    />
+    <ButtonContainer>
+      <MobileButton
+        style={{ marginRight: '5px' }}
+        target="_blank"
+        href="https://google.co.th/"
+        rel="noopener noreferrer"
+      >
+        <ConferenceLogo src="/images/conference/BTNConferenc.svg" />
+        <h3>CONFERENCE HALL 1</h3>
+      </MobileButton>
+      <MobileButton
+        style={{ marginLeft: '5px' }}
+        target="_blank"
+        href="https://google.co.th/"
+        rel="noopener noreferrer"
+      >
+        <ConferenceLogo src="/images/conference/BTNConferenc.svg" />
+        <h3>CONFERENCE HALL 2</h3>
+      </MobileButton>
+    </ButtonContainer>
+    <H2>PROGRAM BOARD</H2>
+    {
+      conferencePreviewImages.map((src) => (
+        <MobileImageContainer>
+          <Image
+            key={`preview-${src}`}
+            src={src}
+            alt="conference-bg"
+            scrollPosition={scrollPosition}
+          />
+        </MobileImageContainer>
+      ))
+    }
+  </MobileLayout>
+)
+
+Mobile.propTypes = {
+  scrollPosition: PropTypes.shape({}),
+}
+
+Mobile.defaultProps = {
+  scrollPosition: {},
+}
+
+const Conference = ({ isMobile, ...props }) => (isMobile ? <Mobile {...props} /> : <Desktop />)
 
 Conference.propTypes = {
   isMobile: PropTypes.bool,
@@ -178,4 +266,4 @@ Conference.defaultProps = {
   isMobile: false,
 }
 
-export default Conference
+export default trackWindowScroll(Conference)
