@@ -37,9 +37,6 @@ const ButtonImg = styled.img`
   transition: transform .2s;
   :hover {
     transform: scale(1.1);
-    box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
-    -webkit-box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
-    -moz-box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
   }
 `
 

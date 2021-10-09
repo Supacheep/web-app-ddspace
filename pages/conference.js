@@ -34,6 +34,20 @@ const Perspective = styled.div`
   }
 `
 
+const ButtonImg = styled.img`
+  transition: transform .2s;
+  width: 100%;
+  :hover {
+    transform: scale(1.05);
+  }
+`
+
+const ButtonBox = styled.div`
+  position: absolute;
+  cursor: pointer;
+  overflow: hidden;
+`
+
 const Desktop = () => {
   const [containerRef, getPosition, onResize] = useCalculateSize()
   const [visible, setVisible] = useState(false)
@@ -101,6 +115,40 @@ const Desktop = () => {
               }}
             />
           </Perspective>
+          <ButtonBox
+            style={{
+              ...getPosition({
+                topValue: 42.4,
+                heightValue: 11,
+                width: '23%',
+              }),
+              right: '2.7%',
+            }}
+          >
+            <a target="_blank" href="https://google.co.th/" rel="noopener noreferrer">
+              <ButtonImg
+                src="/images/conference/hall-1-btn.jpeg"
+                alt="hall_btn"
+              />
+            </a>
+          </ButtonBox>
+          <ButtonBox
+            style={{
+              ...getPosition({
+                topValue: 56.8,
+                heightValue: 11,
+                width: '23%',
+              }),
+              right: '2.7%',
+            }}
+          >
+            <a target="_blank" href="https://google.co.th/" rel="noopener noreferrer">
+              <ButtonImg
+                src="/images/conference/hall-2-btn.jpeg"
+                alt="hall_btn"
+              />
+            </a>
+          </ButtonBox>
         </Container>
       </FullImageWrapper>
       <div style={{ display: 'none' }}>
