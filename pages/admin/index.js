@@ -9,10 +9,11 @@ import {
   Table,
   Upload,
 } from 'antd'
-import { ModalLogin } from '../src/components'
-import { HeaderLogo, TitleH3 } from '../src/components/common'
-import userContext from '../src/context/userContext'
-import { colors } from '../src/configs/color'
+import { ModalLogin } from '../../src/components'
+import { HeaderLogo, TitleH3 } from '../../src/components/common'
+import userContext from '../../src/context/userContext'
+import { colors } from '../../src/configs/color'
+import ModalRegister from './components/modalRegister'
 
 const { Search } = Input
 
@@ -69,6 +70,7 @@ const LogoContainer = styled.div`
 const Admin = () => {
   const user = useContext(userContext)
   const [fileList, setFile] = useState([])
+  const [registerVisible, setRegisterVisible] = useState(false)
   const columns = [
     { title: 'ID', dataIndex: 'id', key: 'id' },
     { title: 'Name', dataIndex: 'name', key: 'name' },
@@ -183,7 +185,13 @@ const Admin = () => {
         />
         <Section>
           <span>Member Profile</span>
-          <Button type="primary" style={{ marginLeft: 10 }}>Add Member</Button>
+          <Button
+            type="primary"
+            style={{ marginLeft: 10 }}
+            onClick={() => setRegisterVisible(true)}
+          >
+            Add Member
+          </Button>
         </Section>
         <Section>
           <span>Select File (.csv)</span>
@@ -210,6 +218,7 @@ const Admin = () => {
           dataSource={dataList}
         />
       </Content>
+      <ModalRegister visible={registerVisible} onClose={() => setRegisterVisible(false)} />
     </div>
   )
 }

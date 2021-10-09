@@ -6,9 +6,7 @@ import SwiperCore, {
   Pagination,
   Autoplay,
 } from 'swiper'
-// import 'swiper/swiper.min.css'
-// import 'swiper/components/pagination/pagination.min.css'
-// import 'swiper/components/navigation/navigation.min.css'
+
 require('swiper/swiper.min.css')
 require('swiper/components/pagination/pagination.min.css')
 require('swiper/components/navigation/navigation.min.css')

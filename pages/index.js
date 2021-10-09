@@ -10,6 +10,7 @@ import userContext from '../src/context/userContext'
 import { ModalLogin, YoutubePlayer, MobileLayout } from '../src/components'
 import { colors } from '../src/configs/color'
 import useCalculateSize from '../src/libs/useCalculateSize'
+import { FullImageWrapper } from '../src/components/common'
 
 const Container = styled.div`
   position: relative;
@@ -42,16 +43,6 @@ const ButtonImg = styled.img`
   }
 `
 
-const Wrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-color: ${colors.tan};
-  margin-top: -65px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
 const Desktop = ({ user, scrollPosition }) => {
   const [containerRef, getPosition, onResize] = useCalculateSize()
 
@@ -63,7 +54,7 @@ const Desktop = ({ user, scrollPosition }) => {
 
   return (
     <div className={styles.container}>
-      <Wrapper>
+      <FullImageWrapper>
         <Container ref={containerRef} id="container">
           <Image
             src="/images/lobby/pagelobbyFinal.jpeg"
@@ -125,7 +116,7 @@ const Desktop = ({ user, scrollPosition }) => {
             }
           </Box>
         </Container>
-      </Wrapper>
+      </FullImageWrapper>
     </div>
   )
 }
