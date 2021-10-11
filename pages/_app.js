@@ -144,6 +144,9 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     document.body.scrollTo(0, 0)
+    if (drawerVisible) {
+      setDrawerVisible(false)
+    }
   }, [pathname])
 
   useEffect(() => {

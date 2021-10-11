@@ -152,6 +152,7 @@ const VideoSection = styled.div`
   border-radius: 10px;
   background-color: ${colors.white};
   margin: 0 15px;
+  overflow: hidden;
 `
 
 const YoutubeBox = styled.div`

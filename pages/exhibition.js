@@ -34,10 +34,7 @@ const CardContainer = styled.div`
   cursor: pointer;
 
   :hover {
-    transform: scale(1.02);
-    box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
-    -webkit-box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
-    -moz-box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
+    opacity: 0.8;
   }
 `
 
@@ -103,7 +100,7 @@ const Mobile = ({ scrollPosition }) => (
     />
     <Content>
       <Badge
-        src="/images/exbition/badge-platium.svg"
+        src="/images/exbition/badge-gold.svg"
       />
       <CompanyListContainer>
         {
