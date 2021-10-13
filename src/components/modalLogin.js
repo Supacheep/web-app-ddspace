@@ -3,6 +3,7 @@ import {
   Modal,
   Form,
   Input,
+  Alert,
 } from 'antd'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
@@ -37,14 +38,18 @@ const CustomInput = styled(Input)`
   font-size: 18px;
 `
 
-const ModalLogin = ({ visible, onFinish }) => {
+const CustomInputPassword = styled(Input.Password)`
+  font-size: 18px;
+`
+
+const ModalLogin = ({ visible, onFinish, error }) => {
   const emailValidator = async (rule, value) => {
     if (!value) {
       return Promise.reject('Please input your email')
     }
-    if (!value.match(PATTERN_EMAIL)) {
-      return Promise.reject('Invalid email')
-    }
+    // if (!value.match(PATTERN_EMAIL)) {
+    //   return Promise.reject('Invalid email')
+    // }
     return Promise.resolve()
   }
   return (
@@ -83,8 +88,9 @@ const ModalLogin = ({ visible, onFinish }) => {
           name="password"
           rules={[{ required: true, message: 'Please input your password' }]}
         >
-          <CustomInput type="password" placeholder="Password" />
+          <CustomInputPassword placeholder="Password" maxLength="12" />
         </Form.Item>
+        {error && <Alert message={error} type="error" showIcon style={{ marginBottom: 10 }} />}
         <Container>
           <LoginButton type="primary" htmlType="submit">
             LOGIN
@@ -98,11 +104,13 @@ const ModalLogin = ({ visible, onFinish }) => {
 ModalLogin.propTypes = {
   visible: PropTypes.bool,
   onFinish: PropTypes.func,
+  error: PropTypes.string,
 }
 
 ModalLogin.defaultProps = {
   visible: false,
   onFinish: () => {},
+  error: '',
 }
 
 export default ModalLogin

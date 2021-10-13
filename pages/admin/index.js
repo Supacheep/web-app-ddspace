@@ -8,12 +8,15 @@ import {
   Button,
   Table,
   Upload,
+  message,
 } from 'antd'
-import { ModalLogin } from '../../src/components'
+import axios from 'axios'
+import { ModalLogin, ModalLoading } from '../../src/components'
 import { HeaderLogo, TitleH3 } from '../../src/components/common'
 import userContext from '../../src/context/userContext'
 import { colors } from '../../src/configs/color'
 import ModalRegister from './components/modalRegister'
+import { API } from '../../src/configs'
 
 const { Search } = Input
 
@@ -71,6 +74,8 @@ const Admin = () => {
   const user = useContext(userContext)
   const [fileList, setFile] = useState([])
   const [registerVisible, setRegisterVisible] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const columns = [
     { title: 'ID', dataIndex: 'id', key: 'id' },
     { title: 'Name', dataIndex: 'name', key: 'name' },
@@ -118,15 +123,32 @@ const Admin = () => {
     },
   ]
 
+  const loginAdmin = async (data) => {
+    setIsLoading(true)
+    try {
+      const loginUser = await axios.post(`${API}/adminsession/adminlogin`, data)
+      const adminToken = loginUser?.data?.data?.token
+      setIsLoading(false)
+      if (adminToken) {
+        user.setAdmin({ ...data, adminToken })
+      } else {
+        setErrorMsg(loginUser?.data?.data?.message || 'Login failed')
+      }
+    } catch (err) {
+      setIsLoading(false)
+      setErrorMsg(err?.response?.data?.error?.message || 'Login failed')
+    }
+  }
+
   if (!user.adminData) {
     return (
       <Container>
         <ModalLogin
-          visible={!user.adminData && !user.isLoading}
-          onFinish={(data) => {
-            user.setAdmin(data)
-          }}
+          visible={!user.adminData}
+          onFinish={loginAdmin}
+          error={errorMsg}
         />
+        {isLoading && <ModalLoading />}
       </Container>
     )
   }
@@ -135,17 +157,15 @@ const Admin = () => {
 
   }
 
-  const handleAction = (uploadfile) => new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(uploadfile)
-    reader.onload = () => resolve(reader.result)
-    reader.onerror = (error) => reject(error)
-  })
-
   const handleChange = (info) => {
     let list = [...info.fileList]
-
+    console.log('handleChange!!!', info?.file?.response)
     // fileList = fileList.slice(-2)
+
+    if (info?.file?.response?.success) {
+      message.success('Upload success')
+      return setFile([])
+    }
 
     list = list.map((file) => {
       const returnFile = file
@@ -154,7 +174,7 @@ const Admin = () => {
       }
       return returnFile
     })
-    setFile(list)
+    return setFile(list)
   }
 
   return (
@@ -197,7 +217,10 @@ const Admin = () => {
           <span>Select File (.csv)</span>
           <Upload
             accept=".csv"
-            action={handleAction}
+            action={`${API}/userprofile/multipleregister`}
+            headers={{
+              AdminToken: user.adminData.adminToken,
+            }}
             className="upload-btn"
             maxCount={1}
             fileList={fileList}
@@ -205,13 +228,13 @@ const Admin = () => {
           >
             <Button>Upload</Button>
           </Upload>
-          <Button
+          {/* <Button
             type="primary"
             style={{ marginLeft: 10 }}
             disabled={!fileList.length}
           >
             Import
-          </Button>
+          </Button> */}
         </Section>
         <Table
           columns={columns}

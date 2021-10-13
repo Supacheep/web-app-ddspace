@@ -1,9 +1,13 @@
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 import PropTypes from 'prop-types'
 import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-component'
 import styled from 'styled-components'
 import Link from 'next/link'
+import { Skeleton } from 'antd'
 import { MobileLayout } from '../src/components'
 import { colors } from '../src/configs/color'
+import { API } from '../src/configs'
 
 const Image = styled(LazyLoadImage)`
   height: 100%;
@@ -46,6 +50,7 @@ const CompanyListContainer = styled.div`
   display: grid;
   grid-template-columns: auto auto;
   margin: 5px 0;
+  margin-bottom: 20px;
 `
 
 const CompanyCard = ({
@@ -54,7 +59,7 @@ const CompanyCard = ({
   <Link href={{ pathname: `/booth/${id}` }}>
     <CardContainer style={style}>
       <Logo
-        src={logo}
+        src={logo || '/images/exbition/logoMock.svg'}
         alt="company-logo"
       />
       <CompanyName>{name}</CompanyName>
@@ -73,25 +78,7 @@ CompanyCard.defaultProps = {
   style: {},
 }
 
-const data = [
-  {
-    id: 1,
-    name: 'Company Name',
-    logo: '/images/exbition/logoMock.svg',
-  },
-  {
-    id: 2,
-    name: 'Company Name',
-    logo: '/images/exbition/logoMock.svg',
-  },
-  {
-    id: 3,
-    name: 'Company Name',
-    logo: '/images/exbition/logoMock.svg',
-  },
-]
-
-const Mobile = ({ scrollPosition }) => (
+const Mobile = ({ scrollPosition, booths, isLoading }) => (
   <MobileLayout isShowTitle>
     <Image
       src="/images/lobby/pagelobbyFinaMobile.jpeg"
@@ -99,40 +86,70 @@ const Mobile = ({ scrollPosition }) => (
       scrollPosition={scrollPosition}
     />
     <Content>
-      <Badge
-        src="/images/exbition/badge-gold.svg"
-      />
-      <CompanyListContainer>
-        {
-          data.map((item, index) => (
-            <CompanyCard
-              id={item.id}
-              name={item.name}
-              logo={item.logo}
-              style={{
-                ...index % 2 ? {
-                  marginLeft: 5,
-                } : {
-                  marginRight: 5,
-                },
-              }}
-            />
-          ))
-        }
-      </CompanyListContainer>
+      {
+        ['Gold', 'Silver'].map((type) => (
+          isLoading
+            ? (<Skeleton active />)
+            : (
+              <>
+                <Badge
+                  src={`/images/exbition/badge-${type}.svg`}
+                />
+                <CompanyListContainer>
+                  {
+                  booths.filter((booth) => booth?.bootType === type).map((item, index) => (
+                    <CompanyCard
+                      id={item.id}
+                      name={item.name}
+                      logo={item.logo}
+                      style={{
+                        ...index % 2 ? {
+                          marginLeft: 5,
+                        } : {
+                          marginRight: 5,
+                        },
+                      }}
+                    />
+                  ))
+                }
+                </CompanyListContainer>
+              </>
+            )
+        ))
+      }
     </Content>
   </MobileLayout>
 )
 
 Mobile.propTypes = {
   scrollPosition: PropTypes.shape({}),
+  booths: PropTypes.arrayOf(PropTypes.shape({})),
+  isLoading: PropTypes.bool,
 }
 
 Mobile.defaultProps = {
   scrollPosition: {},
+  booths: [],
+  isLoading: false,
 }
 
-const Exhibition = ({ isMobile, ...props }) => (isMobile ? <Mobile {...props} /> : <div>Exhibition Hall</div>)
+const Exhibition = ({ isMobile, ...props }) => {
+  const [booths, setBooths] = useState([])
+  const [isLoading, setLoading] = useState(false)
+
+  useEffect(async () => {
+    try {
+      setLoading(true)
+      const response = await axios.get(`${API}/boot/getallboot`)
+      setBooths(response.data.data.boots)
+      setLoading(false)
+      console.log('response-b', response.data.data.boots)
+    } catch (err) {
+      console.warn(err)
+    }
+  }, [])
+  return (isMobile ? <Mobile {...props} booths={booths} isLoading={isLoading} /> : <div>Exhibition Hall</div>)
+}
 
 Exhibition.propTypes = {
   isMobile: PropTypes.bool,

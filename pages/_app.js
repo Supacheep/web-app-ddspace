@@ -199,7 +199,7 @@ function MyApp({ Component, pageProps }) {
       <MenuContainer justify="flex-end">
         <Dropdown overlay={dropdownMenu} trigger={['click']}>
           <ProfileButton>
-            <ProfileComponent name={user?.userData?.email} />
+            <ProfileComponent name={user?.userData?.name} />
           </ProfileButton>
         </Dropdown>
       </MenuContainer>
@@ -249,7 +249,7 @@ function MyApp({ Component, pageProps }) {
       >
         <Dropdown overlay={dropdownMenu} trigger={['click']}>
           <ProfileButton>
-            <ProfileComponent name={user?.userData?.email} />
+            <ProfileComponent name={user?.userData?.name} />
           </ProfileButton>
         </Dropdown>
         <Link href={{ pathname: '/' }}>

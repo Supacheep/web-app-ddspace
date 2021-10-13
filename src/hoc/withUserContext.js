@@ -31,10 +31,12 @@ const withUserContext = (Component) => (
         .then((data) => {
           const { userData } = data?.data || {}
           this.setState({ userData, isLoading: false })
+          return data?.data
         })
         .catch((err) => {
           console.warn(err)
           this.setState({ userData: undefined, isLoading: false })
+          return { message: err?.response?.data?.message || 'Login failed' }
         })
     }
 
@@ -42,15 +44,18 @@ const withUserContext = (Component) => (
       this.setState({ adminData: user })
     }
 
-    fetchUser() {
+    async fetchUser() {
+      this.setState({ isLoading: true })
       return axios.get('/auth/user')
         .then((data) => {
           const { userData } = data.data
           this.setState({ userData, isLoading: false })
+          console.log('fetchUser!!', userData)
           return { userData }
         })
         .catch((err) => {
           console.warn(err)
+          console.log('fetchUser-err!!', err)
           this.setState({ userData: undefined, isLoading: false })
           return {}
         })
