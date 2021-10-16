@@ -42,7 +42,7 @@ const getUserData = async (req, res) => {
     if (!response.data.success) {
       return logout(req, res)
     }
-    return res.status(200).json({ userData })
+    return res.status(200).json({ token, userData })
   } catch (err) {
     return logout(req, res)
   }

@@ -5,6 +5,7 @@ import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-componen
 import styled from 'styled-components'
 import Link from 'next/link'
 import { Skeleton } from 'antd'
+import { useRouter } from 'next/router'
 import { MobileLayout } from '../src/components'
 import { colors } from '../src/configs/color'
 import { API } from '../src/configs'
@@ -36,6 +37,8 @@ const CardContainer = styled.div`
   margin: 5px 0;
   transition: transform .2s;
   cursor: pointer;
+  min-height: 50px;
+  overflow: hidden;
 
   :hover {
     opacity: 0.8;
@@ -48,7 +51,7 @@ const CompanyName = styled.div`
 
 const CompanyListContainer = styled.div`
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 50% 50%;
   margin: 5px 0;
   margin-bottom: 20px;
 `
@@ -68,7 +71,7 @@ const CompanyCard = ({
 )
 
 CompanyCard.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   logo: PropTypes.string.isRequired,
   style: PropTypes.shape({}),
@@ -87,11 +90,11 @@ const Mobile = ({ scrollPosition, booths, isLoading }) => (
     />
     <Content>
       {
-        ['Gold', 'Silver'].map((type) => (
+        ['Gold', 'Standard'].map((type) => (
           isLoading
-            ? (<Skeleton active />)
+            ? (<Skeleton key={type} active />)
             : (
-              <>
+              <div key={type}>
                 <Badge
                   src={`/images/exbition/badge-${type}.svg`}
                 />
@@ -113,7 +116,7 @@ const Mobile = ({ scrollPosition, booths, isLoading }) => (
                   ))
                 }
                 </CompanyListContainer>
-              </>
+              </div>
             )
         ))
       }
@@ -136,16 +139,20 @@ Mobile.defaultProps = {
 const Exhibition = ({ isMobile, ...props }) => {
   const [booths, setBooths] = useState([])
   const [isLoading, setLoading] = useState(false)
+  const router = useRouter()
 
   useEffect(async () => {
     try {
       setLoading(true)
-      const response = await axios.get(`${API}/boot/getallboot`)
+      const response = await axios.post(`${API}/boot/getallboot`)
       setBooths(response.data.data.boots)
       setLoading(false)
-      console.log('response-b', response.data.data.boots)
-    } catch (err) {
-      console.warn(err)
+    } catch (error) {
+      console.warn(error)
+      router.push({
+        pathname: '/error',
+        query: { status: 'error' },
+      })
     }
   }, [])
   return (isMobile ? <Mobile {...props} booths={booths} isLoading={isLoading} /> : <div>Exhibition Hall</div>)

@@ -1,11 +1,20 @@
-import { useState } from 'react'
-// import { useRouter } from 'next/router'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-component'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { Tabs } from 'antd'
+import {
+  Tabs,
+  Skeleton,
+  Button,
+  message,
+  Spin,
+} from 'antd'
+import axios from 'axios'
 import { MobileLayout, YoutubePlayer, Swiper } from '../../src/components'
 import { colors } from '../../src/configs/color'
+import { API } from '../../src/configs'
+import useCalculateSize from '../../src/libs/useCalculateSize'
 
 const { TabPane } = Tabs
 
@@ -92,37 +101,157 @@ const LinkContainer = styled.div`
   }
 `
 
-const Infometion = () => {
-  function callback(key) {
-    console.log(key)
+const FilesContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+`
+
+const CustomP = styled.p`
+  margin: 0;
+  margin-top: 10px;
+`
+
+const SpinContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30vh;
+`
+
+const Spining = () => (
+  <SpinContainer>
+    <Spin />
+  </SpinContainer>
+)
+
+const logBooth = async (bootID, UserToken) => {
+  try {
+    if (bootID && UserToken) {
+      await axios.post(
+        `${API}/bootVisitor/createbootvisitor`,
+        { bootID },
+        {
+          headers: {
+            UserToken,
+          },
+        },
+      )
+    }
+  } catch (err) {
+    console.warn(err)
   }
+}
+
+const Infometion = ({ data, isLoading }) => {
+  const download = (url, filename) => {
+    fetch(url)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const link = document.createElement('a')
+        link.href = URL.createObjectURL(blob)
+        link.download = filename
+        link.click()
+      })
+      .catch((err) => {
+        console.error(err)
+        message.error('Download failed')
+      })
+  }
+
   return (
     <>
-      <LinkContainer>
-        <LinkButton>
-          <Logo src="/images/exbition/link-zoom.svg" alt="link-zoom-logo" />
-          <h3>LIVE CONTACT ROOM 1</h3>
-        </LinkButton>
-        <LinkButton>
-          <Logo src="/images/exbition/link-zoom.svg" alt="link-zoom-logo" />
-          <h3>LIVE CONTACT ROOM 2</h3>
-        </LinkButton>
-        <LinkButton>
-          <Logo src="/images/exbition/link-zoom.svg" alt="link-zoom-logo" />
-          <h3>LIVE CONTACT ROOM 3</h3>
-        </LinkButton>
-      </LinkContainer>
+      {
+        data?.contactLink && (
+          <LinkContainer>
+            {
+              data.contactLink.map((item, index) => (
+                <LinkButton key={`contact-link-${item}`} href={item} target="_blank">
+                  <Logo src="/images/exbition/link-zoom.svg" alt="link-zoom-logo" />
+                  <h3>{`LIVE CONTACT ROOM ${index + 1}`}</h3>
+                </LinkButton>
+              ))
+            }
+          </LinkContainer>
+        )
+      }
       <ContentBox>
-        <CompanyName>COMPANY NAME</CompanyName>
-        <Tabs defaultActiveKey="1" onChange={callback}>
+        {
+          isLoading
+            ? (<Skeleton.Button active />)
+            : (
+              <CompanyName>{data?.name}</CompanyName>
+            )
+        }
+        <Tabs defaultActiveKey="1">
           <TabPane tab="About Us" key="1">
-            Content of Tab Pane 1
+            {
+              isLoading
+                ? (<Skeleton active />)
+                : (
+                  <>
+                    <h3>Company Description</h3>
+                    <p>{data?.companyDescription}</p>
+                  </>
+                )
+            }
           </TabPane>
           <TabPane tab="Download Files" key="2">
-            Content of Tab Pane 2
+            {
+              isLoading
+                ? (<Skeleton active />)
+                : (
+                  data?.bootFiles?.map((item) => (
+                    <FilesContainer>
+                      <h3>{item.fileName}</h3>
+                      <Button type="primary" onClick={() => download(item.link, item.fileName)}>Download Files</Button>
+                    </FilesContainer>
+                  ))
+                )
+            }
           </TabPane>
           <TabPane tab="Contact Us" key="3">
-            Content of Tab Pane 3
+            {
+              isLoading
+                ? (<Skeleton active />)
+                : (
+                  <>
+                    {
+                      data?.website && (
+                        <>
+                          <CustomP>Website</CustomP>
+                          <h3>{data.website}</h3>
+                        </>
+                      )
+                    }
+                    {
+                      data?.email && (
+                        <>
+                          <CustomP>Email Address</CustomP>
+                          <h3>{data.email}</h3>
+                        </>
+                      )
+                    }
+                    {
+                      data?.telephoneNumber && (
+                        <>
+                          <CustomP>Telephone</CustomP>
+                          <h3>{data.telephoneNumber}</h3>
+                        </>
+                      )
+                    }
+                    {
+                      data?.facebook && (
+                        <>
+                          <CustomP>Facebook</CustomP>
+                          <h3>{data?.facebook}</h3>
+                        </>
+                      )
+                    }
+                  </>
+                )
+            }
           </TabPane>
         </Tabs>
       </ContentBox>
@@ -130,57 +259,209 @@ const Infometion = () => {
   )
 }
 
-const Mobile = () => {
-  // const router = useRouter()
-  // const { id } = router.query
-  const [swiperRef, setSwiperRef] = useState(null)
+Infometion.propTypes = {
+  data: PropTypes.shape({
+    contactLink: PropTypes.arrayOf(PropTypes.string),
+    bootFiles: PropTypes.arrayOf(PropTypes.shape({})),
+    name: PropTypes.string,
+    companyDescription: PropTypes.string,
+    website: PropTypes.string,
+    email: PropTypes.string,
+    telephoneNumber: PropTypes.string,
+    facebook: PropTypes.string,
+  }),
+  isLoading: PropTypes.bool,
+}
+
+Infometion.defaultProps = {
+  data: undefined,
+  isLoading: false,
+}
+
+const ImgContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+`
+
+const VideoBox = styled.div`
+  position: absolute;
+  cursor: pointer;
+  overflow: hidden;
+  background-color: ${colors.black};
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
+`
+
+const Desktop = ({ data, isLoading, scrollPosition }) => {
+  const [
+    containerRef,
+    getPosition,
+    onResize,
+  ] = useCalculateSize()
+
+  const basePosition = {
+    topValue: 29.3,
+    heightValue: 19.2,
+    width: '12.3%',
+  }
 
   return (
     <MobileLayout
-      isShowBack
-      containerStyle={{ backgroundColor: colors.grey200 }}
+      containerStyle={{
+        backgroundColor: colors.grey200,
+        padding: '50px',
+      }}
       backStyle={{ color: colors.themeColor }}
     >
-      {/* <div>{`Booth ${id}`}</div> */}
-      <Container>
-        <Swiper
-          ref={swiperRef}
-          autoplay={{
-            delay: 5000,
-            disableOnInteraction: true,
-          }}
-          onInit={(swiper) => setSwiperRef(swiper)}
-        >
-          <Box>
+      {
+        data?.imageLink ? (
+          <ImgContainer ref={containerRef}>
             <Image
-              src="/images/exbition/booth-l.png"
-              alt="lobby-bg"
+              src={data.imageLink}
+              alt="booth-bg"
+              scrollPosition={scrollPosition}
+              style={{ width: '60%' }}
+              afterLoad={onResize}
             />
-          </Box>
-          <Box>
-            <Section>
+            <VideoBox
+              style={{
+                ...getPosition(basePosition),
+                right: '32.8%',
+              }}
+            >
               <YoutubePlayer
-                videoID="6FIJfRINVLE"
+                videoID={data?.youtube}
+                autoplay
                 mute
                 loop
-                onStateChange={() => swiperRef?.autoplay?.stop()}
+                hideUi
               />
-            </Section>
-          </Box>
-        </Swiper>
-        <Infometion />
+            </VideoBox>
+          </ImgContainer>
+        ) : <Spining />
+      }
+      <Infometion data={data} isLoading={isLoading} />
+    </MobileLayout>
+  )
+}
+
+Desktop.propTypes = {
+  data: PropTypes.shape({
+    imageLink: PropTypes.string,
+    youtube: PropTypes.string,
+  }),
+  isLoading: PropTypes.bool,
+  scrollPosition: PropTypes.shape({}),
+}
+
+Desktop.defaultProps = {
+  data: undefined,
+  isLoading: false,
+  scrollPosition: {},
+}
+
+const Mobile = ({ data, isLoading }) => {
+  const [swiperRef, setSwiperRef] = useState(null)
+  return (
+    <MobileLayout
+      containerStyle={{
+        backgroundColor: colors.grey200,
+        padding: '15px',
+      }}
+    >
+      <Container>
+        {
+          isLoading
+            ? (<Spining />)
+            : (
+              <Swiper
+                ref={swiperRef}
+                autoplay={{
+                  delay: 5000,
+                  disableOnInteraction: true,
+                }}
+                onInit={(swiper) => setSwiperRef(swiper)}
+              >
+                <Box>
+                  <Image
+                    src={data?.imageLink}
+                    alt="booth-bg"
+                  />
+                </Box>
+                <Box>
+                  <Section>
+                    <YoutubePlayer
+                      videoID={data?.youtube}
+                      mute
+                      loop
+                      onStateChange={() => swiperRef?.autoplay?.stop()}
+                    />
+                  </Section>
+                </Box>
+              </Swiper>
+            )
+        }
+        <Infometion data={data} isLoading={isLoading} />
       </Container>
     </MobileLayout>
   )
 }
 
-const Booth = ({ isMobile }) => (isMobile ? <Mobile /> : <div>Booth</div>)
+Mobile.propTypes = {
+  data: PropTypes.shape({
+    imageLink: PropTypes.string,
+    youtube: PropTypes.string,
+  }),
+  isLoading: PropTypes.bool,
+}
+
+Mobile.defaultProps = {
+  data: undefined,
+  isLoading: false,
+}
+
+const Booth = ({ isMobile, userData, ...props }) => {
+  const [booth, setBooth] = useState(undefined)
+  const [isLoading, setLoading] = useState(false)
+  const router = useRouter()
+  const { id } = router.query
+  useEffect(() => {
+    setLoading(true)
+    axios.post(
+      `${API}/boot/getbootbybootid`,
+      { bootid: id },
+    )
+      .then((response) => {
+        const resultData = response?.data?.data?.boot
+        setBooth(resultData)
+        logBooth(id, userData?.userToken)
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.warn(error)
+        router.push({
+          pathname: '/error',
+          query: { status: 'error' },
+        })
+      })
+  }, [])
+
+  return (isMobile ? <Mobile data={booth} isLoading={isLoading} /> : <Desktop data={booth} isLoading={isLoading} {...props} />)
+}
 
 Booth.propTypes = {
   isMobile: PropTypes.bool,
+  userData: PropTypes.shape({
+    userToken: PropTypes.string,
+  }),
 }
 
 Booth.defaultProps = {
   isMobile: false,
+  userData: {},
 }
-export default Booth
+export default trackWindowScroll(Booth)

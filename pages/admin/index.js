@@ -1,6 +1,7 @@
 import {
   useContext,
   useState,
+  useEffect,
 } from 'react'
 import styled from 'styled-components'
 import {
@@ -11,6 +12,7 @@ import {
   message,
 } from 'antd'
 import axios from 'axios'
+import { useRouter } from 'next/router'
 import { ModalLogin, ModalLoading } from '../../src/components'
 import { HeaderLogo, TitleH3 } from '../../src/components/common'
 import userContext from '../../src/context/userContext'
@@ -76,50 +78,86 @@ const Admin = () => {
   const [registerVisible, setRegisterVisible] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [dataList, setData] = useState([])
+  const [total, setTotal] = useState(0)
+  const [dataLoading, setDataLoading] = useState(false)
+  const [dataIndex, setDataIndex] = useState(0)
+  const [filter, setFilter] = useState('')
+
+  const router = useRouter()
+  const pageSize = 20
+
+  const fetchData = () => {
+    setDataLoading(true)
+    axios.post(
+      `${API}/userprofile/getalluserprofile`,
+      {
+        index: dataIndex,
+        count: pageSize,
+        filter,
+      },
+      {
+        headers: {
+          AdminToken: user.adminData.adminToken,
+        },
+      },
+    )
+      .then((response) => {
+        setData(response?.data?.data?.userProfile)
+        setTotal(response?.data?.data?.count)
+        setDataLoading(false)
+      })
+      .catch((error) => {
+        console.warn(error)
+        router.push({
+          pathname: '/error',
+          query: { status: 'error' },
+        })
+      })
+  }
+
+  useEffect(() => {
+    if (user?.adminData?.adminToken) {
+      fetchData()
+    }
+  }, [user?.adminData?.adminToken, dataIndex, filter])
+
+  const deleteUser = (userid) => axios.delete(
+    `${API}/userprofile/removeuserprofilebyuserid`,
+    {
+      headers: {
+        AdminToken: user.adminData.adminToken,
+      },
+      data: { userid },
+    },
+  )
+    .then(() => {
+      setRegisterVisible(false)
+      message.success('Delete success')
+      setDataIndex(0)
+      fetchData()
+    })
+    .catch((error) => {
+      console.warn(error)
+      setRegisterVisible(false)
+      message.error('Delete failed')
+    })
+
   const columns = [
-    { title: 'ID', dataIndex: 'id', key: 'id' },
+    {
+      title: 'No.',
+      dataIndex: '',
+      key: 'no',
+      render: (text, record, index) => <span>{index + 1}</span>,
+    },
     { title: 'Name', dataIndex: 'name', key: 'name' },
-    { title: 'Address', dataIndex: 'address', key: 'address' },
+    { title: 'Lastname', dataIndex: 'lastName', key: 'lastName' },
+    { title: 'Email', dataIndex: 'email', key: 'email' },
     {
       title: 'Action',
       dataIndex: '',
       key: 'x',
-      render: () => <DeleteButton type="primary">Delete</DeleteButton>,
-    },
-  ]
-
-  const dataList = [
-    {
-      key: 1,
-      id: 1,
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      description: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.',
-    },
-    {
-      key: 2,
-      id: 2,
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      description: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.',
-    },
-    {
-      key: 3,
-      id: 3,
-      name: 'Not Expandable',
-      age: 29,
-      address: 'Jiangsu No. 1 Lake Park',
-      description: 'This not expandable',
-    },
-    {
-      key: 4,
-      id: 4,
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-      description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.',
+      render: (_, record) => <DeleteButton type="primary" onClick={() => deleteUser(record.id)}>Delete</DeleteButton>,
     },
   ]
 
@@ -153,14 +191,13 @@ const Admin = () => {
     )
   }
 
-  const onSearch = () => {
-
+  const onSearch = (val) => {
+    setDataIndex(0)
+    setFilter(val)
   }
 
   const handleChange = (info) => {
     let list = [...info.fileList]
-    console.log('handleChange!!!', info?.file?.response)
-    // fileList = fileList.slice(-2)
 
     if (info?.file?.response?.success) {
       message.success('Upload success')
@@ -176,6 +213,27 @@ const Admin = () => {
     })
     return setFile(list)
   }
+
+  const register = (data) => axios.post(
+    `${API}/userprofile/register`,
+    data,
+    {
+      headers: {
+        AdminToken: user.adminData.adminToken,
+      },
+    },
+  )
+    .then(() => {
+      setRegisterVisible(false)
+      message.success('Register success')
+      setDataIndex(0)
+      fetchData()
+    })
+    .catch((error) => {
+      console.warn(error)
+      setRegisterVisible(false)
+      message.error('Register failed')
+    })
 
   return (
     <div>
@@ -239,9 +297,21 @@ const Admin = () => {
         <Table
           columns={columns}
           dataSource={dataList}
+          onChange={(pagination) => {
+            setDataIndex((pagination.current - 1) * (pageSize))
+          }}
+          pagination={{
+            total,
+            pageSize,
+          }}
+          loading={dataLoading}
         />
       </Content>
-      <ModalRegister visible={registerVisible} onClose={() => setRegisterVisible(false)} />
+      <ModalRegister
+        visible={registerVisible}
+        onClose={() => setRegisterVisible(false)}
+        onFinish={register}
+      />
     </div>
   )
 }

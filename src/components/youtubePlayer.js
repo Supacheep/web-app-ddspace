@@ -21,7 +21,7 @@ const Container = styled.div`
 `
 
 const YoutubePlayer = ({
-  videoID, autoplay, mute, loop, onStateChange,
+  videoID, autoplay, mute, loop, onStateChange, hideUi,
 }) => {
   const playerVars = useMemo(() => {
     const vars = {}
@@ -33,6 +33,9 @@ const YoutubePlayer = ({
     }
     if (loop) {
       Object.assign(vars, { loop: 1, playlist: videoID })
+    }
+    if (hideUi) {
+      Object.assign(vars, { controls: 0, frameborder: 0, showinfo: 0 })
     }
     return vars
   }, [autoplay, mute, loop])
@@ -54,6 +57,7 @@ YoutubePlayer.propTypes = {
   autoplay: PropTypes.bool,
   mute: PropTypes.bool,
   loop: PropTypes.bool,
+  hideUi: PropTypes.bool,
   onStateChange: PropTypes.func,
 }
 
@@ -61,6 +65,7 @@ YoutubePlayer.defaultProps = {
   autoplay: false,
   mute: false,
   loop: false,
+  hideUi: false,
   onStateChange: () => {},
 }
 

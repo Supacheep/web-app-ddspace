@@ -263,7 +263,7 @@ function MyApp({ Component, pageProps }) {
         </Link>
       </Drawer>
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} isMobile={isMobile} />
+        <Component {...pageProps} isMobile={isMobile} userData={user} />
       </ThemeProvider>
       <GlobalStyle />
     </CustomLayout>
