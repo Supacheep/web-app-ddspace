@@ -144,6 +144,9 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     document.body.scrollTo(0, 0)
+    if (drawerVisible) {
+      setDrawerVisible(false)
+    }
   }, [pathname])
 
   useEffect(() => {
@@ -196,7 +199,7 @@ function MyApp({ Component, pageProps }) {
       <MenuContainer justify="flex-end">
         <Dropdown overlay={dropdownMenu} trigger={['click']}>
           <ProfileButton>
-            <ProfileComponent name={user?.userData?.email} />
+            <ProfileComponent name={user?.userData?.name} />
           </ProfileButton>
         </Dropdown>
       </MenuContainer>
@@ -246,7 +249,7 @@ function MyApp({ Component, pageProps }) {
       >
         <Dropdown overlay={dropdownMenu} trigger={['click']}>
           <ProfileButton>
-            <ProfileComponent name={user?.userData?.email} />
+            <ProfileComponent name={user?.userData?.name} />
           </ProfileButton>
         </Dropdown>
         <Link href={{ pathname: '/' }}>
@@ -260,7 +263,7 @@ function MyApp({ Component, pageProps }) {
         </Link>
       </Drawer>
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} isMobile={isMobile} />
+        <Component {...pageProps} isMobile={isMobile} userData={user} />
       </ThemeProvider>
       <GlobalStyle />
     </CustomLayout>

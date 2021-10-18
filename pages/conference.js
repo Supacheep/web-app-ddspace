@@ -1,13 +1,16 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-component'
 import PropTypes from 'prop-types'
 import { Image as ImageAntd } from 'antd'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 import useCalculateSize from '../src/libs/useCalculateSize'
 import { colors } from '../src/configs/color'
 import styles from '../styles/Home.module.css'
 import { FullImageWrapper } from '../src/components/common'
 import { MobileLayout } from '../src/components'
+import { API } from '../src/configs'
 
 const Container = styled.div`
   position: relative;
@@ -15,7 +18,7 @@ const Container = styled.div`
 
 const Image = styled(LazyLoadImage)`
   height: 100%;
-  Width: 100%;
+  width: 100%;
   object-fit: cover;
 `
 
@@ -49,13 +52,37 @@ const ButtonBox = styled.div`
   overflow: hidden;
 `
 
+const A = styled.a`
+  ${(props) => (props.disabled ? 'pointer-events: none;' : '')}
+`
+
 const conferencePreviewImages = [
   '/images/conference/program-01.jpeg',
   '/images/conference/program-02.jpeg',
   '/images/conference/program-03.jpeg',
 ]
 
-const Desktop = () => {
+const logConference = async (conferenceHallID, UserToken) => {
+  try {
+    if (conferenceHallID && UserToken) {
+      await axios.post(
+        `${API}/conferencehallvisitor/createconferencehallvisitor`,
+        { conferenceHallID },
+        {
+          headers: {
+            UserToken,
+          },
+        },
+      )
+    }
+  } catch (err) {
+    console.warn(err)
+  }
+}
+
+const Desktop = ({
+  isLoading, data, scrollPosition, userData,
+}) => {
   const [containerRef, getPosition, onResize] = useCalculateSize()
   const [visible, setVisible] = useState(false)
   const [imageIndex, setImageIndex] = useState(0)
@@ -73,6 +100,7 @@ const Desktop = () => {
             src="/images/conference/BGconferencePre.jpeg"
             alt="conference-bg"
             afterLoad={onResize}
+            scrollPosition={scrollPosition}
           />
           <Perspective
             style={{
@@ -126,12 +154,18 @@ const Desktop = () => {
               right: '2.7%',
             }}
           >
-            <a target="_blank" href="https://google.co.th/" rel="noopener noreferrer">
+            <A
+              target="_blank"
+              href={`${data?.[0]?.zoomLink}`}
+              rel="noopener noreferrer"
+              disabled={isLoading}
+              onClick={() => logConference(data?.[0]?.id, userData?.userToken)}
+            >
               <ButtonImg
                 src="/images/conference/hall-1-btn.jpeg"
                 alt="hall_btn"
               />
-            </a>
+            </A>
           </ButtonBox>
           <ButtonBox
             style={{
@@ -143,12 +177,18 @@ const Desktop = () => {
               right: '2.7%',
             }}
           >
-            <a target="_blank" href="https://google.co.th/" rel="noopener noreferrer">
+            <A
+              target="_blank"
+              href={`${data?.[1]?.zoomLink}`}
+              rel="noopener noreferrer"
+              disabled={isLoading}
+              onClick={() => logConference(data?.[1]?.id, userData?.userToken)}
+            >
               <ButtonImg
                 src="/images/conference/hall-2-btn.jpeg"
                 alt="hall_btn"
               />
-            </a>
+            </A>
           </ButtonBox>
         </Container>
       </FullImageWrapper>
@@ -167,6 +207,22 @@ const Desktop = () => {
       </div>
     </div>
   )
+}
+
+Desktop.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape({})),
+  isLoading: PropTypes.bool,
+  scrollPosition: PropTypes.shape({}),
+  userData: PropTypes.shape({
+    userToken: PropTypes.string,
+  }),
+}
+
+Desktop.defaultProps = {
+  data: undefined,
+  isLoading: false,
+  scrollPosition: {},
+  userData: {},
 }
 
 const MobileImageContainer = styled.div`
@@ -195,6 +251,7 @@ const MobileButton = styled.a`
   display: flex;
   align-items: center;
   padding: 5px 10px;
+  ${(props) => (props.disabled ? 'pointer-events: none;' : '')}
   h3 {
     margin: 0;
     margin-left: 10px;
@@ -212,7 +269,9 @@ const ConferenceLogo = styled.img`
   width: 20%;
 `
 
-const Mobile = ({ scrollPosition }) => (
+const Mobile = ({
+  scrollPosition, data, isLoading, userData,
+}) => (
   <MobileLayout isShowTitle>
     <Image
       src="/images/conference/BGconferencePre.jpeg"
@@ -223,8 +282,10 @@ const Mobile = ({ scrollPosition }) => (
       <MobileButton
         style={{ marginRight: '5px' }}
         target="_blank"
-        href="https://google.co.th/"
+        href={`${data?.[0]?.zoomLink}`}
         rel="noopener noreferrer"
+        disabled={isLoading}
+        onClick={() => logConference(data?.[0]?.id, userData?.userToken)}
       >
         <ConferenceLogo src="/images/conference/BTNConferenc.svg" />
         <h3>CONFERENCE HALL 1</h3>
@@ -232,8 +293,10 @@ const Mobile = ({ scrollPosition }) => (
       <MobileButton
         style={{ marginLeft: '5px' }}
         target="_blank"
-        href="https://google.co.th/"
+        href={`${data?.[1]?.zoomLink}`}
         rel="noopener noreferrer"
+        disabled={isLoading}
+        onClick={() => logConference(data?.[1]?.id, userData?.userToken)}
       >
         <ConferenceLogo src="/images/conference/BTNConferenc.svg" />
         <h3>CONFERENCE HALL 2</h3>
@@ -256,14 +319,41 @@ const Mobile = ({ scrollPosition }) => (
 )
 
 Mobile.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape({})),
+  isLoading: PropTypes.bool,
   scrollPosition: PropTypes.shape({}),
+  userData: PropTypes.shape({
+    userToken: PropTypes.string,
+  }),
 }
 
 Mobile.defaultProps = {
+  data: undefined,
+  isLoading: false,
   scrollPosition: {},
+  userData: {},
 }
 
-const Conference = ({ isMobile, ...props }) => (isMobile ? <Mobile {...props} /> : <Desktop />)
+const Conference = ({ isMobile, ...props }) => {
+  const [isLoading, setLoading] = useState(false)
+  const [data, setData] = useState(undefined)
+  const router = useRouter()
+  useEffect(() => {
+    setLoading(true)
+    axios.post(`${API}/conferencehall/getallconferencehall`)
+      .then((response) => {
+        setData(response?.data?.data?.conferenceHall)
+        setLoading(false)
+      })
+      .catch(() => {
+        router.push({
+          pathname: '/error',
+          query: { status: 'error' },
+        })
+      })
+  }, [])
+  return (isMobile ? <Mobile isLoading={isLoading} data={data} {...props} /> : <Desktop isLoading={isLoading} data={data} {...props} />)
+}
 
 Conference.propTypes = {
   isMobile: PropTypes.bool,

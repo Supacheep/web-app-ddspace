@@ -1,5 +1,6 @@
 import {
   useContext,
+  useState,
 } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
@@ -7,7 +8,9 @@ import PropTypes from 'prop-types'
 import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-component'
 import styles from '../styles/Home.module.css'
 import userContext from '../src/context/userContext'
-import { ModalLogin, YoutubePlayer, MobileLayout } from '../src/components'
+import {
+  ModalLogin, YoutubePlayer, MobileLayout, ModalLoading,
+} from '../src/components'
 import { colors } from '../src/configs/color'
 import useCalculateSize from '../src/libs/useCalculateSize'
 import { FullImageWrapper } from '../src/components/common'
@@ -18,7 +21,7 @@ const Container = styled.div`
 
 const Image = styled(LazyLoadImage)`
   height: 100%;
-  Width: 100%;
+  width: 100%;
   object-fit: cover;
 `
 
@@ -152,6 +155,7 @@ const VideoSection = styled.div`
   border-radius: 10px;
   background-color: ${colors.white};
   margin: 0 15px;
+  overflow: hidden;
 `
 
 const YoutubeBox = styled.div`
@@ -165,7 +169,6 @@ const Mobile = ({ user, scrollPosition }) => (
       <Image
         src="/images/lobby/pagelobbyFinaMobile.jpeg"
         alt="pagelobbyMobile-bg"
-        // placeholderSrc="/images/lobby-lowres.png"
         scrollPosition={scrollPosition}
       />
     </div>
@@ -220,15 +223,21 @@ Mobile.defaultProps = {
 
 const Lobby = ({ isMobile, ...props }) => {
   const user = useContext(userContext)
+  const [errorMsg, setErrorMsg] = useState('')
   return (
     <>
       {isMobile ? <Mobile user={user} {...props} /> : <Desktop user={user} {...props} />}
       <ModalLogin
         visible={!user.userData && !user.isLoading}
-        onFinish={(data) => {
-          user.setUser(data)
+        error={errorMsg}
+        onFinish={async (data) => {
+          const res = await user.setUser(data)
+          if (res?.message) {
+            setErrorMsg(res.message)
+          }
         }}
       />
+      {!user.userData && user.isLoading && <ModalLoading />}
     </>
   )
 }

@@ -24,7 +24,7 @@ const Container = styled.div`
   text-align: center;
 `
 
-const ModalRegister = ({ visible, onClose }) => {
+const ModalRegister = ({ visible, onClose, onFinish }) => {
   const itemBaseProps = {
     labelCol: { span: 6 },
     wrapperCol: { span: 16 },
@@ -36,9 +36,12 @@ const ModalRegister = ({ visible, onClose }) => {
       footer={null}
       centered
       onCancel={onClose}
+      destroyOnClose
     >
       <TitleH3>Add Member Profile</TitleH3>
-      <Form>
+      <Form
+        onFinish={onFinish}
+      >
         <Form.Item
           name="email"
           label="Email"
@@ -61,7 +64,7 @@ const ModalRegister = ({ visible, onClose }) => {
           <CustomInput />
         </Form.Item>
         <Form.Item
-          name="lastname"
+          name="lastName"
           label="Lastname"
           {...itemBaseProps}
         >
@@ -80,11 +83,13 @@ const ModalRegister = ({ visible, onClose }) => {
 ModalRegister.propTypes = {
   visible: PropTypes.bool,
   onClose: PropTypes.func,
+  onFinish: PropTypes.func,
 }
 
 ModalRegister.defaultProps = {
   visible: false,
   onClose: () => {},
+  onFinish: () => {},
 }
 
 export default ModalRegister

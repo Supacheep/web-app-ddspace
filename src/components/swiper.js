@@ -6,28 +6,38 @@ import SwiperCore, {
   Pagination,
   Autoplay,
 } from 'swiper'
+import { createGlobalStyle } from 'styled-components'
 
 require('swiper/swiper.min.css')
 require('swiper/components/pagination/pagination.min.css')
 require('swiper/components/navigation/navigation.min.css')
 
+const GlobalStyle = createGlobalStyle`
+  .swiper-wrapper {
+    align-items: center;
+  }
+`
+
 const SwiperComponent = ({ children, ...props }) => {
   SwiperCore.use([Navigation, Pagination, Autoplay])
   return (
-    <Swiper
+    <>
+      <Swiper
     // navigation
-      pagination={{ clickable: true }}
-      scrollbar={{ draggable: true }}
-      spaceBetween={50}
-      slidesPerView={1}
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: true }}
+        spaceBetween={50}
+        slidesPerView={1}
     //   onSlideChange={() => console.log('slide change')}
     //   onSwiper={(swiper) => console.log(swiper)}
-      {...props}
-    >
-      {
+        {...props}
+      >
+        {
         React.Children.map(children, (child) => <SwiperSlide>{child}</SwiperSlide>)
       }
-    </Swiper>
+      </Swiper>
+      <GlobalStyle />
+    </>
   )
 }
 
