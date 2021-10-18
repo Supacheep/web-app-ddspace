@@ -210,7 +210,10 @@ const Desktop = ({
 }
 
 Desktop.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({})),
+  data: PropTypes.arrayOf(PropTypes.shape({
+    zoomLink: PropTypes.string,
+    id: PropTypes.string,
+  })),
   isLoading: PropTypes.bool,
   scrollPosition: PropTypes.shape({}),
   userData: PropTypes.shape({
@@ -319,7 +322,10 @@ const Mobile = ({
 )
 
 Mobile.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({})),
+  data: PropTypes.arrayOf(PropTypes.shape({
+    zoomLink: PropTypes.string,
+    id: PropTypes.string,
+  })),
   isLoading: PropTypes.bool,
   scrollPosition: PropTypes.shape({}),
   userData: PropTypes.shape({
