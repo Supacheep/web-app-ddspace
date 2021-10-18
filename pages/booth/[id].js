@@ -9,6 +9,7 @@ import {
   Button,
   message,
   Spin,
+  Tooltip,
 } from 'antd'
 import axios from 'axios'
 import { MobileLayout, YoutubePlayer, Swiper } from '../../src/components'
@@ -20,7 +21,7 @@ const { TabPane } = Tabs
 
 const Image = styled(LazyLoadImage)`
   height: auto;
-  Width: 90%;
+  width: 90%;
   object-fit: cover;
   margin: auto;
 `
@@ -120,6 +121,11 @@ const SpinContainer = styled.div`
   height: 30vh;
 `
 
+const P = styled.p`
+  white-space: break-spaces;
+  width: 100%;
+`
+
 const Spining = () => (
   <SpinContainer>
     <Spin />
@@ -167,7 +173,7 @@ const Infometion = ({ data, isLoading }) => {
           <LinkContainer>
             {
               data.contactLink.map((item, index) => (
-                <LinkButton key={`contact-link-${item}`} href={item} target="_blank">
+                <LinkButton key={`contact-link-${item}`} href={item} target="_blank" rel="noopener noreferrer">
                   <Logo src="/images/exbition/link-zoom.svg" alt="link-zoom-logo" />
                   <h3>{`LIVE CONTACT ROOM ${index + 1}`}</h3>
                 </LinkButton>
@@ -192,7 +198,7 @@ const Infometion = ({ data, isLoading }) => {
                 : (
                   <>
                     <h3>Company Description</h3>
-                    <p>{data?.companyDescription}</p>
+                    <P>{data?.companyDescription}</P>
                   </>
                 )
             }
@@ -296,6 +302,17 @@ const VideoBox = styled.div`
   }
 `
 
+const ContactBox = styled.div`
+  position: absolute;
+  cursor: pointer;
+  overflow: hidden;
+`
+
+const ContactBoxLogo = styled.img`
+  width: 100%;
+  height: auto;
+`
+
 const Desktop = ({ data, isLoading, scrollPosition }) => {
   const [
     containerRef,
@@ -303,10 +320,108 @@ const Desktop = ({ data, isLoading, scrollPosition }) => {
     onResize,
   ] = useCalculateSize()
 
-  const basePosition = {
-    topValue: 29.3,
-    heightValue: 19.2,
-    width: '12.3%',
+  const [tooltipVisible, setTooltipVisible] = useState(false)
+
+  useEffect(() => {
+    if (!isLoading && !tooltipVisible) {
+      setTimeout(() => {
+        setTooltipVisible(true)
+      }, 1000)
+    }
+  }, [isLoading])
+
+  const videoPosition = () => {
+    switch (data?.subType) {
+      case 'L':
+        return ({
+          ...getPosition({
+            topValue: 4.5,
+            heightValue: 40.2,
+            width: '23.6%',
+          }),
+          right: '19%',
+        })
+      case 'M':
+        return ({
+          ...getPosition({
+            topValue: 25.2,
+            heightValue: 27.5,
+            width: '18.9%',
+          }),
+          right: '21.2%',
+        })
+      default:
+        return ({
+          ...getPosition({
+            topValue: 29.3,
+            heightValue: 19.2,
+            width: '12.3%',
+          }),
+          right: '32.8%',
+        })
+    }
+  }
+
+  const contactPosition = () => {
+    switch (data?.subType) {
+      case 'L':
+        return ([
+          {
+            ...getPosition({
+              topValue: 47,
+              heightValue: 13,
+              width: '2.5%',
+            }),
+            left: '16%',
+          },
+          {
+            ...getPosition({
+              topValue: 47,
+              heightValue: 13,
+              width: '2.5%',
+            }),
+            left: '32.5%',
+          },
+          {
+            ...getPosition({
+              topValue: 47,
+              heightValue: 13,
+              width: '2.5%',
+            }),
+            left: '49%',
+          },
+        ])
+      case 'M':
+        return ([
+          {
+            ...getPosition({
+              topValue: 47,
+              heightValue: 13,
+              width: '2.5%',
+            }),
+            left: '32.5%',
+          },
+          {
+            ...getPosition({
+              topValue: 33,
+              heightValue: 13,
+              width: '2.5%',
+            }),
+            left: '32.5%',
+          },
+        ])
+      default:
+        return ([
+          {
+            ...getPosition({
+              topValue: 21,
+              heightValue: 13,
+              width: '2.5%',
+            }),
+            left: '29.5%',
+          },
+        ])
+    }
   }
 
   return (
@@ -319,20 +434,15 @@ const Desktop = ({ data, isLoading, scrollPosition }) => {
     >
       {
         data?.imageLink ? (
-          <ImgContainer ref={containerRef}>
+          <ImgContainer ref={containerRef} id="image-container">
             <Image
               src={data.imageLink}
               alt="booth-bg"
               scrollPosition={scrollPosition}
-              style={{ width: '60%' }}
+              style={{ width: data?.subType === 'L' ? '90%' : '60%' }}
               afterLoad={onResize}
             />
-            <VideoBox
-              style={{
-                ...getPosition(basePosition),
-                right: '32.8%',
-              }}
-            >
+            <VideoBox style={videoPosition()}>
               <YoutubePlayer
                 videoID={data?.youtube}
                 autoplay
@@ -341,6 +451,28 @@ const Desktop = ({ data, isLoading, scrollPosition }) => {
                 hideUi
               />
             </VideoBox>
+            {
+              data.contactLink.map((item, index) => {
+                const positionObj = contactPosition()[index]
+                if (!positionObj) return null
+                return (
+                  <a key={`contact-link-${item}`} href={item} target="_blank" rel="noopener noreferrer">
+                    <ContactBox style={positionObj}>
+                      <Tooltip
+                        visible={tooltipVisible}
+                        placement="top"
+                        title={`LIVE CONTACT ROOM ${index + 1}`}
+                        overlayInnerStyle={{ fontSize: 'calc((5vw) / 7)' }}
+                        getPopupContainer={() => document.getElementById('image-container')}
+                        overlayStyle={{ zIndex: 99 }}
+                      >
+                        <ContactBoxLogo src="/images/exbition/link-zoom.svg" alt="link-zoom-logo" />
+                      </Tooltip>
+                    </ContactBox>
+                  </a>
+                )
+              })
+            }
           </ImgContainer>
         ) : <Spining />
       }
@@ -353,6 +485,8 @@ Desktop.propTypes = {
   data: PropTypes.shape({
     imageLink: PropTypes.string,
     youtube: PropTypes.string,
+    subType: PropTypes.string,
+    contactLink: PropTypes.arrayOf(PropTypes.string),
   }),
   isLoading: PropTypes.bool,
   scrollPosition: PropTypes.shape({}),

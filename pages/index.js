@@ -21,7 +21,7 @@ const Container = styled.div`
 
 const Image = styled(LazyLoadImage)`
   height: 100%;
-  Width: 100%;
+  width: 100%;
   object-fit: cover;
 `
 
@@ -169,7 +169,6 @@ const Mobile = ({ user, scrollPosition }) => (
       <Image
         src="/images/lobby/pagelobbyFinaMobile.jpeg"
         alt="pagelobbyMobile-bg"
-        // placeholderSrc="/images/lobby-lowres.png"
         scrollPosition={scrollPosition}
       />
     </div>

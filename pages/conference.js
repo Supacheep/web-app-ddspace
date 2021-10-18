@@ -18,7 +18,7 @@ const Container = styled.div`
 
 const Image = styled(LazyLoadImage)`
   height: 100%;
-  Width: 100%;
+  width: 100%;
   object-fit: cover;
 `
 

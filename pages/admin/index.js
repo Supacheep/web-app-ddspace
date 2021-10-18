@@ -10,6 +10,7 @@ import {
   Table,
   Upload,
   message,
+  Popconfirm,
 } from 'antd'
 import axios from 'axios'
 import { useRouter } from 'next/router'
@@ -157,7 +158,21 @@ const Admin = () => {
       title: 'Action',
       dataIndex: '',
       key: 'x',
-      render: (_, record) => <DeleteButton type="primary" onClick={() => deleteUser(record.id)}>Delete</DeleteButton>,
+      render: (_, record) => (
+        <Popconfirm
+          placement="leftTop"
+          onConfirm={() => deleteUser(record.id)}
+          title="Are you sure to delete this member ?"
+          okText="Yes"
+          cancelText="No"
+        >
+          <DeleteButton
+            type="primary"
+          >
+            Delete
+          </DeleteButton>
+        </Popconfirm>
+      ),
     },
   ]
 
