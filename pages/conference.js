@@ -57,9 +57,9 @@ const A = styled.a`
 `
 
 const conferencePreviewImages = [
-  '/images/conference/program-01.jpeg',
-  '/images/conference/program-02.jpeg',
-  '/images/conference/program-03.jpeg',
+  'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/ConferenceHall/programDay1.jpg',
+  'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/ConferenceHall/programDay2.jpg',
+  'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/ConferenceHall/programDay3.jpg',
 ]
 
 const logConference = async (conferenceHallID, UserToken) => {
@@ -97,7 +97,7 @@ const Desktop = ({
       <FullImageWrapper>
         <Container ref={containerRef}>
           <Image
-            src="/images/conference/BGconferencePre.jpeg"
+            src="https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/ConferenceHall/ConferenceHallForWeb.jpg"
             alt="conference-bg"
             afterLoad={onResize}
             scrollPosition={scrollPosition}
@@ -277,7 +277,7 @@ const Mobile = ({
 }) => (
   <MobileLayout isShowTitle>
     <Image
-      src="/images/conference/BGconferencePre.jpeg"
+      src="https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/ConferenceHall/ConferenceHallForWeb.jpg"
       alt="conference-bg"
       scrollPosition={scrollPosition}
     />

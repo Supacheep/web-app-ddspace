@@ -39,7 +39,19 @@ const CustomInput = styled(Input)`
 `
 
 const CustomInputPassword = styled(Input.Password)`
-  font-size: 18px;
+  .ant-input {
+    font-size: 18px !important;
+    height: 38px;
+    padding: 5px;
+    border-radius: 8px;
+  }
+  .ant-input-suffix {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  padding: 0;
+  padding-left: 10px;
+  padding-right: 10px;
 `
 
 const ModalLogin = ({ visible, onFinish, error }) => {
@@ -73,14 +85,15 @@ const ModalLogin = ({ visible, onFinish, error }) => {
           />
         </LogoContainer>
         <TitleH3>
-          The 31
-          <sup>th</sup>
+          31
+          <sup>st</sup>
           {' '}
-          {'Annual Meeting of\nThe Society of Plastic and Reconstructive Surgeons of Thailand\nThe Society of Aesthetic Plastic Surgeons of Thailand'}
+          Annual meeting of ThPRS & ThSAPS
         </TitleH3>
         <Form.Item
           name="email"
           rules={[{ validator: emailValidator }]}
+          validateTrigger="onBlur"
         >
           <CustomInput placeholder="Email Address" />
         </Form.Item>
@@ -88,7 +101,7 @@ const ModalLogin = ({ visible, onFinish, error }) => {
           name="password"
           rules={[{ required: true, message: 'Please input your password' }]}
         >
-          <CustomInputPassword placeholder="Password" maxLength="12" />
+          <CustomInputPassword placeholder="Password" />
         </Form.Item>
         {error && <Alert message={error} type="error" showIcon style={{ marginBottom: 10 }} />}
         <Container>
