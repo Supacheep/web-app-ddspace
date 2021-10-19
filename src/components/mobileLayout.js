@@ -45,7 +45,7 @@ const MobileLayout = ({
             31
             <sup>st</sup>
             {' '}
-            {'Annual meeting of ThPRS & ThSAPS'}
+            Annual meeting of ThPRS & ThSAPS
           </TitleH3>
         )
       }
