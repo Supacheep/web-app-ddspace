@@ -60,6 +60,9 @@ const ContentBox = styled.div`
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
+  .ant-tabs-tab {
+    font-size: 18px;
+  }
 `
 
 const CompanyName = styled.div`
@@ -68,6 +71,7 @@ const CompanyName = styled.div`
   border-radius: 6px;
   color: ${colors.white};
   display: inline-block;
+  font-size: 20px;
 `
 
 const Logo = styled.img`
@@ -81,12 +85,12 @@ const LinkButton = styled.a`
   display: flex;
   align-items: center;
   margin: 5px;
-  max-width: 160px;
+  max-width: 190px;
   h3 {
     color: ${colors.white};
     margin: 0;
     margin-left: 5px;
-    font-size: 10px;
+    font-size: 12px;
   }
   :hover {
     opacity: 0.8;
