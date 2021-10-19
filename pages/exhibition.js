@@ -425,12 +425,13 @@ const Mobile = ({ scrollPosition, booths, isLoading }) => (
             : (
               <div key={type}>
                 <Badge
-                  src={`/images/exbition/badge-${type}.svg`}
+                  src={`/images/exbition/${type}.svg`}
                 />
                 <CompanyListContainer>
                   {
                   booths.filter((booth) => booth?.bootType === type).map((item, index) => (
                     <CompanyCard
+                      key={item.id}
                       id={item.id}
                       name={item.name}
                       logo={item.logo}

@@ -84,6 +84,7 @@ const Admin = () => {
   const [dataLoading, setDataLoading] = useState(false)
   const [dataIndex, setDataIndex] = useState(0)
   const [filter, setFilter] = useState('')
+  const [currentPage, setCurrentPage] = useState(0)
 
   const router = useRouter()
   const pageSize = 20
@@ -136,6 +137,7 @@ const Admin = () => {
       setRegisterVisible(false)
       message.success('Delete success')
       setDataIndex(0)
+      setCurrentPage(0)
       fetchData()
     })
     .catch((error) => {
@@ -149,7 +151,7 @@ const Admin = () => {
       title: 'No.',
       dataIndex: '',
       key: 'no',
-      render: (text, record, index) => <span>{index + 1}</span>,
+      render: (text, record, index) => <span>{(pageSize * currentPage) + (index + 1)}</span>,
     },
     { title: 'Name', dataIndex: 'name', key: 'name' },
     { title: 'Lastname', dataIndex: 'lastName', key: 'lastName' },
@@ -208,15 +210,22 @@ const Admin = () => {
 
   const onSearch = (val) => {
     setDataIndex(0)
+    setCurrentPage(0)
     setFilter(val)
   }
 
   const handleChange = (info) => {
     let list = [...info.fileList]
-
-    if (info?.file?.response?.success) {
+    if (info?.file?.response && info?.file?.response?.success) {
       message.success('Upload success')
+      setDataIndex(0)
+      setCurrentPage(0)
+      fetchData()
       return setFile([])
+    }
+
+    if (info?.file?.status !== 'removed' && info?.file?.response && !info?.file?.response?.success) {
+      message.error(info?.file?.response?.error?.message || 'Register failed')
     }
 
     list = list.map((file) => {
@@ -242,6 +251,7 @@ const Admin = () => {
       setRegisterVisible(false)
       message.success('Register success')
       setDataIndex(0)
+      setCurrentPage(0)
       fetchData()
     })
     .catch((error) => {
@@ -309,6 +319,7 @@ const Admin = () => {
           columns={columns}
           dataSource={dataList}
           onChange={(pagination) => {
+            setCurrentPage(pagination.current)
             setDataIndex((pagination.current - 1) * (pageSize))
           }}
           pagination={{
