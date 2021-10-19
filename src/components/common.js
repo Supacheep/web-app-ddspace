@@ -19,7 +19,7 @@ export const TitleH3 = styled.h3`
 export const FullImageWrapper = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: ${colors.tan};
+  background-color: ${colors.themeColor};
   margin-top: -65px;
   display: flex;
   align-items: center;
