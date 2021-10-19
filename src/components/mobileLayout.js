@@ -42,7 +42,10 @@ const MobileLayout = ({
       {
         isShowTitle && (
           <TitleH3 className="title">
-            {'Annual Meeting of\nThe Society of Plastic and Reconstructive Surgeons of Thailand\nThe Society of Aesthetic Plastic Surgeons of Thailand'}
+            31
+            <sup>st</sup>
+            {' '}
+            {'Annual meeting of ThPRS & ThSAPS'}
           </TitleH3>
         )
       }

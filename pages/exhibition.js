@@ -101,7 +101,7 @@ CompanyCard.defaultProps = {
 
 const Desktop = ({ booths, scrollPosition }) => {
   const [containerRef, getPosition, onResize] = useCalculateSize()
-  const specialNumber = [{ number: 6, fixedIndex: 2 }]
+  const specialNumber = [{ number: 5, fixedIndex: 2 }]
 
   const boothS = useMemo(() => {
     const specialPositionBooth = booths.filter((item) => item.subType === 'S' && specialNumber.map(({ number }) => number).includes(item.number))

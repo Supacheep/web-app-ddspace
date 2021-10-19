@@ -321,6 +321,7 @@ const Desktop = ({ data, isLoading, scrollPosition }) => {
   ] = useCalculateSize()
 
   const [tooltipVisible, setTooltipVisible] = useState(false)
+  const [imageLoaded, setImageLoaded] = useState(false)
 
   useEffect(() => {
     if (!isLoading && !tooltipVisible) {
@@ -440,38 +441,52 @@ const Desktop = ({ data, isLoading, scrollPosition }) => {
               alt="booth-bg"
               scrollPosition={scrollPosition}
               style={{ width: data?.subType === 'L' ? '90%' : '60%' }}
-              afterLoad={onResize}
+              afterLoad={() => {
+                console.log('afterLoad')
+                setImageLoaded(true)
+                onResize()
+              }}
             />
-            <VideoBox style={videoPosition()}>
-              <YoutubePlayer
-                videoID={data?.youtube}
-                autoplay
-                mute
-                loop
-                hideUi
-              />
-            </VideoBox>
             {
-              data.contactLink.map((item, index) => {
-                const positionObj = contactPosition()[index]
-                if (!positionObj) return null
-                return (
-                  <a key={`contact-link-${item}`} href={item} target="_blank" rel="noopener noreferrer">
-                    <ContactBox style={positionObj}>
-                      <Tooltip
-                        visible={tooltipVisible}
-                        placement="top"
-                        title={`LIVE CONTACT ROOM ${index + 1}`}
-                        overlayInnerStyle={{ fontSize: 'calc((5vw) / 7)' }}
-                        getPopupContainer={() => document.getElementById('image-container')}
-                        overlayStyle={{ zIndex: 99 }}
-                      >
-                        <ContactBoxLogo src="/images/exbition/link-zoom.svg" alt="link-zoom-logo" />
-                      </Tooltip>
-                    </ContactBox>
-                  </a>
-                )
-              })
+              imageLoaded && (
+                <>
+                  <VideoBox style={videoPosition()}>
+                    <YoutubePlayer
+                      videoID={data?.youtube}
+                      autoplay
+                      mute
+                      loop
+                      hideUi
+                    />
+                  </VideoBox>
+                  {
+                    data.contactLink.map((item, index) => {
+                      const positionObj = contactPosition()[index]
+                      if (!positionObj) return null
+                      return (
+                        <a key={`contact-link-${item}`} href={item} target="_blank" rel="noopener noreferrer">
+                          <ContactBox style={positionObj}>
+                            <Tooltip
+                              visible={tooltipVisible}
+                              placement="top"
+                              title={`LIVE CONTACT ROOM ${index + 1}`}
+                              overlayInnerStyle={{
+                                fontSize: 'calc((5vw) / 7)',
+                                display: 'flex',
+                                alignItems: 'center',
+                              }}
+                              getPopupContainer={() => document.getElementById('image-container')}
+                              overlayStyle={{ zIndex: 99 }}
+                            >
+                              <ContactBoxLogo src="/images/exbition/link-zoom.svg" alt="link-zoom-logo" />
+                            </Tooltip>
+                          </ContactBox>
+                        </a>
+                      )
+                    })
+                  }
+                </>
+              )
             }
           </ImgContainer>
         ) : <Spining />

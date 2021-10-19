@@ -264,7 +264,10 @@ const Admin = () => {
           />
         </LogoContainer>
         <Title style={{ color: colors.white }}>
-          {'The 31th Annual Meeting of The Society of Plastic and Reconstructive Surgeons of Thailand\nThe Society of Aesthetic Plastic Surgeons of Thailand'}
+          31
+          <sup>st</sup>
+          {' '}
+          Annual meeting of ThPRS & ThSAPS
         </Title>
       </Header>
       <Content>
@@ -301,13 +304,6 @@ const Admin = () => {
           >
             <Button>Upload</Button>
           </Upload>
-          {/* <Button
-            type="primary"
-            style={{ marginLeft: 10 }}
-            disabled={!fileList.length}
-          >
-            Import
-          </Button> */}
         </Section>
         <Table
           columns={columns}
