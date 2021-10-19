@@ -20,6 +20,10 @@ const Image = styled(LazyLoadImage)`
   height: 100%;
   width: 100%;
   object-fit: cover;
+
+  box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
+  -webkit-box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
+  -moz-box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
 `
 
 const Box = styled.div`
