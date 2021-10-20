@@ -190,9 +190,7 @@ const Infometion = ({ data, isLoading }) => {
         {
           isLoading
             ? (<Skeleton.Button active />)
-            : (
-              <CompanyName>{data?.name}</CompanyName>
-            )
+            : (<CompanyName>{data?.name}</CompanyName>)
         }
         <Tabs defaultActiveKey="1">
           <TabPane tab="About Us" key="1">
@@ -454,15 +452,19 @@ const Desktop = ({ data, isLoading, scrollPosition }) => {
             {
               imageLoaded && (
                 <>
-                  <VideoBox style={videoPosition()}>
-                    <YoutubePlayer
-                      videoID={data?.youtube}
-                      autoplay
-                      mute
-                      loop
-                      hideUi
-                    />
-                  </VideoBox>
+                  {
+                    data?.youtube && (
+                      <VideoBox style={videoPosition()}>
+                        <YoutubePlayer
+                          videoID={data.youtube}
+                          autoplay
+                          mute
+                          loop
+                          hideUi
+                        />
+                      </VideoBox>
+                    )
+                  }
                   {
                     data.contactLink.map((item, index) => {
                       const positionObj = contactPosition()[index]
@@ -531,31 +533,46 @@ const Mobile = ({ data, isLoading }) => {
           isLoading
             ? (<Spining />)
             : (
-              <Swiper
-                ref={swiperRef}
-                autoplay={{
-                  delay: 5000,
-                  disableOnInteraction: true,
-                }}
-                onInit={(swiper) => setSwiperRef(swiper)}
-              >
-                <Box>
-                  <Image
-                    src={data?.imageLink}
-                    alt="booth-bg"
-                  />
-                </Box>
-                <Box>
-                  <Section>
-                    <YoutubePlayer
-                      videoID={data?.youtube}
-                      mute
-                      loop
-                      onStateChange={() => swiperRef?.autoplay?.stop()}
-                    />
-                  </Section>
-                </Box>
-              </Swiper>
+              <>
+                {
+                  data?.youtube
+                    ? (
+                      <Swiper
+                        ref={swiperRef}
+                        autoplay={{
+                          delay: 5000,
+                          disableOnInteraction: true,
+                        }}
+                        onInit={(swiper) => setSwiperRef(swiper)}
+                      >
+                        <Box>
+                          <Image
+                            src={data?.imageLink}
+                            alt="booth-bg"
+                          />
+                        </Box>
+                        <Box>
+                          <Section>
+                            <YoutubePlayer
+                              videoID={data?.youtube}
+                              mute
+                              loop
+                              onStateChange={() => swiperRef?.autoplay?.stop()}
+                            />
+                          </Section>
+                        </Box>
+                      </Swiper>
+                    )
+                    : (
+                      <Box>
+                        <Image
+                          src={data?.imageLink}
+                          alt="booth-bg"
+                        />
+                      </Box>
+                    )
+                }
+              </>
             )
         }
         <Infometion data={data} isLoading={isLoading} />
