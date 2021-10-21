@@ -127,7 +127,7 @@ const FilesContainer = styled.div`
   margin-bottom: 10px;
 
   h3 { 
-    max-width: 50%;
+    max-width: 70%;
     text-overflow: ellipsis;
     overflow: hidden;
   }
