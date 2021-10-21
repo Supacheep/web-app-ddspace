@@ -62,6 +62,13 @@ const ContentBox = styled.div`
   margin: 10px;
   .ant-tabs-tab {
     font-size: 18px;
+    @media screen and (max-width: 600px) {
+      font-size: 15px;
+    }
+  }
+  @media screen and (max-width: 600px) {
+    margin-left: 0;
+    margin-right: 0;
   }
 `
 
@@ -72,6 +79,9 @@ const CompanyName = styled.div`
   color: ${colors.white};
   display: inline-block;
   font-size: 20px;
+  @media screen and (max-width: 600px) {
+    font-size: 16px;
+  }
 `
 
 const Logo = styled.img`
@@ -91,6 +101,10 @@ const LinkButton = styled.a`
     margin: 0;
     margin-left: 5px;
     font-size: 12px;
+    @media screen and (max-width: 600px) {
+      font-size: 11px;
+      max-width: 180px;
+    }
   }
   :hover {
     opacity: 0.8;
@@ -111,6 +125,12 @@ const FilesContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
+
+  h3 { 
+    max-width: 50%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 `
 
 const CustomP = styled.p`
