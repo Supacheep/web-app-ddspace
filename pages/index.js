@@ -113,6 +113,7 @@ const Desktop = ({ user, scrollPosition }) => {
                   videoID="6Mab8UrqoR4"
                   autoplay
                   loop
+                  mute
                 />
               )
             }
@@ -199,9 +200,10 @@ const Mobile = ({ user, scrollPosition }) => (
         <YoutubeBox>
           <VideoSection>
             <YoutubePlayer
-              videoID="6FIJfRINVLE"
+              videoID="6Mab8UrqoR4"
               autoplay
               loop
+              mute
             />
           </VideoSection>
         </YoutubeBox>
