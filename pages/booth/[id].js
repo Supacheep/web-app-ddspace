@@ -478,7 +478,6 @@ const Desktop = ({ data, isLoading, scrollPosition }) => {
                         <YoutubePlayer
                           videoID={data.youtube}
                           autoplay
-                          mute
                           loop
                           hideUi
                         />
@@ -575,7 +574,6 @@ const Mobile = ({ data, isLoading }) => {
                           <Section>
                             <YoutubePlayer
                               videoID={data?.youtube}
-                              mute
                               loop
                               onStateChange={() => swiperRef?.autoplay?.stop()}
                             />

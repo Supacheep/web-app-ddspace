@@ -263,7 +263,7 @@ const Desktop = ({ booths, scrollPosition }) => {
       <FullImageWrapper customStyle="align-items: flex-start;">
         <Container ref={containerRef}>
           <Image
-            src="https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/MockupExhition1920.jpg?fbclid=IwAR3zaUNtE-Pmm1iBQLbNFpzCd1LM-HpTkPA7r3utoQeO9TE2z-uN6VQ2-yY"
+            src="https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/ExhitionHall/PicExhitionHall.jpg"
             alt="exhibition-bg"
             afterLoad={onResize}
             scrollPosition={scrollPosition}
@@ -372,7 +372,7 @@ const Desktop = ({ booths, scrollPosition }) => {
                     logo={item.logo}
                     style={{
                       ...cardSStyle,
-                      fontSize: 'calc((7vw) / 7)',
+                      fontSize: 'calc((10vw) / 7)',
                     }}
                   />
                 </Box>
@@ -413,7 +413,7 @@ const CompanyListContainer = styled.div`
 const Mobile = ({ scrollPosition, booths, isLoading }) => (
   <MobileLayout isShowTitle>
     <Image
-      src="https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/MockupExhition1920.jpg?fbclid=IwAR3zaUNtE-Pmm1iBQLbNFpzCd1LM-HpTkPA7r3utoQeO9TE2z-uN6VQ2-yY"
+      src="https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/ExhitionHall/PicExhitionHall.jpg"
       alt="lobby-bg"
       scrollPosition={scrollPosition}
     />

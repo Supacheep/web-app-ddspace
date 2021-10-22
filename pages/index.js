@@ -64,7 +64,6 @@ const Desktop = ({ user, scrollPosition }) => {
             src="/images/lobby/pagelobbyFinal.jpeg"
             alt="lobby-bg"
             afterLoad={onResize}
-            // placeholderSrc="/images/lobby-lowres.png"
             scrollPosition={scrollPosition}
           />
           <Box
@@ -111,9 +110,8 @@ const Desktop = ({ user, scrollPosition }) => {
             {
               user.userData && (
                 <YoutubePlayer
-                  videoID="6FIJfRINVLE"
+                  videoID="6Mab8UrqoR4"
                   autoplay
-                  mute
                   loop
                 />
               )
@@ -203,7 +201,6 @@ const Mobile = ({ user, scrollPosition }) => (
             <YoutubePlayer
               videoID="6FIJfRINVLE"
               autoplay
-              mute
               loop
             />
           </VideoSection>
