@@ -340,7 +340,7 @@ const Desktop = ({ data, isLoading, scrollPosition }) => {
     containerRef,
     getPosition,
     onResize,
-  ] = useCalculateSize()
+  ] = useCalculateSize(true)
 
   const [tooltipVisible, setTooltipVisible] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)

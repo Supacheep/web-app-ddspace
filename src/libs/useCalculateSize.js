@@ -1,12 +1,21 @@
 import { useEffect, useRef, useState } from 'react'
 
-const useCalculateSize = () => {
+const useCalculateSize = (shouldNotResizeContainer) => {
   const containerRef = useRef()
   const [eleHeight, setHeight] = useState()
 
   const onResize = () => {
     const el = containerRef?.current
     if (el) {
+      if (!shouldNotResizeContainer) {
+        if ((window.innerHeight * 1.77777777778) <= window.innerWidth) {
+          containerRef.current.style.width = 'auto'
+          containerRef.current.style.height = '100vh'
+        } else {
+          containerRef.current.style.width = '100vw'
+          containerRef.current.style.height = 'auto'
+        }
+      }
       setHeight(el.offsetHeight)
     }
   }
