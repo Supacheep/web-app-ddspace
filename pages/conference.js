@@ -39,6 +39,7 @@ const Perspective = styled.div`
   overflow: hidden;
   :hover {
     border: 3px solid ${colors.themeColor};
+    background-color: rgba(255, 255, 255, 0.2);
   }
 `
 
