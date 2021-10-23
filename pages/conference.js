@@ -206,7 +206,7 @@ const Desktop = ({
           }}
         >
           {
-            conferencePreviewImages.map((src, index) => <ImageAntd key={`preview-${src}`} src={src} alt={`preview-${index}`} />)
+            conferencePreviewImages.map((src, index) => <ImageAntd key={`preview-${src}`} src={`${src}?${Math.random()}`} alt={`preview-${index}`} />)
           }
         </ImageAntd.PreviewGroup>
       </div>
