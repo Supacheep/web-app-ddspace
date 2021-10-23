@@ -316,7 +316,7 @@ const Mobile = ({
         <MobileImageContainer>
           <Image
             key={`preview-${src}`}
-            src={src}
+            src={`${src}?${Math.random()}`}
             alt="conference-bg"
             scrollPosition={scrollPosition}
           />
