@@ -89,7 +89,7 @@ const Admin = () => {
   const router = useRouter()
   const pageSize = 20
 
-  const fetchData = () => {
+  const fetchData = (cb = () => {}) => {
     setDataLoading(true)
     axios.post(
       `${API}/userprofile/getalluserprofile`,
@@ -106,8 +106,9 @@ const Admin = () => {
     )
       .then((response) => {
         setData(response?.data?.data?.userProfile)
-        setTotal(response?.data?.data?.count)
+        setTotal(response?.data?.data?.currentCount)
         setDataLoading(false)
+        cb()
       })
       .catch((error) => {
         console.warn(error)
@@ -136,9 +137,10 @@ const Admin = () => {
     .then(() => {
       setRegisterVisible(false)
       message.success('Delete success')
-      setDataIndex(0)
-      setCurrentPage(1)
-      fetchData()
+      fetchData(() => {
+        setDataIndex(0)
+        setCurrentPage(1)
+      })
     })
     .catch((error) => {
       console.warn(error)
@@ -250,9 +252,10 @@ const Admin = () => {
     .then(() => {
       setRegisterVisible(false)
       message.success('Register success')
-      setDataIndex(0)
-      setCurrentPage(1)
-      fetchData()
+      fetchData(() => {
+        setDataIndex(0)
+        setCurrentPage(1)
+      })
     })
     .catch((error) => {
       console.warn(error)
@@ -326,6 +329,8 @@ const Admin = () => {
           pagination={{
             total,
             pageSize,
+            showSizeChanger: false,
+            current: currentPage,
           }}
           loading={dataLoading}
         />

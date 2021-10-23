@@ -60,6 +60,11 @@ const ContentBox = styled.div`
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
+
+  box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
+  -webkit-box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
+  -moz-box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
+
   .ant-tabs-tab {
     font-size: 18px;
     @media screen and (max-width: 600px) {
@@ -127,7 +132,7 @@ const FilesContainer = styled.div`
   margin-bottom: 10px;
 
   h3 { 
-    max-width: 70%;
+    max-width: 60%;
     text-overflow: ellipsis;
     overflow: hidden;
   }
@@ -452,6 +457,7 @@ const Desktop = ({ data, isLoading, scrollPosition }) => {
       containerStyle={{
         backgroundColor: colors.grey200,
         padding: '50px',
+        background: colors.grey200,
       }}
       backStyle={{ color: colors.themeColor }}
     >
@@ -545,6 +551,7 @@ const Mobile = ({ data, isLoading }) => {
       containerStyle={{
         backgroundColor: colors.grey200,
         padding: '15px',
+        background: colors.grey200,
       }}
     >
       <Container>

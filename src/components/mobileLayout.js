@@ -7,12 +7,13 @@ import { TitleH3 } from './common'
 const MobileContainer = styled.div`
   width: 100vw;
   min-height: 100vh;
-  background-color: ${colors.themeColor};
+  /* background-color: ${colors.themeColor}; */
+  background: linear-gradient(10deg, #3E43DE 10%, ${colors.themeColor} 90%);
   padding-bottom: 15px;
 
   .title {
     color: ${colors.white};
-    background-color: ${colors.themeColor};
+    /* background-color: ${colors.themeColor}; */
     margin: 0;
     padding: 1.5em;
   }

@@ -154,11 +154,15 @@ const VideoSection = styled.div`
   height: 55vw;
   max-width: 540px;
   max-height: 310px;
-  border: 5px solid ${colors.white};
+  /* border: 5px solid ${colors.white}; */
   border-radius: 10px;
   background-color: ${colors.white};
   margin: 0 15px;
   overflow: hidden;
+  
+  box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
+  -webkit-box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
+  -moz-box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
 `
 
 const YoutubeBox = styled.div`

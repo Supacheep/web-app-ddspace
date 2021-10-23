@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { colors } from '../configs/color'
+import { MOBILE_WINDOW_WIDTH } from '../constants/constantsValue'
 
 export const HeaderLogo = styled.img`
   width: 40px;
@@ -14,12 +15,16 @@ export const TitleH3 = styled.h3`
   white-space: break-spaces;
   margin-top: 15px;
   margin-bottom: 20px;
+  @media screen and (max-width: ${MOBILE_WINDOW_WIDTH}px) {
+    font-size: 16px;
+  }
 `
 
 export const FullImageWrapper = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: ${colors.themeColor};
+  /* background-color: ${colors.themeColor}; */
+  background: linear-gradient(10deg, #3E43DE 10%, ${colors.themeColor} 90%);
   margin-top: -65px;
   display: flex;
   align-items: center;
