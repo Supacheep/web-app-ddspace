@@ -211,7 +211,16 @@ const Record = () => {
           }
         </Tabs>
       </Container>
-      {video && <VideoPlayer src={video} visible={videoVisible} onCancel={() => { setVisible(false) }} />}
+      {video && (
+        <VideoPlayer
+          src={video}
+          visible={videoVisible}
+          onCancel={() => {
+            setVisible(false)
+            setVideo('')
+          }}
+        />
+      )}
     </MobileLayout>
   )
 }
