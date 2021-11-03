@@ -36,12 +36,12 @@ const Footer = styled.div`
   background-repeat: repeat-x;
   background-position: center bottom;
   width: 190%;
-  height: 130px;
+  height: 150px;
   z-index: 1;
 `
 
 const Content = styled.div`
-  padding-bottom: 130px;
+  padding-bottom: 145px;
   height: 100%;
   z-index: 2;
 `
