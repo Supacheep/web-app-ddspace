@@ -6,7 +6,9 @@ const colors = {
   grey300: '#DEDEDE',
   tan: '#A9A699',
   red: '#F44535',
-  themeColor: '#1B1D62',
+  themeColor: '#402913',
+  themeGradient: 'linear-gradient(220deg, #F3E283 0%, #F1B631 100%)',
+  yellow: '#F1B631',
 }
 
 export {

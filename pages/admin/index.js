@@ -24,13 +24,13 @@ import { API } from '../../src/configs'
 const { Search } = Input
 
 const Container = styled.div`
-  background-color: ${colors.themeColor};
+  background: ${colors.themeGradient};
   width: 100vw;
   height: 100vh;
 `
 
 const Header = styled.div`
-  background-color: ${colors.themeColor};
+  background-color: ${colors.themeGradient};
   display: flex;
   align-items: center;
 `
@@ -268,15 +268,16 @@ const Admin = () => {
       <Header>
         <LogoContainer>
           <HeaderLogo
-            src="/images/LogoThPRS-01.svg"
-            alt="LogoThPRS"
+            src="/images/LOGOICS_.png"
+            alt="LogoICS"
+            style={{ marginTop: 16 }}
           />
           <HeaderLogo
-            src="/images/LogoThSAPS_whole.svg"
-            alt="LogoThPRS"
+            src="/images/LogoAPALMS-01.svg"
+            alt="LogoThAPALMS"
           />
         </LogoContainer>
-        <Title style={{ color: colors.white }}>
+        <Title style={{ color: colors.themeColor }}>
           31
           <sup>st</sup>
           {' '}

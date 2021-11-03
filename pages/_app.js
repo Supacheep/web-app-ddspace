@@ -199,12 +199,13 @@ function MyApp({ Component, pageProps }) {
       <Link href={{ pathname: '/' }}>
         <MenuContainer>
           <HeaderLogo
-            src="/images/LogoThPRS-01.svg"
-            alt="LogoThPRS"
+            src="/images/LOGOICS_.png"
+            alt="LogoICS"
+            style={{ marginTop: 16 }}
           />
           <HeaderLogo
-            src="/images/LogoThSAPS_whole.svg"
-            alt="LogoThPRS"
+            src="/images/LogoAPALMS-01.svg"
+            alt="LogoThAPALMS"
           />
         </MenuContainer>
       </Link>
@@ -239,12 +240,13 @@ function MyApp({ Component, pageProps }) {
       <Link href={{ pathname: '/' }}>
         <MenuContainer justify="center">
           <HeaderLogo
-            src="/images/LogoThPRS-01.svg"
-            alt="LogoThPRS"
+            src="/images/LOGOICS_.png"
+            alt="LogoICS"
+            style={{ marginTop: 16 }}
           />
           <HeaderLogo
-            src="/images/LogoThSAPS_whole.svg"
-            alt="LogoThPRS"
+            src="/images/LogoAPALMS-01.svg"
+            alt="LogoThAPALMS"
           />
         </MenuContainer>
       </Link>
@@ -255,7 +257,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <CustomLayout>
       <Head>
-        <title>thprsmeeting2021</title>
+        <title>ICSMeeting2021</title>
       </Head>
       {
         !hideHeaderList.includes(pathname) && (

@@ -9,9 +9,8 @@ import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-componen
 import styles from '../styles/Home.module.css'
 import userContext from '../src/context/userContext'
 import {
-  ModalLogin, YoutubePlayer, MobileLayout, ModalLoading,
+  ModalLogin, MobileLayout, ModalLoading,
 } from '../src/components'
-import { colors } from '../src/configs/color'
 import useCalculateSize from '../src/libs/useCalculateSize'
 import { FullImageWrapper } from '../src/components/common'
 
@@ -42,18 +41,19 @@ const Box = styled.div`
 
 const ButtonImg = styled.img`
   transition: transform .2s;
+  width: 100%;
   :hover {
-    transform: scale(1.1);
+    transform: scale(1.04);
   }
 `
 
-const Desktop = ({ user, scrollPosition }) => {
+const Desktop = ({ scrollPosition }) => {
   const [containerRef, getPosition, onResize] = useCalculateSize()
 
   const basePosition = {
-    topValue: 34,
+    topValue: 26,
     heightValue: 12,
-    width: '26.5%',
+    width: '27.6%',
   }
 
   return (
@@ -61,20 +61,25 @@ const Desktop = ({ user, scrollPosition }) => {
       <FullImageWrapper>
         <Container ref={containerRef} id="container">
           <Image
-            src="/images/lobby/pagelobbyFinal.jpeg"
+            src="https://icsmeeting.s3.ap-southeast-1.amazonaws.com/Lobby/pagelobbyFinal.jpg?fbclid=IwAR0R6fDJ2tlBBS-oUNmXHGkFwbpwaPE-Y9SSEZIPj4fU0BSyclnfO8jzlK8"
             alt="lobby-bg"
             afterLoad={onResize}
             scrollPosition={scrollPosition}
           />
           <Box
             style={{
-              ...getPosition(basePosition),
+              ...getPosition({
+                ...basePosition,
+                topValue: 26.3,
+              }),
               right: '3%',
+              borderRadius: '5px',
+              borderBottomRightRadius: '18px',
             }}
           >
             <Link href={{ pathname: '/exhibition' }}>
               <ButtonImg
-                src="/images/exhibition_btn.svg"
+                src="/images/lobby/BTNEXhition.png"
                 alt="exhibition_btn"
               />
             </Link>
@@ -83,14 +88,16 @@ const Desktop = ({ user, scrollPosition }) => {
             style={{
               ...getPosition({
                 ...basePosition,
-                topValue: 33,
+                topValue: 26.2,
               }),
-              left: '2.8%',
+              left: '4%',
+              borderRadius: '5px',
+              borderBottomLeftRadius: '18px',
             }}
           >
             <Link href={{ pathname: '/conference' }}>
               <ButtonImg
-                src="/images/conference_btn.svg"
+                src="/images/lobby/BTNConference.png"
                 alt="conference_btn"
               />
             </Link>
@@ -98,25 +105,40 @@ const Desktop = ({ user, scrollPosition }) => {
           <Box
             style={{
               ...getPosition({
-                topValue: 19.3,
-                heightValue: 37.5,
-                width: '37.6%',
+                topValue: 39,
+                width: '17.5%',
+                heightValue: 7.5,
               }),
-              right: '30.8%',
-              border: 0,
-              backgroundColor: colors.black,
+              left: '14.2%',
+              borderRadius: '5px',
+              borderBottomLeftRadius: '10px',
             }}
           >
-            {
-              user.userData && (
-                <YoutubePlayer
-                  videoID="6Mab8UrqoR4"
-                  autoplay
-                  loop
-                  mute
-                />
-              )
-            }
+            <a href="https://www.google.co.th/" target="_blank" rel="noopener noreferrer">
+              <ButtonImg
+                src="/images/lobby/BTNEPoster.png"
+                alt="conference_btn"
+              />
+            </a>
+          </Box>
+          <Box
+            style={{
+              ...getPosition({
+                topValue: 48.6,
+                width: '17%',
+                heightValue: 7.5,
+              }),
+              left: '14.2%',
+              borderRadius: '5px',
+              borderBottomLeftRadius: '10px',
+            }}
+          >
+            <a href="https://www.google.co.th/" target="_blank" rel="noopener noreferrer">
+              <ButtonImg
+                src="/images/lobby/BTNDownloadAbstact.png"
+                alt="conference_btn"
+              />
+            </a>
           </Box>
         </Container>
       </FullImageWrapper>
@@ -149,32 +171,11 @@ const ButtonContainer = styled.div`
   }
 `
 
-const VideoSection = styled.div`
-  width: 100%;
-  height: 55vw;
-  max-width: 540px;
-  max-height: 310px;
-  /* border: 5px solid ${colors.white}; */
-  border-radius: 10px;
-  background-color: ${colors.white};
-  margin: 0 15px;
-  overflow: hidden;
-  
-  box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
-  -webkit-box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
-  -moz-box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
-`
-
-const YoutubeBox = styled.div`
-  display: flex;
-  justify-content: center;
-`
-
-const Mobile = ({ user, scrollPosition }) => (
+const Mobile = ({ scrollPosition }) => (
   <MobileLayout isShowTitle>
     <div>
       <Image
-        src="/images/lobby/pagelobbyFinaMobile.jpeg"
+        src="https://icsmeeting.s3.ap-southeast-1.amazonaws.com/Lobby/pagelobbyFinal.jpg?fbclid=IwAR0R6fDJ2tlBBS-oUNmXHGkFwbpwaPE-Y9SSEZIPj4fU0BSyclnfO8jzlK8"
         alt="pagelobbyMobile-bg"
         scrollPosition={scrollPosition}
       />
@@ -199,20 +200,6 @@ const Mobile = ({ user, scrollPosition }) => (
         </div>
       </Link>
     </ButtonContainer>
-    {
-      user.userData && (
-        <YoutubeBox>
-          <VideoSection>
-            <YoutubePlayer
-              videoID="6Mab8UrqoR4"
-              autoplay
-              loop
-              mute
-            />
-          </VideoSection>
-        </YoutubeBox>
-      )
-    }
   </MobileLayout>
 )
 

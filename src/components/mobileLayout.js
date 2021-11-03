@@ -5,15 +5,13 @@ import { colors } from '../configs/color'
 import { TitleH3 } from './common'
 
 const MobileContainer = styled.div`
+  position: relative;
   width: 100vw;
-  min-height: 100vh;
-  /* background-color: ${colors.themeColor}; */
-  background: linear-gradient(10deg, #3E43DE 10%, ${colors.themeColor} 90%);
-  padding-bottom: 15px;
+  min-height: calc((100vh) - 65px);
+  background: ${colors.themeGradient};
 
   .title {
-    color: ${colors.white};
-    /* background-color: ${colors.themeColor}; */
+    color: ${colors.themeColor};
     margin: 0;
     padding: 1.5em;
   }
@@ -30,6 +28,24 @@ const BackButton = styled.div`
   }
 `
 
+const Footer = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-image: url("/images/TextureFooter-01.svg");
+  background-repeat: repeat-x;
+  background-position: center bottom;
+  width: 190%;
+  height: 130px;
+  z-index: 1;
+`
+
+const Content = styled.div`
+  padding-bottom: 130px;
+  height: 100%;
+  z-index: 2;
+`
+
 const MobileLayout = ({
   children,
   isShowTitle,
@@ -43,15 +59,23 @@ const MobileLayout = ({
       {
         isShowTitle && (
           <TitleH3 className="title">
-            31
-            <sup>st</sup>
+            The 42
+            <sup>nd</sup>
             {' '}
-            Annual meeting of ThPRS & ThSAPS
+            ICS WORLD CONGRESS
+            <h4>in conjunction with</h4>
+            17
+            <sup>th</sup>
+            {' '}
+            APALMS-ISLSM Congress 2021
           </TitleH3>
         )
       }
       {isShowBack && <BackButton style={backStyle} onClick={() => router.back()}>BACK</BackButton>}
-      {children}
+      <Content>
+        {children}
+      </Content>
+      <Footer />
     </MobileContainer>
   )
 }

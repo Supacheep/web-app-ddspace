@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { PATTERN_EMAIL } from '../constants/validateValue'
 import { TitleH3 } from './common'
+import { colors } from '../configs/color'
 
 const Container = styled.div`
   text-align: center;
@@ -19,6 +20,9 @@ const LoginButton = styled(Button)`
   height: 40px;
   padding: 0 30px;
   font-size: 18px;
+  background: ${colors.themeGradient};
+  border-color: transparent;
+  color: ${colors.themeColor};
 `
 
 const LogoContainer = styled.div`
@@ -30,7 +34,7 @@ const LogoContainer = styled.div`
 `
 
 const Logo = styled.img`
-  width: 15%;
+  width: 30%;
   margin: 10px;
 `
 
@@ -76,19 +80,26 @@ const ModalLogin = ({ visible, onFinish, error }) => {
       >
         <LogoContainer>
           <Logo
-            src="/images/LogoThPRS-01.svg"
-            alt="LogoThPRS"
+            src="/images/LOGOICS_.png"
+            alt="LogoICS"
+            style={{ marginTop: 16 }}
           />
           <Logo
-            src="/images/LogoThSAPS_whole.svg"
-            alt="LogoThPRS"
+            src="/images/LogoAPALMS-01.svg"
+            alt="LogoThAPALMS"
           />
         </LogoContainer>
         <TitleH3>
-          31
-          <sup>st</sup>
+          The 42
+          <sup>nd</sup>
           {' '}
-          Annual meeting of ThPRS & ThSAPS
+          ICS WORLD CONGRESS
+          in conjunction with
+          17
+          <sup>th</sup>
+          {' '}
+          APALMS-ISLSM Congress
+          2021
         </TitleH3>
         <Form.Item
           name="email"
