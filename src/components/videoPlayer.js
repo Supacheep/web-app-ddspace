@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { Modal } from 'antd'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import axios from 'axios'
 import { colors } from '../configs/color'
 
 const CustomModal = styled(Modal)`
@@ -54,38 +53,6 @@ const VideoPlayer = ({ src, visible, onCancel }) => {
     window.addEventListener('contextmenu', handleEvent)
     return () => window.removeEventListener('contextmenu', handleEvent)
   }, [])
-
-  // useEffect(() => {
-  //   const mimeCodec = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"'
-  //   if (videoRef.current && MediaSource.isTypeSupported(mimeCodec)) {
-  //     const myMediaSource = new MediaSource()
-  //     const url = URL.createObjectURL(myMediaSource)
-
-  //     videoRef.current.src = url
-
-  //     myMediaSource.addEventListener('sourceopen', () => {
-  //       const videoSourceBuffer = myMediaSource.addSourceBuffer(mimeCodec)
-
-  //       videoSourceBuffer.addEventListener('error', console.log)
-
-  //       // this is just an express route that return an mp4 file using `res.sendFile`
-  //       fetch('http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4').then((response) => response.arrayBuffer()).then((videoData) => {
-  //         videoSourceBuffer.appendBuffer(videoData)
-  //       })
-  //     })
-  //   }
-  // }, [])
-
-  // const [source, setSource] = useState(null)
-  // useEffect(async () => {
-  //   const video = document.getElementById('vid')
-  //   fetch(src)
-  //     .then((response) => response.arrayBuffer()).then((videoData) => {
-  //       const blob = new Blob([new Uint8Array(videoData)], { type: 'video/mp4' })
-  //       const url = URL.createObjectURL(blob)
-  //       video.src = url
-  //     })
-  // }, [])
 
   return (
     <CustomModal
