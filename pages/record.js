@@ -196,7 +196,7 @@ const data = [
       ],
     },
     {
-      title: 'Thursday, 29 OCTOBER 2021',
+      title: 'Friday, 29 OCTOBER 2021',
       titleColor: '#5A9CD6',
       lists: [
         {
@@ -277,7 +277,7 @@ const data = [
       ],
     },
     {
-      title: 'Thursday, 29 OCTOBER 2021',
+      title: 'Friday, 29 OCTOBER 2021',
       titleColor: '#5A9CD6',
       lists: [
         {
