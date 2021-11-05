@@ -141,13 +141,13 @@ const data = [
           video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY1/14-00_15-00+Annual+General+Meeting.mp4',
         },
         {
-          topic: 'S1 Burn',
+          topic: 'S1: Burn',
           // eslint-disable-next-line max-len
           description: '- The Recent Update in Burn Resuscitation\nTanasit Kangkorn, MD\n- Novel Imaging for Prediction of Burn Depth\nBowornsilp Chowchuen, MD\n- What Do We Need to Know about Sepsis in Burns?\nSuparerk Laohapitakworn, MD\n- Impact of Covid-19 in Burns. The Experience from Chulalongkorn Hospital\nApichai Angspatt, MD\n- Q&A 8 min\nModerator: Vichai Srimuninnimit, MD',
           video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY1/Watergate+Ballroom+B%26C/S1+Burn+(13+min).mp4',
         },
         {
-          topic: 'S3 Facial Rejuvenation',
+          topic: 'S3: Facial Rejuvenation',
           // eslint-disable-next-line max-len
           description: '- Surgical vs Non-Surgical Facelift\nKanit Wittayavanichai, MD\n- Doing Thread Lift: The Plastic Surgeon\'s Way\nApirag Chuangsuwanich, MD\n- Non-Invasive Lifting Modalities\nMarisa Pongprutthipan, MD\n-Deoxycholic Acid: Clinical Trial for Fat Contouring\nRuch Wongtrungkapun, MD\nModerator: Seree Iamphongsai, MD\n- The Evolution of Dorsal Augmentation with Super Fine Diced Cartilage\nSurawej Numhom, MD\n- Strategy for Septal Straightening\nMontien Lueprapai, MD\n- Open Rhinoplasty with Diced Cartilage, Pitfalls and Complications; My Experience\nSomboon Waiprib, MD\nModerator: Kidakorn Kiranantawat, MD',
           video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY1/Watergate+Ballroom+B%26C/S3+Facial+Rejuvenation.mp4',
@@ -181,17 +181,17 @@ const data = [
         {
           topic: 'Special Lecture2: Bottoming Out: Defining the Problem, Risk Factors & Correction (Supported by J&J)',
           description: 'Paul Harris,MD  (UK)',
-          video: '',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY2/Day2+-+Special+Lecture2+Bottoming+Out.mp4',
         },
         {
           topic: 'S9: CAS, CAD/CAM & 3D Technology',
           description: '- How to Start 3D Printing Lab for Medical Services and Education\nTanasit Kangkorn, MD\n- 3D Printing Surgical Planning for Reconstruction in Phramongkutklao Hospital\nNutthapong Wanichjaroen, MD\n- Computer Assisted Reconstructive Surgery Ramathibodi Experience\nKidakorn Kiranantawat, MD\nModerator: Kasama Nilprapha, MD',
-          video: '',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY2/+Watergate+Ballroom+B%26C/Day2+-+S9.mp4',
         },
         {
           topic: 'S11: Medicolegal Panel Discussion',
           description: '- Apirag Chuangsuwanich, MD\n- Sirachai Jindarak, MD\n- Anont Pitiseree, MD\n- Witoon Treesuntornrat, MD\nModerator: Charan Mahatumarat, MD',
-          video: '',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY2/+Watergate+Ballroom+B%26C/Day2+-+S11.mp4',
         },
       ],
     },
@@ -202,7 +202,7 @@ const data = [
         {
           topic: 'Plenary Lecture3: Hi-Definition Ultrasonography and Advance Imaging for Supermicrosurgery',
           description: 'Akitatsu Hayashi, MD (Japan)\nModerator: Chalermpong Chatdokmaiprai, MD',
-          video: '',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY3/Day3+-+Plenary+Lecture3.mp4',
         },
         {
           topic: 'S13: Breast Reconstruction',
@@ -257,7 +257,7 @@ const data = [
         {
           topic: 'S6: Hand Surgery',
           description: '- Management of Apert Hands: KKU Approach\nKengkart Winaikosol, MD (15 min)\n- Neurovascular Island Flap for Fingertip Reconstruction\nWichit Siritattamrong, MD (15 min)\n -Webspace Reconstruction\nNatcha Ariyaprakai, MD\nModerator: Pasu Promniyom, MD',
-          video: '',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY2/Watergate+Ballroom+A/Day2+-S6.mp4',
         },
         {
           topic: 'S8: The Best Reconstructive Surgery Award',
@@ -265,14 +265,14 @@ const data = [
           video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY2/Watergate+Ballroom+A/Day2+-+S8.mp4',
         },
         {
-          topic: 'S10 Reconstructive Microsurgery and Lymphatic Surgery II',
+          topic: 'S10: Reconstructive Microsurgery and Lymphatic Surgery II',
           description: '- Reconstructive Surgery: Fast and Furious\nPalakorn Surakunprapha, MD\n-MSAPS\nApiruk Wongsoasup, MD\n- Heel Reconstruction\nPuttan Wongtriratanachai, MD\n- Microsurgical Techniques for the Different Situations of Lower Limb Reconstructions\nKengkart Winaikosol, MD\nModerator: Sitthichoke Taweepraditpol, MD ',
           video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY2/Watergate+Ballroom+A/Day2+-+S10.mp4',
         },
         {
           topic: 'S12: Special Lecture',
           description: '- Personal Data Protection Act (PDPA)\nPassakorn Sawatdirak, MD\nModerator: Wimon Sirimaharaj, MD',
-          video: '',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY2/Watergate+Ballroom+A/Day2+-+S12.mp4',
         },
       ],
     },
