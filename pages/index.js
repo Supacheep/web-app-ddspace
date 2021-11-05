@@ -13,6 +13,7 @@ import {
 } from '../src/components'
 import useCalculateSize from '../src/libs/useCalculateSize'
 import { FullImageWrapper } from '../src/components/common'
+import { colors } from '../src/configs/color'
 
 const Container = styled.div`
   position: relative;
@@ -159,15 +160,57 @@ Desktop.defaultProps = {
 }
 
 const ButtonContainer = styled.div`
-  display: grid;
-  grid-template-columns: auto auto;
-  padding: 15px;
+  display: flex;
+  flex-flow: column;
+  width: 90%;
   max-width: 570px;
   margin: 20px auto;
+  background: white;
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.3)
+  );
+  backdrop-filter: blur(2rem);
+  padding: 15px;
+  border-radius: 10px;
+`
 
-  .img-btn {
-    width: 95%;
-    border-radius: 10px;
+const Button = styled.div`
+  text-align: center;
+  color: ${colors.white};
+  background-color: ${colors.themeColor};
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 20px
+`
+
+const SmallButton = styled.a`
+  text-align: center;
+  color: ${colors.themeColor};
+  border: 3px solid ${colors.themeColor};
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 16px;
+  white-space: pre-wrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  width: 100%;
+  font-weight: bold;
+  @media screen and (max-width: 345px) {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+`
+
+const FlexContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  @media screen and (max-width: 345px) {
+    display: block;
   }
 `
 
@@ -181,24 +224,26 @@ const Mobile = ({ scrollPosition }) => (
       />
     </div>
     <ButtonContainer>
-      <Link href={{ pathname: '/conference' }}>
-        <div style={{ textAlign: 'left' }}>
-          <ButtonImg
-            className="img-btn"
-            src="/images/conference_btn.svg"
-            alt="conference_btn"
-          />
-        </div>
-      </Link>
       <Link href={{ pathname: '/exhibition' }}>
-        <div style={{ textAlign: 'right' }}>
-          <ButtonImg
-            className="img-btn"
-            src="/images/exhibition_btn.svg"
-            alt="exhibition_btn"
-          />
-        </div>
+        <Button>
+          EXHIBITION HALL
+        </Button>
       </Link>
+    </ButtonContainer>
+    <ButtonContainer>
+      <Link href={{ pathname: '/conference' }}>
+        <Button>
+          CONFERENCE HALL
+        </Button>
+      </Link>
+      <FlexContainer>
+        <SmallButton style={{ marginRight: 5 }} href="https://www.google.co.th/" target="_blank" rel="noopener noreferrer">
+          E-Poster
+        </SmallButton>
+        <SmallButton style={{ marginLeft: 5 }} href="https://www.google.co.th/" target="_blank" rel="noopener noreferrer">
+          {'E-Program &\nAbstract Book'}
+        </SmallButton>
+      </FlexContainer>
     </ButtonContainer>
   </MobileLayout>
 )

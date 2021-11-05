@@ -36,15 +36,31 @@ const CardContainer = styled.div`
   background-color: ${colors.white};
   border-radius: 10px;
   display: flex;
-  align-items: center;
-  margin: 5px 0;
+  margin: 5px auto;
   transition: transform .2s;
   cursor: pointer;
-  height: 50px;
   overflow: hidden;
   transition: transform .2s;
   -webkit-animation: fadeIn 1s;
   animation: fadeIn 1s;
+  border-radius: 50%;
+  ${(props) => (props.isSmall
+    ? `
+      height: 90px;
+      width: 90px;
+    `
+    : `
+      height: 125px;
+      width: 125px;
+    `
+  )}
+  align-items: center;
+  justify-content: center;
+  border: 1px solid ${colors.themeColor};
+
+  box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
+  -webkit-box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
+  -moz-box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
 
   :hover {
     transform: scale(1.05);
@@ -61,8 +77,8 @@ const CardContainer = styled.div`
 `
 
 const Logo = styled(LazyLoadImage)`
-  max-width: 20%;
-  max-height: 80%;
+  width: 55%;
+  height: auto;
   margin: 0.5em 0.8em;
 `
 
@@ -79,15 +95,15 @@ const CompanyName = styled.div`
 `
 
 const CompanyCard = ({
-  id, name, logo, style,
+  id, name, logo, style, type,
 }) => (
   <Link href={{ pathname: `/booth/${id}` }}>
-    <CardContainer style={style}>
+    <CardContainer style={style} isSmall={type === 'Standard'}>
       <Logo
         src={logo || '/images/exbition/logoMock.svg'}
         alt="company-logo"
       />
-      <CompanyName>{name}</CompanyName>
+      {/* <CompanyName>{name}</CompanyName> */}
     </CardContainer>
   </Link>
 )
@@ -97,10 +113,12 @@ CompanyCard.propTypes = {
   name: PropTypes.string.isRequired,
   logo: PropTypes.string.isRequired,
   style: PropTypes.shape({}),
+  type: PropTypes.string,
 }
 
 CompanyCard.defaultProps = {
   style: {},
+  type: '',
 }
 
 const Desktop = ({ booths, scrollPosition }) => {
@@ -212,17 +230,9 @@ const Desktop = ({ booths, scrollPosition }) => {
       ...getPosition({ ...basePosition, topValue: 18.8 }),
       left: '57.5%',
     },
-    // {
-    //   ...getPosition({ ...basePosition, topValue: 18.8 }),
-    //   left: '70.5%',
-    // },
   ]
 
   const m1stRowPosition = [
-    // {
-    //   ...getPosition({ ...basePosition, topValue: 54.8 }),
-    //   left: '4.5%',
-    // },
     {
       ...getPosition({ ...basePosition, topValue: 54.8 }),
       left: '24.5%',
@@ -259,11 +269,11 @@ const Desktop = ({ booths, scrollPosition }) => {
   }
 
   return (
-    <div className={styles.container} style={{ paddingTop: '60px' }}>
-      <FullImageWrapper customStyle="align-items: flex-start;">
+    <div className={styles.container}>
+      <FullImageWrapper>
         <Container ref={containerRef}>
           <Image
-            src="https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/ExhitionHall/PicExhitionHall.jpg"
+            src="https://icsmeeting.s3.ap-southeast-1.amazonaws.com/Exhition/ExhitionHallPre.jpg"
             alt="exhibition-bg"
             afterLoad={onResize}
             scrollPosition={scrollPosition}
@@ -395,39 +405,81 @@ Desktop.defaultProps = {
   booths: [],
 }
 
-const Badge = styled.img`
-  width: 5em;
-`
-
 const Content = styled.div`
   margin: 20px;
 `
 
 const CompanyListContainer = styled.div`
   display: grid;
-  grid-template-columns: 50% 50%;
+  ${(props) => (props.isStandard ? 'grid-template-columns: auto auto auto;' : 'grid-template-columns: auto auto;')}
   margin: 5px 0;
   margin-bottom: 20px;
 `
 
-const Mobile = ({ scrollPosition, booths, isLoading }) => (
-  <MobileLayout isShowTitle>
-    <Image
-      src="https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/ExhitionHall/PicExhitionHall.jpg"
-      alt="lobby-bg"
-      scrollPosition={scrollPosition}
-    />
-    <Content>
-      {
-        ['Gold', 'Standard'].map((type) => (
+const Title = styled.h3`
+  color: ${colors.themeColor};
+  font-size: 20px;
+`
+
+const Mobile = ({
+  scrollPosition,
+  // booths,
+  isLoading,
+}) => {
+  const booths = [
+    {
+      id: 1,
+      bootType: 'Silver',
+      name: 'test company',
+      logo: '/images/exbition/logoMock.svg',
+    },
+    {
+      id: 2,
+      bootType: 'Silver',
+      name: 'test company',
+      logo: '/images/exbition/logoMock.svg',
+    },
+    {
+      id: 3,
+      bootType: 'Standard',
+      name: 'test company',
+      logo: '/images/exbition/logoMock.svg',
+    },
+    {
+      id: 4,
+      bootType: 'Standard',
+      name: 'test company',
+      logo: '/images/exbition/logoMock.svg',
+    },
+    {
+      id: 5,
+      bootType: 'Standard',
+      name: 'test company',
+      logo: '/images/exbition/logoMock.svg',
+    },
+    {
+      id: 6,
+      bootType: 'Standard',
+      name: 'test company',
+      logo: '/images/exbition/logoMock.svg',
+    },
+  ]
+  return (
+    <MobileLayout isShowTitle>
+      <Image
+        src="https://icsmeeting.s3.ap-southeast-1.amazonaws.com/Exhition/ExhitionHallPre.jpg"
+        alt="lobby-bg"
+        scrollPosition={scrollPosition}
+      />
+      <Content>
+        {
+        ['Silver', 'Standard'].map((type) => (
           isLoading
             ? (<Skeleton key={type} active />)
             : (
               <div key={type}>
-                <Badge
-                  src={`/images/exbition/${type}.svg`}
-                />
-                <CompanyListContainer>
+                <Title>{`${type} Sponsor`}</Title>
+                <CompanyListContainer isStandard={type === 'Standard'}>
                   {
                   booths.filter((booth) => booth?.bootType === type).map((item, index) => (
                     <CompanyCard
@@ -435,13 +487,14 @@ const Mobile = ({ scrollPosition, booths, isLoading }) => (
                       id={item.id}
                       name={item.name}
                       logo={item.logo}
-                      style={{
-                        ...index % 2 ? {
-                          marginLeft: 5,
-                        } : {
-                          marginRight: 5,
-                        },
-                      }}
+                      type={type}
+                      // style={{
+                      //   ...index % 2 ? {
+                      //     marginLeft: 5,
+                      //   } : {
+                      //     marginRight: 5,
+                      //   },
+                      // }}
                     />
                   ))
                 }
@@ -450,9 +503,10 @@ const Mobile = ({ scrollPosition, booths, isLoading }) => (
             )
         ))
       }
-    </Content>
-  </MobileLayout>
-)
+      </Content>
+    </MobileLayout>
+  )
+}
 
 Mobile.propTypes = {
   scrollPosition: PropTypes.shape({}),
