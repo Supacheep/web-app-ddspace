@@ -80,11 +80,6 @@ const Content = styled.div`
   }
 `
 
-const ContentTitle = styled.h3`
-  white-space: nowrap;
-  margin: 0;
-`
-
 const ContentTopic = styled.h3`
   margin: 0;
 `
@@ -154,7 +149,7 @@ const data = [
         {
           topic: 'S3 Facial Rejuvenation',
           // eslint-disable-next-line max-len
-          description: '- Surgical vs Non-Surgical Facelift\nKanit Wittayavanichai, MD\n- Doing Thread Lift: The Plastic Surgeon\'s Way\nApirag Chuangsuwanich, MD\n- Non-Invasive Lifting Modalities\nMarisa Pongprutthipan, MD\n-Deoxycholic Acid: Clinical Trial for Fat Contouring\nRuch Wongtrungkapun, MD\nModerator: Seree Iamphongsai, MD\n- The Evolution of Dorsal Augmentation with Super Fine Diced Cartilage\nSurawej Numhom, MD\n- Strategy for Septal Straightening\nMontien Lueprapai, MD\n-Open Rhinoplasty with Diced Cartilage, Pitfalls and Complications; My Experience\nSomboon Waiprib, MD\nModerator: Kidakorn Kiranantawat, MD',
+          description: '- Surgical vs Non-Surgical Facelift\nKanit Wittayavanichai, MD\n- Doing Thread Lift: The Plastic Surgeon\'s Way\nApirag Chuangsuwanich, MD\n- Non-Invasive Lifting Modalities\nMarisa Pongprutthipan, MD\n-Deoxycholic Acid: Clinical Trial for Fat Contouring\nRuch Wongtrungkapun, MD\nModerator: Seree Iamphongsai, MD\n- The Evolution of Dorsal Augmentation with Super Fine Diced Cartilage\nSurawej Numhom, MD\n- Strategy for Septal Straightening\nMontien Lueprapai, MD\n- Open Rhinoplasty with Diced Cartilage, Pitfalls and Complications; My Experience\nSomboon Waiprib, MD\nModerator: Kidakorn Kiranantawat, MD',
           video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY1/Watergate+Ballroom+B%26C/S3+Facial+Rejuvenation.mp4',
         },
       ],
@@ -164,12 +159,39 @@ const data = [
       titleColor: '#C45911',
       lists: [
         {
-          description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Suradej.mp4',
+          topic: 'Plenary Lecture2: Tips and Tricks for Better Rhinoplasty Results',
+          description: 'Man Koon Suh, MD (South Korea)\nModerator: Apichai Angspatt, MD',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY2/Day2+-+Plenary+Lecture2+Tips.mp4',
         },
         {
-          description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Suradej.mp4',
+          topic: 'S5: Reconstructive Microsurgery and Lymphatic Surgery I',
+          description: '- Facial Paralysis Clinic, the Past, Present, and Future\nSupasid Jirawatnotai, MD\n- Applying the Low-Cost Augmented Reality in Microsurgery\nNattcha Yodrabum, MD\n- Propeller Flap\nWarangkana Tonaree, MD\nModerator: Kidakorn Kiranantawat, MD',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY2/+Watergate+Ballroom+B%26C/Day2+-+S5.mp4',
+        },
+        {
+          topic: 'S7: Orthognathic Surgery, Facial Contouring',
+          description: '- Malar Reduction\nSuthat Koonnawarote, MD\n- Mandibular Angle Reduction\nSuthat Koonnawarote, MD\n- Genioplasty\nSurakit Visuttiwattanakorn, MD\n- Gonioplasty\nSurakit Visuttiwattanakorn, MD \n- Supraperiosteum Chin Augmentation\n(Personal Technique)\nChanchai Sajjaissariyawut, MD\nModerator: Seree Iamphongsai, MD ',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY2/+Watergate+Ballroom+B%26C/Day2+-+S7.mp4',
+        },
+        {
+          topic: 'Support Sym2: Structured Approach in Breast Implant Selection: Evidence Based & Surgical Experience ',
+          description: 'Paul Harris,MD  (UK)   (Supported by J&J)\nModerator: Visnu Lohsiriwat, MD',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY2/Day+2+-+Support+Sym2.mp4',
+        },
+        {
+          topic: 'Special Lecture2: Bottoming Out: Defining the Problem, Risk Factors & Correction (Supported by J&J)',
+          description: 'Paul Harris,MD  (UK)',
+          video: '',
+        },
+        {
+          topic: 'S9: CAS, CAD/CAM & 3D Technology',
+          description: '- How to Start 3D Printing Lab for Medical Services and Education\nTanasit Kangkorn, MD\n- 3D Printing Surgical Planning for Reconstruction in Phramongkutklao Hospital\nNutthapong Wanichjaroen, MD\n- Computer Assisted Reconstructive Surgery Ramathibodi Experience\nKidakorn Kiranantawat, MD\nModerator: Kasama Nilprapha, MD',
+          video: '',
+        },
+        {
+          topic: 'S11: Medicolegal Panel Discussion',
+          description: '- Apirag Chuangsuwanich, MD\n- Sirachai Jindarak, MD\n- Anont Pitiseree, MD\n- Witoon Treesuntornrat, MD\nModerator: Charan Mahatumarat, MD',
+          video: '',
         },
       ],
     },
@@ -178,8 +200,33 @@ const data = [
       titleColor: '#5A9CD6',
       lists: [
         {
-          description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Suradej.mp4',
+          topic: 'Plenary Lecture3: Hi-Definition Ultrasonography and Advance Imaging for Supermicrosurgery',
+          description: 'Akitatsu Hayashi, MD (Japan)\nModerator: Chalermpong Chatdokmaiprai, MD',
+          video: '',
+        },
+        {
+          topic: 'S13: Breast Reconstruction',
+          description: '- Implant challenge: Biologic ADM vs Synthetic Mesh?\nVisnu Lohsiriwat, MD\n- Partial Breast Reconstruction\nVisnu Lohsiriwat, MD\n- Microsurgical Breast Reconstruction\nKidakorn Kiranantawat, MD\nModerator: Pornthep Sirimahachaiyakul, MD',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY3/Watergate+Ballroom+B%26C/Day3+-+S13.mp4',
+        },
+        {
+          topic: 'S14: High-definition Liposuction',
+          description: '- High Def Liposuction\nParinya Yanpisitkul, MD\n- High Def Liposuction\nRonachai Komthong, MD\n- Body Tite Liposculpture\nSurinnart Charoenchitt, MD\n- Non-Invasive Body Contouring Modalities\nRungsima Wanitphakdeedecha, MD\nModerator: Seree Iamphongsai, MD',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY3/Watergate+Ballroom+B%26C/Day3+-+S14.mp4',
+        },
+        {
+          topic: 'Support Sym3: New Trend : Enhancing Surgery Care with New Post Surgical Silicone Dressing',
+          description: 'Visnu Lohsiriwat, MD,  Warangkana Tonaree, MD. (Supported by Molnlycke)',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY3/Day+3+Support+Sym3+New+Trend.mp4',
+        },
+        {
+          topic: 'S16: Difficult Blepharoplasty',
+          description: 'Wimon Sirimaharaj, MD\nSorawuth Chu-Ongsakul, MD\nKamol Wattanakrai, MD\nModerator: Poonpissamai Suwajo, MD',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY3/Watergate+Ballroom+B%26C/Day3+-+S16.mp4',
+        },
+        {
+          topic: 'Closing + Farewell Break',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY3/Day3+-+Closing.mp4',
         },
       ],
     },
@@ -198,7 +245,7 @@ const data = [
         {
           topic: 'S4: Rhinoplasty',
           // eslint-disable-next-line max-len
-          description: '- The Evolution of Dorsal Augmentation with Super Fine Diced Cartilage\nSurawej Numhom, MD\n- Strategy for Septal Straightening\nMontien Lueprapai, MD\n-Open Rhinoplasty with Diced Cartilage, Pitfalls and Complications; My Experience\nSomboon Waiprib, MD\nModerator: Kidakorn Kiranantawat, MD',
+          description: '- The Evolution of Dorsal Augmentation with Super Fine Diced Cartilage\nSurawej Numhom, MD\n- Strategy for Septal Straightening\nMontien Lueprapai, MD\n- Open Rhinoplasty with Diced Cartilage, Pitfalls and Complications; My Experience\nSomboon Waiprib, MD\nModerator: Kidakorn Kiranantawat, MD',
           video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY1/Watergate+Ballroom+A/S4+Rhinoplasty.mp4',
         },
       ],
@@ -208,8 +255,24 @@ const data = [
       titleColor: '#C45911',
       lists: [
         {
-          description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Suradej.mp4',
+          topic: 'S6: Hand Surgery',
+          description: '- Management of Apert Hands: KKU Approach\nKengkart Winaikosol, MD (15 min)\n- Neurovascular Island Flap for Fingertip Reconstruction\nWichit Siritattamrong, MD (15 min)\n -Webspace Reconstruction\nNatcha Ariyaprakai, MD\nModerator: Pasu Promniyom, MD',
+          video: '',
+        },
+        {
+          topic: 'S8: The Best Reconstructive Surgery Award',
+          description: 'Best Creative Case:\nSurgical Management of a Patient with Severe and Complex Maxillofacial Injuries Caused by a Bear Mauling in the Forest; A Case Report from Thailand\nNutthawut Akaranuchat, MD\nBest Innovative Case:\nMirror LVA: Applying the of Low-cost Augmented Reality in Microsurgery\nNutcha Yodrabum, MD\nBest Practical Case:\nLiposuction + Skin Reduction in Upper Limb Lymphedema\nThanyanan Panich, MD\nBest Young Surgeon Case:\nWrist Amputation\nWorawat Kaewwichian, MD\nModerator: Palakorn Surakunprapha, MD ',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY2/Watergate+Ballroom+A/Day2+-+S8.mp4',
+        },
+        {
+          topic: 'S10 Reconstructive Microsurgery and Lymphatic Surgery II',
+          description: '- Reconstructive Surgery: Fast and Furious\nPalakorn Surakunprapha, MD\n-MSAPS\nApiruk Wongsoasup, MD\n- Heel Reconstruction\nPuttan Wongtriratanachai, MD\n- Microsurgical Techniques for the Different Situations of Lower Limb Reconstructions\nKengkart Winaikosol, MD\nModerator: Sitthichoke Taweepraditpol, MD ',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY2/Watergate+Ballroom+A/Day2+-+S10.mp4',
+        },
+        {
+          topic: 'S12: Special Lecture',
+          description: '- Personal Data Protection Act (PDPA)\nPassakorn Sawatdirak, MD\nModerator: Wimon Sirimaharaj, MD',
+          video: '',
         },
       ],
     },
@@ -218,8 +281,14 @@ const data = [
       titleColor: '#5A9CD6',
       lists: [
         {
-          description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Suradej.mp4',
+          topic: 'How I do It',
+          description: '(10.00-10.10) Indocyanine-Green Fluorescence Angiography of the Transverse Cervical Arterial Supply to Clavicle Flaps: An Anatomical Study\nPapat Sriswadpong, MD\n(10.10-10.20) Microsurgery in a Regional Hospital: How to Survive\nKanda  Chetthasombat, MD\n(10.20-10.30) Unplanned Sarcoma; Decision Making and Management\nPhonlawat Trakunngoenthai, MD\n(10.30-10.40) Anterior Nasal Packing for Traumatic Epistaxis in Sawanpracharak Hospital\nAnurak Amornpetchsathaporn, MD\n(10.40-10.50)  Medical Reduction for Anterior Dislocation of TMJ\nAnurak Amornpetchsathaporn, MD\n(10.50-11.00) Surgery of Condylar Neck and Subcondyle Fracture\nChanchai Sajjaissariyawut, MD\nModerator: Palakorn Surakunprapha, MD ',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY3/Watergate+Ballroom+A/Day+3+How+I+do+It.mp4',
+        },
+        {
+          topic: 'S17: Aesthetic Breast',
+          description: '- Clinical Evidence of Breast Foreign Body and Fat Injection Complications\nVisnu Lohsiriwat, MD\n- From Unequal to Equal Breast Augmentation: How to Approach\nChatchai Pruksapong, MD\n- How to do Mastectomy when You Passed the 1000th Case\nChokchai Amornsawadwattana, MD\nModerator: Sukit Worathamrong, MD',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY3/Watergate+Ballroom+A/DAY+3+-+S17+Aesthetic+Breast.mp4',
         },
       ],
     },
@@ -256,15 +325,19 @@ const Record = () => {
                     </Content>
                   </div>
                   <ButtonContainer>
-                    <Button
-                      type="primary"
-                      onClick={() => {
-                        setVideo(list.video)
-                        setVisible(true)
-                      }}
-                    >
-                      Watching
-                    </Button>
+                    {
+                      list.video && (
+                        <Button
+                          type="primary"
+                          onClick={() => {
+                            setVideo(list.video)
+                            setVisible(true)
+                          }}
+                        >
+                          Watch
+                        </Button>
+                      )
+                    }
                   </ButtonContainer>
                 </ListItem>
               )}
