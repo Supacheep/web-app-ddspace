@@ -35,7 +35,7 @@ const Container = styled.div`
     display: none;
   }
 
-  .ant-tabs-tab-active  {
+  .ant-tabs-tab-active {
     opacity: 1;
   }
 `
@@ -176,7 +176,7 @@ const data = [
         {
           topic: 'Support Sym2: Structured Approach in Breast Implant Selection: Evidence Based & Surgical Experience ',
           description: 'Paul Harris,MD  (UK)   (Supported by J&J)\nModerator: Visnu Lohsiriwat, MD',
-          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY2/Day+2+-+Support+Sym2.mp4',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY2/Day2+-+Support+Sym2++Structured+Approach+in+Breast+Implant+Selection.mp4',
         },
         {
           topic: 'Special Lecture2: Bottoming Out: Defining the Problem, Risk Factors & Correction (Supported by J&J)',
@@ -202,7 +202,7 @@ const data = [
         {
           topic: 'Plenary Lecture3: Hi-Definition Ultrasonography and Advance Imaging for Supermicrosurgery',
           description: 'Akitatsu Hayashi, MD (Japan)\nModerator: Chalermpong Chatdokmaiprai, MD',
-          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY3/Day3+-+Plenary+Lecture3.mp4',
+          video: 'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/Recordthprsmeeting/DAY3/Plenary+Lecture3Akitatsu+Hayashi.mp4',
         },
         {
           topic: 'S13: Breast Reconstruction',
@@ -329,6 +329,7 @@ const Record = () => {
                       list.video && (
                         <Button
                           type="primary"
+                          size="large"
                           onClick={() => {
                             setVideo(list.video)
                             setVisible(true)
