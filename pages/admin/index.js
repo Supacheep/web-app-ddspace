@@ -30,7 +30,7 @@ const Container = styled.div`
 `
 
 const Header = styled.div`
-  background-color: ${colors.themeGradient};
+  background: ${colors.themeGradient};
   display: flex;
   align-items: center;
 `
@@ -278,10 +278,16 @@ const Admin = () => {
           />
         </LogoContainer>
         <Title style={{ color: colors.themeColor }}>
-          31
-          <sup>st</sup>
+          The 42
+          <sup>nd</sup>
           {' '}
-          Annual meeting of ThPRS & ThSAPS
+          ICS WORLD CONGRESS
+          in conjunction with
+          17
+          <sup>th</sup>
+          {' '}
+          APALMS-ISLSM Congress
+          2021
         </Title>
       </Header>
       <Content>

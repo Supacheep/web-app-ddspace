@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import Link from 'next/link'
 import PropTypes from 'prop-types'
 import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-component'
+import { ArrowRightOutlined } from '@ant-design/icons'
 import styles from '../styles/Home.module.css'
 import userContext from '../src/context/userContext'
 import {
@@ -183,7 +184,10 @@ const Button = styled.div`
   padding: 12px;
   border-radius: 10px;
   font-weight: bold;
-  font-size: 20px
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `
 
 const SmallButton = styled.a`
@@ -227,6 +231,8 @@ const Mobile = ({ scrollPosition }) => (
       <Link href={{ pathname: '/exhibition' }}>
         <Button>
           EXHIBITION HALL
+          {' '}
+          <ArrowRightOutlined />
         </Button>
       </Link>
     </ButtonContainer>
@@ -234,6 +240,8 @@ const Mobile = ({ scrollPosition }) => (
       <Link href={{ pathname: '/conference' }}>
         <Button>
           CONFERENCE HALL
+          {' '}
+          <ArrowRightOutlined />
         </Button>
       </Link>
       <FlexContainer>
