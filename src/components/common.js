@@ -19,7 +19,7 @@ export const TitleH3 = styled.h3`
     margin: 5px 0;
   }
   @media screen and (max-width: ${MOBILE_WINDOW_WIDTH}px) {
-    font-size: 16px;
+    font-size: 18px;
   }
 `
 

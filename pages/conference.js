@@ -58,6 +58,7 @@ const ButtonBox = styled.div`
   position: absolute;
   cursor: pointer;
   overflow: hidden;
+  background-color: #171615;
 `
 
 const A = styled.a`
@@ -99,7 +100,7 @@ const Desktop = ({
       <FullImageWrapper>
         <Container ref={containerRef}>
           <Image
-            src="https://icsmeeting.s3.ap-southeast-1.amazonaws.com/conference/pageConferceFinal2.jpg"
+            src="https://icsmeeting.s3.ap-southeast-1.amazonaws.com/conference/pageConferceFinal.jpg"
             alt="conference-bg"
             afterLoad={onResize}
             scrollPosition={scrollPosition}
@@ -156,7 +157,7 @@ const Desktop = ({
             style={{
               ...getPosition({
                 topValue: 27.8,
-                heightValue: 7.3,
+                heightValue: 6.5,
                 width: '18.7%',
               }),
               right: '5.1%',
@@ -179,7 +180,7 @@ const Desktop = ({
             style={{
               ...getPosition({
                 topValue: 38,
-                heightValue: 7.3,
+                heightValue: 6.5,
                 width: '18.7%',
               }),
               right: '5%',
@@ -202,7 +203,7 @@ const Desktop = ({
             style={{
               ...getPosition({
                 topValue: 48.5,
-                heightValue: 7.3,
+                heightValue: 6.5,
                 width: '18.7%',
               }),
               right: '5%',
@@ -225,7 +226,7 @@ const Desktop = ({
             style={{
               ...getPosition({
                 topValue: 58.5,
-                heightValue: 7.3,
+                heightValue: 6.5,
                 width: '18.7%',
               }),
               right: '5%',
@@ -248,7 +249,7 @@ const Desktop = ({
             style={{
               ...getPosition({
                 topValue: 68.5,
-                heightValue: 7.3,
+                heightValue: 6.5,
                 width: '18.7%',
               }),
               right: '5%',
@@ -324,20 +325,26 @@ const ButtonContainer = styled.div`
   margin: 20px auto;
   @media screen and (max-width: 345px) {
     grid-template-columns: auto;
+    .mobile-button {
+      grid-column: 1 !important;
+      width: 100% !important;
+    }
   }
 `
 
 const MobileButton = styled.a`
   border-radius: 10px;
-  background-color: ${colors.white};
-  display: flex;
-  align-items: center;
-  padding: 5px 10px;
+  background-color: ${colors.themeColor};
+  padding: 5px;
+  text-align: center;
+  margin: 5px;
+
   ${(props) => (props.disabled ? 'pointer-events: none;' : '')}
   h3 {
     margin: 0;
-    margin-left: 10px;
     line-height: normal;
+    color: ${colors.white};
+    font-size: 20px;
   }
   :hover {
     opacity: 0.8;
@@ -347,42 +354,49 @@ const MobileButton = styled.a`
   }
 `
 
-const ConferenceLogo = styled.img`
-  width: 20%;
-`
+const roomName = [
+  'Chamchuri 1',
+  'Chamchuri 2',
+  'Pandan 2',
+  'Galangal',
+  'Ginger',
+]
 
 const Mobile = ({
   scrollPosition, data, isLoading, userData, imageData,
 }) => (
   <MobileLayout isShowTitle>
     <Image
-      src="https://icsmeeting.s3.ap-southeast-1.amazonaws.com/conference/pageConferceFinal2.jpg"
+      src="https://icsmeeting.s3.ap-southeast-1.amazonaws.com/conference/pageConferceFinal.jpg"
       alt="conference-bg"
       scrollPosition={scrollPosition}
     />
     <ButtonContainer>
-      <MobileButton
-        style={{ marginRight: '5px' }}
-        target="_blank"
-        href={`${data?.[0]?.zoomLink}`}
-        rel="noopener noreferrer"
-        disabled={isLoading}
-        onClick={() => logConference(data?.[0]?.id, userData?.userToken)}
-      >
-        <ConferenceLogo src="/images/conference/BTNConferenc.svg" />
-        <h3>CONFERENCE HALL 1</h3>
-      </MobileButton>
-      <MobileButton
-        style={{ marginLeft: '5px' }}
-        target="_blank"
-        href={`${data?.[1]?.zoomLink}`}
-        rel="noopener noreferrer"
-        disabled={isLoading}
-        onClick={() => logConference(data?.[1]?.id, userData?.userToken)}
-      >
-        <ConferenceLogo src="/images/conference/BTNConferenc.svg" />
-        <h3>CONFERENCE HALL 2</h3>
-      </MobileButton>
+      {
+        roomName.map((name, index) => (
+          <MobileButton
+            key={name}
+            target="_blank"
+            href={`${data?.[index]?.zoomLink}`}
+            onClick={() => logConference(data?.[index]?.id, userData?.userToken)}
+            rel="noopener noreferrer"
+            disabled={isLoading}
+            className="mobile-button"
+            style={
+              roomName.length % 2 !== 0 && (index + 1) === roomName.length
+                ? {
+                  gridColumn: '1 / span 2',
+                  width: '50%',
+                  margin: '5px auto',
+                }
+                : {}
+            }
+          >
+            <h3>Room</h3>
+            <h3>{name}</h3>
+          </MobileButton>
+        ))
+      }
     </ButtonContainer>
     <H2>PROGRAM BOARD</H2>
     {

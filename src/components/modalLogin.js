@@ -94,7 +94,7 @@ const ModalLogin = ({ visible, onFinish, error }) => {
           <sup>nd</sup>
           {' '}
           ICS WORLD CONGRESS
-          in conjunction with
+          <h4 style={{ color: colors.themeColor }}>in conjunction with</h4>
           17
           <sup>th</sup>
           {' '}

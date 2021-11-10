@@ -8,6 +8,7 @@ const colors = {
   red: '#F44535',
   themeColor: '#402913',
   themeGradient: 'linear-gradient(220deg, #F3E283 0%, #F1B631 100%)',
+  lightYellow: '#F3E283',
   yellow: '#F1B631',
 }
 
