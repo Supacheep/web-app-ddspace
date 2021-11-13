@@ -1,4 +1,6 @@
-import { useEffect, useState, useMemo } from 'react'
+import {
+  useEffect, useState, useMemo, useContext,
+} from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
 import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-component'
@@ -11,6 +13,7 @@ import { API } from '../src/configs'
 import useCalculateSize from '../src/libs/useCalculateSize'
 import { FullImageWrapper } from '../src/components/common'
 import styles from '../styles/Home.module.css'
+import userContext from '../src/context/userContext'
 
 const Container = styled.div`
   position: relative;
@@ -63,22 +66,49 @@ const LinkBTN = styled.a`
   }
 `
 
+const logBooth = async (bootID, UserToken) => {
+  try {
+    if (bootID && UserToken) {
+      await axios.post(
+        `${API}/bootVisitor/createbootvisitor`,
+        { bootID },
+        {
+          headers: {
+            UserToken,
+          },
+        },
+      )
+    }
+  } catch (err) {
+    console.warn(err)
+  }
+}
+
 const CompanyCard = ({
-  logo, style, bootLink,
-}) => (
-  <LinkBTN href={bootLink} target="_blank" rel="noopener noreferrer">
-    <Logo
-      src={logo || '/images/exbition/logoMock.svg'}
-      alt="company-logo"
-      style={style}
-    />
-  </LinkBTN>
-)
+  logo, style, bootLink, id,
+}) => {
+  const user = useContext(userContext)
+  return (
+    <LinkBTN
+      href={bootLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={() => logBooth(id, user?.userToken)}
+    >
+      <Logo
+        src={logo || '/images/exbition/logoMock.svg'}
+        alt="company-logo"
+        style={style}
+      />
+    </LinkBTN>
+  )
+}
 
 CompanyCard.propTypes = {
   logo: PropTypes.string.isRequired,
   style: PropTypes.shape({}),
   bootLink: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 }
 
 CompanyCard.defaultProps = {
