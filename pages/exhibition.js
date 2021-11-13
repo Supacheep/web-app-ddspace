@@ -3,7 +3,6 @@ import axios from 'axios'
 import PropTypes from 'prop-types'
 import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-component'
 import styled from 'styled-components'
-import Link from 'next/link'
 import { Skeleton } from 'antd'
 import { useRouter } from 'next/router'
 import { MobileLayout } from '../src/components'
@@ -32,358 +31,220 @@ const Box = styled.div`
   cursor: pointer;
 `
 
-const CardContainer = styled.div`
-  background-color: ${colors.white};
-  border-radius: 10px;
+const Logo = styled(LazyLoadImage)`
+  width: 55%;
+  height: auto;
+  margin: 0.5em 0.8em;
+  margin: 5px auto;
+  border-radius: 50%;
+  box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
+  -webkit-box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
+  -moz-box-shadow: 7px 6px 26px -6px rgba(0,0,0,0.45);
+`
+
+const LinkBTN = styled.a`
   display: flex;
-  align-items: center;
-  margin: 5px 0;
-  transition: transform .2s;
-  cursor: pointer;
-  height: 50px;
-  overflow: hidden;
+  justify-content: center;
   transition: transform .2s;
   -webkit-animation: fadeIn 1s;
   animation: fadeIn 1s;
+  border-radius: 50%;
 
   :hover {
     transform: scale(1.05);
   }
-
   @-webkit-keyframes fadeIn {
     from { opacity: 0; }
       to { opacity: 1; }
   }
   @keyframes fadeIn {
-      from { opacity: 0; }
-        to { opacity: 1; }
+    from { opacity: 0; }
+      to { opacity: 1; }
   }
 `
 
-const Logo = styled(LazyLoadImage)`
-  max-width: 20%;
-  max-height: 80%;
-  margin: 0.5em 0.8em;
-`
-
-const CompanyName = styled.div`
-  font-weight: bold;
-  width: 100%;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  display: block;
-  word-wrap: break-word;
-  max-height: 3em;
-  line-height: 1.5em;
-  margin-right: 0.5em;
-`
-
 const CompanyCard = ({
-  id, name, logo, style,
+  logo, style, bootLink,
 }) => (
-  <Link href={{ pathname: `/booth/${id}` }}>
-    <CardContainer style={style}>
-      <Logo
-        src={logo || '/images/exbition/logoMock.svg'}
-        alt="company-logo"
-      />
-      <CompanyName>{name}</CompanyName>
-    </CardContainer>
-  </Link>
+  <LinkBTN href={bootLink} target="_blank" rel="noopener noreferrer">
+    <Logo
+      src={logo || '/images/exbition/logoMock.svg'}
+      alt="company-logo"
+      style={style}
+    />
+  </LinkBTN>
 )
 
 CompanyCard.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
   logo: PropTypes.string.isRequired,
   style: PropTypes.shape({}),
+  bootLink: PropTypes.string.isRequired,
 }
 
 CompanyCard.defaultProps = {
   style: {},
 }
 
-const Desktop = ({ booths, scrollPosition }) => {
+const ImageComponent = ({ booths, scrollPosition }) => {
   const [containerRef, getPosition, onResize] = useCalculateSize()
-  const specialNumber = [{ number: 5, fixedIndex: 2 }]
 
-  const boothS = useMemo(() => {
-    const specialPositionBooth = booths.filter((item) => item.subType === 'S' && specialNumber.map(({ number }) => number).includes(item.number))
-    const formatedBooth = booths.filter((item) => item.subType === 'S' && !specialNumber.map(({ number }) => number).includes(item.number))
-    specialPositionBooth.forEach((item) => {
-      const positon = specialNumber.find(({ number }) => number === item.number)
-      formatedBooth.splice(2, positon, item)
-    })
-    return formatedBooth
-  }, [booths])
+  const boothM = useMemo(() => booths.filter((item) => item.bootType === 'Standard'), [booths])
 
-  const boothM = useMemo(() => booths.filter((item) => item.subType === 'M'), [booths])
-
-  const boothL = useMemo(() => booths.filter((item) => item.subType === 'L'), [booths])
+  const boothL = useMemo(() => booths.filter((item) => item.bootType === 'Silver'), [booths])
 
   const basePosition = {
-    heightValue: 5.5,
-    width: '11.5%',
+    heightValue: 0,
+    width: '8%',
   }
 
-  const standard1stRowPosition = [
+  const m2ndRowPosition = [
     {
-      ...getPosition({ ...basePosition, topValue: 42 }),
-      left: '5%',
+      ...getPosition({ ...basePosition, topValue: 78.4 }),
+      left: '26.5%',
     },
     {
-      ...getPosition({ ...basePosition, topValue: 42 }),
-      left: '25%',
+      ...getPosition({ ...basePosition, topValue: 78.4 }),
+      left: '39.5%',
     },
     {
-      ...getPosition({ ...basePosition, topValue: 42 }),
-      left: '44.5%',
+      ...getPosition({ ...basePosition, topValue: 78.4 }),
+      left: '52.5%',
     },
     {
-      ...getPosition({ ...basePosition, topValue: 42 }),
-      left: '65%',
+      ...getPosition({ ...basePosition, topValue: 78.4 }),
+      left: '65.5%',
     },
-    {
-      ...getPosition({ ...basePosition, topValue: 42 }),
-      left: '85%',
-    },
-  ]
-
-  const standard2ndRowPosition = [
-    {
-      ...getPosition({ ...basePosition, topValue: 32.7 }),
-      left: '10.5%',
-    },
-    {
-      ...getPosition({ ...basePosition, topValue: 32.7 }),
-      left: '27.5%',
-    },
-    {
-      ...getPosition({ ...basePosition, topValue: 32.7 }),
-      left: '44.5%',
-    },
-    {
-      ...getPosition({ ...basePosition, topValue: 32.7 }),
-      left: '61.5%',
-    },
-    {
-      ...getPosition({ ...basePosition, topValue: 32.7 }),
-      left: '78.5%',
-    },
-  ]
-
-  const standard3thRowPosition = [
-    {
-      ...getPosition({ ...basePosition, topValue: 25.8 }),
-      left: '14.5%',
-    },
-    {
-      ...getPosition({ ...basePosition, topValue: 25.8 }),
-      left: '29.5%',
-    },
-    {
-      ...getPosition({ ...basePosition, topValue: 25.8 }),
-      left: '44.5%',
-    },
-    {
-      ...getPosition({ ...basePosition, topValue: 25.8 }),
-      left: '59.5%',
-    },
-    {
-      ...getPosition({ ...basePosition, topValue: 25.8 }),
-      left: '74.5%',
-    },
-  ]
-
-  const standard4thRowPosition = [
-    {
-      ...getPosition({ ...basePosition, topValue: 18.8 }),
-      left: '17.5%',
-    },
-    {
-      ...getPosition({ ...basePosition, topValue: 18.8 }),
-      left: '30.5%',
-    },
-    {
-      ...getPosition({ ...basePosition, topValue: 18.8 }),
-      left: '44.5%',
-    },
-    {
-      ...getPosition({ ...basePosition, topValue: 18.8 }),
-      left: '57.5%',
-    },
-    // {
-    //   ...getPosition({ ...basePosition, topValue: 18.8 }),
-    //   left: '70.5%',
-    // },
   ]
 
   const m1stRowPosition = [
-    // {
-    //   ...getPosition({ ...basePosition, topValue: 54.8 }),
-    //   left: '4.5%',
-    // },
     {
-      ...getPosition({ ...basePosition, topValue: 54.8 }),
-      left: '24.5%',
+      ...getPosition({ ...basePosition, topValue: 57.2 }),
+      left: '20%',
     },
     {
-      ...getPosition({ ...basePosition, topValue: 54.8 }),
-      left: '64.5%',
+      ...getPosition({ ...basePosition, topValue: 57.2 }),
+      left: '33%',
     },
     {
-      ...getPosition({ ...basePosition, topValue: 54.8 }),
-      left: '84.5%',
+      ...getPosition({ ...basePosition, topValue: 57.2 }),
+      left: '45.8%',
+    },
+    {
+      ...getPosition({ ...basePosition, topValue: 57.2 }),
+      left: '58.9%',
+    },
+    {
+      ...getPosition({ ...basePosition, topValue: 57.2 }),
+      left: '72%',
     },
   ]
 
   const l1stRowPosition = [
     {
       ...getPosition({
-        heightValue: 7.9,
-        width: '16.7%',
-        topValue: 55.4,
+        heightValue: 16.4,
+        width: '9%',
+        topValue: 36.5,
       }),
-      left: '41.95%',
+      left: '45%',
     },
   ]
 
   const cardSStyle = {
     margin: 0,
-    // fontSize: '0.7em',
     minHeight: '100%',
     maxHeight: '100%',
-    border: `1px solid ${colors.black}`,
-    fontSize: 'calc((5vw) / 7)',
-    textAlign: 'center',
+    width: '100%',
   }
-
   return (
-    <div className={styles.container} style={{ paddingTop: '60px' }}>
-      <FullImageWrapper customStyle="align-items: flex-start;">
-        <Container ref={containerRef}>
-          <Image
-            src="https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/MockupExhition1920.jpg?fbclid=IwAR3zaUNtE-Pmm1iBQLbNFpzCd1LM-HpTkPA7r3utoQeO9TE2z-uN6VQ2-yY"
-            alt="exhibition-bg"
-            afterLoad={onResize}
-            scrollPosition={scrollPosition}
-          />
-          {
-            boothS.slice(0, 5).map((item, index) => {
-              if (!standard1stRowPosition[index]) return null
-              return (
-                <Box
-                  key={`${item.name}-${item.id}`}
-                  style={standard1stRowPosition[index]}
-                >
-                  <CompanyCard
-                    id={item.id}
-                    name={item.name}
-                    logo={item.logo}
-                    style={cardSStyle}
-                  />
-                </Box>
-              )
-            })
-          }
-          {
-            boothS.slice(5, 10).map((item, index) => {
-              if (!standard2ndRowPosition[index]) return null
-              return (
-                <Box
-                  key={`${item.name}-${item.id}`}
-                  style={standard2ndRowPosition[index]}
-                >
-                  <CompanyCard
-                    id={item.id}
-                    name={item.name}
-                    logo={item.logo}
-                    style={cardSStyle}
-                  />
-                </Box>
-              )
-            })
-          }
-          {
-            boothS.slice(10, 15).map((item, index) => {
-              if (!standard3thRowPosition[index]) return null
-              return (
-                <Box
-                  key={`${item.name}-${item.id}`}
-                  style={standard3thRowPosition[index]}
-                >
-                  <CompanyCard
-                    id={item.id}
-                    name={item.name}
-                    logo={item.logo}
-                    style={cardSStyle}
-                  />
-                </Box>
-              )
-            })
-          }
-          {
-            boothS.slice(15, 19).map((item, index) => {
-              if (!standard4thRowPosition[index]) return null
-              return (
-                <Box
-                  key={`${item.name}-${item.id}`}
-                  style={standard4thRowPosition[index]}
-                >
-                  <CompanyCard
-                    id={item.id}
-                    name={item.name}
-                    logo={item.logo}
-                    style={cardSStyle}
-                  />
-                </Box>
-              )
-            })
-          }
-          {
-            boothM.slice(0, 3).map((item, index) => {
-              if (!m1stRowPosition[index]) return null
-              return (
-                <Box
-                  key={`${item.name}-${item.id}`}
-                  style={m1stRowPosition[index]}
-                >
-                  <CompanyCard
-                    id={item.id}
-                    name={item.name}
-                    logo={item.logo}
-                    style={cardSStyle}
-                  />
-                </Box>
-              )
-            })
-          }
-          {
-            boothL.slice(0, 1).map((item, index) => {
-              if (!l1stRowPosition[index]) return null
-              return (
-                <Box
-                  key={`${item.name}-${item.id}`}
-                  style={l1stRowPosition[index]}
-                >
-                  <CompanyCard
-                    id={item.id}
-                    name={item.name}
-                    logo={item.logo}
-                    style={{
-                      ...cardSStyle,
-                      fontSize: 'calc((7vw) / 7)',
-                    }}
-                  />
-                </Box>
-              )
-            })
-          }
-        </Container>
-      </FullImageWrapper>
-    </div>
+    <Container ref={containerRef}>
+      <Image
+        src="https://icsmeeting.s3.ap-southeast-1.amazonaws.com/Exhition/ExhitionHall.jpg"
+        alt="exhibition-bg"
+        afterLoad={onResize}
+        scrollPosition={scrollPosition}
+      />
+      {
+          boothM.slice(5, 9).map((item, index) => {
+            if (!m2ndRowPosition[index]) return null
+            return (
+              <Box
+                key={`${item.name}-${item.id}`}
+                style={m2ndRowPosition[index]}
+              >
+                <CompanyCard
+                  id={item.id}
+                  name={item.name}
+                  logo={item.logo}
+                  bootLink={item.bootLink}
+                  style={cardSStyle}
+                />
+              </Box>
+            )
+          })
+        }
+      {
+          boothM.slice(0, 5).map((item, index) => {
+            if (!m1stRowPosition[index]) return null
+            return (
+              <Box
+                key={`${item.name}-${item.id}`}
+                style={m1stRowPosition[index]}
+              >
+                <CompanyCard
+                  id={item.id}
+                  name={item.name}
+                  logo={item.logo}
+                  bootLink={item.bootLink}
+                  style={cardSStyle}
+                />
+              </Box>
+            )
+          })
+        }
+      {
+          boothL.slice(0, 1).map((item, index) => {
+            if (!l1stRowPosition[index]) return null
+            return (
+              <Box
+                key={`${item.name}-${item.id}`}
+                style={l1stRowPosition[index]}
+              >
+                <CompanyCard
+                  id={item.id}
+                  name={item.name}
+                  logo={item.logo}
+                  bootLink={item.bootLink}
+                  style={cardSStyle}
+                />
+              </Box>
+            )
+          })
+        }
+    </Container>
   )
 }
+
+ImageComponent.propTypes = {
+  scrollPosition: PropTypes.shape({}),
+  booths: PropTypes.arrayOf(PropTypes.shape({})),
+}
+
+ImageComponent.defaultProps = {
+  scrollPosition: {},
+  booths: [],
+}
+
+const Desktop = ({
+  booths,
+  scrollPosition,
+}) => (
+  <div className={styles.container}>
+    <FullImageWrapper>
+      <ImageComponent booths={booths} scrollPosition={scrollPosition} />
+    </FullImageWrapper>
+  </div>
+)
 
 Desktop.propTypes = {
   scrollPosition: PropTypes.shape({}),
@@ -395,52 +256,47 @@ Desktop.defaultProps = {
   booths: [],
 }
 
-const Badge = styled.img`
-  width: 5em;
-`
-
 const Content = styled.div`
   margin: 20px;
 `
 
 const CompanyListContainer = styled.div`
   display: grid;
-  grid-template-columns: 50% 50%;
+  ${(props) => (props.isStandard ? 'grid-template-columns: auto auto auto;' : 'grid-template-columns: 50% 50%;')}
   margin: 5px 0;
   margin-bottom: 20px;
 `
 
-const Mobile = ({ scrollPosition, booths, isLoading }) => (
+const Title = styled.h3`
+  color: ${colors.themeColor};
+  font-size: 20px;
+`
+
+const Mobile = ({
+  scrollPosition,
+  booths,
+  isLoading,
+}) => (
   <MobileLayout isShowTitle>
-    <Image
-      src="https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/MockupExhition1920.jpg?fbclid=IwAR3zaUNtE-Pmm1iBQLbNFpzCd1LM-HpTkPA7r3utoQeO9TE2z-uN6VQ2-yY"
-      alt="lobby-bg"
-      scrollPosition={scrollPosition}
-    />
+    <ImageComponent booths={booths} scrollPosition={scrollPosition} />
     <Content>
       {
-        ['Gold', 'Standard'].map((type) => (
+        ['Silver', 'Standard'].map((type) => (
           isLoading
             ? (<Skeleton key={type} active />)
             : (
               <div key={type}>
-                <Badge
-                  src={`/images/exbition/badge-${type}.svg`}
-                />
-                <CompanyListContainer>
+                <Title>{`${type} Sponsor`}</Title>
+                <CompanyListContainer isStandard={type === 'Standard'}>
                   {
-                  booths.filter((booth) => booth?.bootType === type).map((item, index) => (
+                  booths.filter((booth) => booth?.bootType === type).map((item) => (
                     <CompanyCard
+                      key={item.id}
                       id={item.id}
                       name={item.name}
                       logo={item.logo}
-                      style={{
-                        ...index % 2 ? {
-                          marginLeft: 5,
-                        } : {
-                          marginRight: 5,
-                        },
-                      }}
+                      type={type}
+                      bootLink={item.bootLink}
                     />
                   ))
                 }
@@ -484,6 +340,7 @@ const Exhibition = ({ isMobile, ...props }) => {
       })
     }
   }, [])
+
   return (isMobile ? <Mobile {...props} booths={booths} isLoading={isLoading} /> : <Desktop {...props} booths={booths} isLoading={isLoading} />)
 }
 

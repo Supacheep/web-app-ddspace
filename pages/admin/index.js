@@ -24,13 +24,13 @@ import { API } from '../../src/configs'
 const { Search } = Input
 
 const Container = styled.div`
-  background-color: ${colors.themeColor};
+  background: ${colors.themeGradient};
   width: 100vw;
   height: 100vh;
 `
 
 const Header = styled.div`
-  background-color: ${colors.themeColor};
+  background: ${colors.themeGradient};
   display: flex;
   align-items: center;
 `
@@ -84,11 +84,12 @@ const Admin = () => {
   const [dataLoading, setDataLoading] = useState(false)
   const [dataIndex, setDataIndex] = useState(0)
   const [filter, setFilter] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
 
   const router = useRouter()
   const pageSize = 20
 
-  const fetchData = () => {
+  const fetchData = (cb = () => {}) => {
     setDataLoading(true)
     axios.post(
       `${API}/userprofile/getalluserprofile`,
@@ -105,8 +106,9 @@ const Admin = () => {
     )
       .then((response) => {
         setData(response?.data?.data?.userProfile)
-        setTotal(response?.data?.data?.count)
+        setTotal(response?.data?.data?.currentCount)
         setDataLoading(false)
+        cb()
       })
       .catch((error) => {
         console.warn(error)
@@ -135,8 +137,10 @@ const Admin = () => {
     .then(() => {
       setRegisterVisible(false)
       message.success('Delete success')
-      setDataIndex(0)
-      fetchData()
+      fetchData(() => {
+        setDataIndex(0)
+        setCurrentPage(1)
+      })
     })
     .catch((error) => {
       console.warn(error)
@@ -149,7 +153,7 @@ const Admin = () => {
       title: 'No.',
       dataIndex: '',
       key: 'no',
-      render: (text, record, index) => <span>{index + 1}</span>,
+      render: (text, record, index) => <span>{((currentPage * pageSize) - (pageSize - 1)) + index}</span>,
     },
     { title: 'Name', dataIndex: 'name', key: 'name' },
     { title: 'Lastname', dataIndex: 'lastName', key: 'lastName' },
@@ -208,15 +212,22 @@ const Admin = () => {
 
   const onSearch = (val) => {
     setDataIndex(0)
+    setCurrentPage(1)
     setFilter(val)
   }
 
   const handleChange = (info) => {
     let list = [...info.fileList]
-
-    if (info?.file?.response?.success) {
+    if (info?.file?.response && info?.file?.response?.success) {
       message.success('Upload success')
+      setDataIndex(0)
+      setCurrentPage(1)
+      fetchData()
       return setFile([])
+    }
+
+    if (info?.file?.status !== 'removed' && info?.file?.response && !info?.file?.response?.success) {
+      message.error(info?.file?.response?.error?.message || 'Register failed')
     }
 
     list = list.map((file) => {
@@ -241,8 +252,10 @@ const Admin = () => {
     .then(() => {
       setRegisterVisible(false)
       message.success('Register success')
-      setDataIndex(0)
-      fetchData()
+      fetchData(() => {
+        setDataIndex(0)
+        setCurrentPage(1)
+      })
     })
     .catch((error) => {
       console.warn(error)
@@ -255,19 +268,26 @@ const Admin = () => {
       <Header>
         <LogoContainer>
           <HeaderLogo
-            src="/images/LogoThPRS-01.svg"
-            alt="LogoThPRS"
+            src="/images/LOGOICS_.png"
+            alt="LogoICS"
+            style={{ marginTop: 16 }}
           />
           <HeaderLogo
-            src="/images/LogoThSAPS_whole.svg"
-            alt="LogoThPRS"
+            src="/images/LogoAPALMS-01.svg"
+            alt="LogoThAPALMS"
           />
         </LogoContainer>
-        <Title style={{ color: colors.white }}>
-          31
-          <sup>st</sup>
+        <Title style={{ color: colors.themeColor }}>
+          The 42
+          <sup>nd</sup>
           {' '}
-          Annual meeting of ThPRS & ThSAPS
+          ICS WORLD CONGRESS
+          in conjunction with
+          17
+          <sup>th</sup>
+          {' '}
+          APALMS-ISLSM Congress
+          2021
         </Title>
       </Header>
       <Content>
@@ -309,11 +329,15 @@ const Admin = () => {
           columns={columns}
           dataSource={dataList}
           onChange={(pagination) => {
+            console.log('pagination', pagination)
+            setCurrentPage(pagination.current)
             setDataIndex((pagination.current - 1) * (pageSize))
           }}
           pagination={{
             total,
             pageSize,
+            showSizeChanger: false,
+            current: currentPage,
           }}
           loading={dataLoading}
         />

@@ -76,7 +76,15 @@ const LinkButtonMobile = styled.div`
   :hover {
     background-color: ${colors.grey200};
   }
-  ${(props) => (props.active ? `background-color: ${colors.greyF3}` : '')}
+  ${(props) => (props.active ? `
+    /* background-color: ${colors.greyF3} */
+    background: white;
+    background: linear-gradient(
+      to right bottom,
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0.3)
+    );
+  ` : '')}
 `
 
 const MenuContainer = styled.div`
@@ -108,7 +116,24 @@ const CustomLayout = styled.div`
       display: flex;
     }
   }
+`
 
+const CustomDrawer = styled(Drawer)`
+  .ant-drawer-content {
+    background: white;
+    background: linear-gradient(
+      to right bottom,
+      rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0.3)
+    );
+    backdrop-filter: blur(2rem);
+  }
+  .ant-drawer-header {
+    background: transparent;
+  }
+  .ant-btn {
+    background-color: transparent;
+  }
 `
 
 const ProfileButton = styled(Button)`
@@ -174,12 +199,13 @@ function MyApp({ Component, pageProps }) {
       <Link href={{ pathname: '/' }}>
         <MenuContainer>
           <HeaderLogo
-            src="/images/LogoThPRS-01.svg"
-            alt="LogoThPRS"
+            src="/images/LOGOICS_.png"
+            alt="LogoICS"
+            style={{ marginTop: 16 }}
           />
           <HeaderLogo
-            src="/images/LogoThSAPS_whole.svg"
-            alt="LogoThPRS"
+            src="/images/LogoAPALMS-01.svg"
+            alt="LogoThAPALMS"
           />
         </MenuContainer>
       </Link>
@@ -214,12 +240,13 @@ function MyApp({ Component, pageProps }) {
       <Link href={{ pathname: '/' }}>
         <MenuContainer justify="center">
           <HeaderLogo
-            src="/images/LogoThPRS-01.svg"
-            alt="LogoThPRS"
+            src="/images/LOGOICS_.png"
+            alt="LogoICS"
+            style={{ marginTop: 16 }}
           />
           <HeaderLogo
-            src="/images/LogoThSAPS_whole.svg"
-            alt="LogoThPRS"
+            src="/images/LogoAPALMS-01.svg"
+            alt="LogoThAPALMS"
           />
         </MenuContainer>
       </Link>
@@ -230,7 +257,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <CustomLayout>
       <Head>
-        <title>thprsmeeting2021</title>
+        <title>ICSMeeting2021</title>
       </Head>
       {
         !hideHeaderList.includes(pathname) && (
@@ -241,11 +268,12 @@ function MyApp({ Component, pageProps }) {
           </>
         )
       }
-      <Drawer
+      <CustomDrawer
         title="Menu"
         placement="left"
         onClose={() => setDrawerVisible(false)}
         visible={drawerVisible}
+        maskStyle={{ opacity: 0, animation: 'none' }}
       >
         <Dropdown overlay={dropdownMenu} trigger={['click']}>
           <ProfileButton>
@@ -261,7 +289,7 @@ function MyApp({ Component, pageProps }) {
         <Link href={{ pathname: '/exhibition' }}>
           <LinkButtonMobile active={asPath === '/exhibition'}>Exhibition Hall</LinkButtonMobile>
         </Link>
-      </Drawer>
+      </CustomDrawer>
       <ThemeProvider theme={theme}>
         <Component {...pageProps} isMobile={isMobile} userData={user} />
       </ThemeProvider>

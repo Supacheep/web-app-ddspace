@@ -9,11 +9,11 @@ import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-componen
 import styles from '../styles/Home.module.css'
 import userContext from '../src/context/userContext'
 import {
-  ModalLogin, YoutubePlayer, MobileLayout, ModalLoading,
+  ModalLogin, MobileLayout, ModalLoading,
 } from '../src/components'
-import { colors } from '../src/configs/color'
 import useCalculateSize from '../src/libs/useCalculateSize'
 import { FullImageWrapper } from '../src/components/common'
+import { colors } from '../src/configs/color'
 
 const Container = styled.div`
   position: relative;
@@ -42,18 +42,19 @@ const Box = styled.div`
 
 const ButtonImg = styled.img`
   transition: transform .2s;
+  width: 100%;
   :hover {
-    transform: scale(1.1);
+    transform: scale(1.04);
   }
 `
 
-const Desktop = ({ user, scrollPosition }) => {
+const Desktop = ({ scrollPosition }) => {
   const [containerRef, getPosition, onResize] = useCalculateSize()
 
   const basePosition = {
-    topValue: 34,
+    topValue: 26,
     heightValue: 12,
-    width: '26.5%',
+    width: '27.6%',
   }
 
   return (
@@ -61,21 +62,25 @@ const Desktop = ({ user, scrollPosition }) => {
       <FullImageWrapper>
         <Container ref={containerRef} id="container">
           <Image
-            src="/images/lobby/pagelobbyFinal.jpeg"
+            src="https://icsmeeting.s3.ap-southeast-1.amazonaws.com/Lobby/pagelobbyFinal.jpg?fbclid=IwAR0R6fDJ2tlBBS-oUNmXHGkFwbpwaPE-Y9SSEZIPj4fU0BSyclnfO8jzlK8"
             alt="lobby-bg"
             afterLoad={onResize}
-            // placeholderSrc="/images/lobby-lowres.png"
             scrollPosition={scrollPosition}
           />
           <Box
             style={{
-              ...getPosition(basePosition),
+              ...getPosition({
+                ...basePosition,
+                topValue: 26.3,
+              }),
               right: '3%',
+              borderRadius: '5px',
+              borderBottomRightRadius: '18px',
             }}
           >
             <Link href={{ pathname: '/exhibition' }}>
               <ButtonImg
-                src="/images/exhibition_btn.svg"
+                src="/images/lobby/BTNEXhition.png"
                 alt="exhibition_btn"
               />
             </Link>
@@ -84,14 +89,16 @@ const Desktop = ({ user, scrollPosition }) => {
             style={{
               ...getPosition({
                 ...basePosition,
-                topValue: 33,
+                topValue: 26.2,
               }),
-              left: '2.8%',
+              left: '4%',
+              borderRadius: '5px',
+              borderBottomLeftRadius: '18px',
             }}
           >
             <Link href={{ pathname: '/conference' }}>
               <ButtonImg
-                src="/images/conference_btn.svg"
+                src="/images/lobby/BTNConference.png"
                 alt="conference_btn"
               />
             </Link>
@@ -99,25 +106,40 @@ const Desktop = ({ user, scrollPosition }) => {
           <Box
             style={{
               ...getPosition({
-                topValue: 19.3,
-                heightValue: 37.5,
-                width: '37.6%',
+                topValue: 39,
+                width: '17.5%',
+                heightValue: 7.5,
               }),
-              right: '30.8%',
-              border: 0,
-              backgroundColor: colors.black,
+              left: '14.2%',
+              borderRadius: '5px',
+              borderBottomLeftRadius: '10px',
             }}
           >
-            {
-              user.userData && (
-                <YoutubePlayer
-                  videoID="6FIJfRINVLE"
-                  autoplay
-                  mute
-                  loop
-                />
-              )
-            }
+            <a href="https://www.google.co.th/" target="_blank" rel="noopener noreferrer">
+              <ButtonImg
+                src="/images/lobby/BTNEPoster.png"
+                alt="conference_btn"
+              />
+            </a>
+          </Box>
+          <Box
+            style={{
+              ...getPosition({
+                topValue: 48.6,
+                width: '17%',
+                heightValue: 7.5,
+              }),
+              left: '14.2%',
+              borderRadius: '5px',
+              borderBottomLeftRadius: '10px',
+            }}
+          >
+            <a href="https://www.google.co.th/" target="_blank" rel="noopener noreferrer">
+              <ButtonImg
+                src="/images/lobby/BTNDownloadAbstact.png"
+                alt="conference_btn"
+              />
+            </a>
           </Box>
         </Container>
       </FullImageWrapper>
@@ -138,78 +160,95 @@ Desktop.defaultProps = {
 }
 
 const ButtonContainer = styled.div`
-  display: grid;
-  grid-template-columns: auto auto;
-  padding: 15px;
+  display: flex;
+  flex-flow: column;
+  width: 90%;
   max-width: 570px;
   margin: 20px auto;
+  background: white;
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.3)
+  );
+  backdrop-filter: blur(2rem);
+  padding: 15px;
+  border-radius: 10px;
+`
 
-  .img-btn {
-    width: 95%;
-    border-radius: 10px;
+const Button = styled.div`
+  text-align: center;
+  color: ${colors.white};
+  background-color: ${colors.themeColor};
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`
+
+const SmallButton = styled.a`
+  text-align: center;
+  color: ${colors.themeColor};
+  border: 3px solid ${colors.themeColor};
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 16px;
+  white-space: pre-wrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  width: 100%;
+  font-weight: bold;
+  @media screen and (max-width: 345px) {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 `
 
-const VideoSection = styled.div`
-  width: 100%;
-  height: 55vw;
-  max-width: 540px;
-  max-height: 310px;
-  border: 5px solid ${colors.white};
-  border-radius: 10px;
-  background-color: ${colors.white};
-  margin: 0 15px;
-  overflow: hidden;
-`
-
-const YoutubeBox = styled.div`
+const FlexContainer = styled.div`
   display: flex;
   justify-content: center;
+  @media screen and (max-width: 345px) {
+    display: block;
+  }
 `
 
-const Mobile = ({ user, scrollPosition }) => (
+const Mobile = ({ scrollPosition }) => (
   <MobileLayout isShowTitle>
     <div>
       <Image
-        src="/images/lobby/pagelobbyFinaMobile.jpeg"
+        src="https://icsmeeting.s3.ap-southeast-1.amazonaws.com/Lobby/pagelobbyFinal.jpg?fbclid=IwAR0R6fDJ2tlBBS-oUNmXHGkFwbpwaPE-Y9SSEZIPj4fU0BSyclnfO8jzlK8"
         alt="pagelobbyMobile-bg"
         scrollPosition={scrollPosition}
       />
     </div>
     <ButtonContainer>
-      <Link href={{ pathname: '/conference' }}>
-        <div style={{ textAlign: 'left' }}>
-          <ButtonImg
-            className="img-btn"
-            src="/images/conference_btn.svg"
-            alt="conference_btn"
-          />
-        </div>
-      </Link>
       <Link href={{ pathname: '/exhibition' }}>
-        <div style={{ textAlign: 'right' }}>
-          <ButtonImg
-            className="img-btn"
-            src="/images/exhibition_btn.svg"
-            alt="exhibition_btn"
-          />
-        </div>
+        <Button>
+          EXHIBITION HALL
+        </Button>
       </Link>
     </ButtonContainer>
-    {
-      user.userData && (
-        <YoutubeBox>
-          <VideoSection>
-            <YoutubePlayer
-              videoID="6FIJfRINVLE"
-              autoplay
-              mute
-              loop
-            />
-          </VideoSection>
-        </YoutubeBox>
-      )
-    }
+    <ButtonContainer>
+      <Link href={{ pathname: '/conference' }}>
+        <Button>
+          CONFERENCE HALL
+        </Button>
+      </Link>
+      <FlexContainer>
+        <SmallButton style={{ marginRight: 5 }} href="https://www.google.co.th/" target="_blank" rel="noopener noreferrer">
+          E-Poster
+        </SmallButton>
+        <SmallButton style={{ marginLeft: 5 }} href="https://www.google.co.th/" target="_blank" rel="noopener noreferrer">
+          {'E-Program &\nAbstract Book'}
+        </SmallButton>
+      </FlexContainer>
+    </ButtonContainer>
   </MobileLayout>
 )
 

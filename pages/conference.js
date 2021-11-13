@@ -33,12 +33,16 @@ const Box = styled.div`
 `
 
 const Perspective = styled.div`
-  transform: perspective(20cm) rotateX(0deg) rotateY(5deg);
+  transform: perspective(20cm) rotateX(0deg) rotateY(3deg);
   position: absolute;
   cursor: pointer;
   overflow: hidden;
   :hover {
-    border: 3px solid ${colors.themeColor};
+    border: 3px solid;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-image: ${colors.themeGradient};
+    border-image-slice: 9;
+    border-style: solid;
   }
 `
 
@@ -54,17 +58,12 @@ const ButtonBox = styled.div`
   position: absolute;
   cursor: pointer;
   overflow: hidden;
+  background-color: #171615;
 `
 
 const A = styled.a`
   ${(props) => (props.disabled ? 'pointer-events: none;' : '')}
 `
-
-const conferencePreviewImages = [
-  'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/ConferenceHall/programDay1.jpg',
-  'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/ConferenceHall/programDay2.jpg',
-  'https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/ConferenceHall/programDay3.jpg',
-]
 
 const logConference = async (conferenceHallID, UserToken) => {
   try {
@@ -85,15 +84,15 @@ const logConference = async (conferenceHallID, UserToken) => {
 }
 
 const Desktop = ({
-  isLoading, data, scrollPosition, userData,
+  isLoading, data, scrollPosition, userData, imageData,
 }) => {
   const [containerRef, getPosition, onResize] = useCalculateSize()
   const [visible, setVisible] = useState(false)
   const [imageIndex, setImageIndex] = useState(0)
 
   const basePosition = {
-    topValue: 42,
-    heightValue: 50.5,
+    topValue: 43.7,
+    heightValue: 33.7,
   }
 
   return (
@@ -101,7 +100,7 @@ const Desktop = ({
       <FullImageWrapper>
         <Container ref={containerRef}>
           <Image
-            src="https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/ConferenceHall/ConferenceHallForWeb.jpg"
+            src="https://icsmeeting.s3.ap-southeast-1.amazonaws.com/conference/pageConferceFinal.jpg"
             alt="conference-bg"
             afterLoad={onResize}
             scrollPosition={scrollPosition}
@@ -109,8 +108,8 @@ const Desktop = ({
           <Perspective
             style={{
               ...getPosition(basePosition),
-              left: '6.6%',
-              width: '19.2%',
+              left: '3.8%',
+              width: '21.5%',
             }}
           >
             <Box
@@ -122,9 +121,12 @@ const Desktop = ({
           </Perspective>
           <Perspective
             style={{
-              ...getPosition(basePosition),
-              left: '31%',
-              width: '18%',
+              ...getPosition({
+                ...basePosition,
+                heightValue: 33,
+              }),
+              left: '29.5%',
+              width: '20%',
             }}
           >
             <Box
@@ -136,9 +138,12 @@ const Desktop = ({
           </Perspective>
           <Perspective
             style={{
-              ...getPosition(basePosition),
-              left: '54%',
-              width: '17%',
+              ...getPosition({
+                ...basePosition,
+                heightValue: 32.5,
+              }),
+              left: '53.5%',
+              width: '19%',
             }}
           >
             <Box
@@ -151,11 +156,11 @@ const Desktop = ({
           <ButtonBox
             style={{
               ...getPosition({
-                topValue: 42.4,
-                heightValue: 11,
-                width: '23%',
+                topValue: 27.8,
+                heightValue: 6.5,
+                width: '18.7%',
               }),
-              right: '2.7%',
+              right: '5.1%',
             }}
           >
             <A
@@ -166,7 +171,7 @@ const Desktop = ({
               onClick={() => logConference(data?.[0]?.id, userData?.userToken)}
             >
               <ButtonImg
-                src="/images/conference/hall-1-btn.jpeg"
+                src="/images/conference/BTNCON1.png"
                 alt="hall_btn"
               />
             </A>
@@ -174,11 +179,11 @@ const Desktop = ({
           <ButtonBox
             style={{
               ...getPosition({
-                topValue: 56.8,
-                heightValue: 11,
-                width: '23%',
+                topValue: 38,
+                heightValue: 6.5,
+                width: '18.7%',
               }),
-              right: '2.7%',
+              right: '5%',
             }}
           >
             <A
@@ -189,7 +194,76 @@ const Desktop = ({
               onClick={() => logConference(data?.[1]?.id, userData?.userToken)}
             >
               <ButtonImg
-                src="/images/conference/hall-2-btn.jpeg"
+                src="/images/conference/BTNCON2.png"
+                alt="hall_btn"
+              />
+            </A>
+          </ButtonBox>
+          <ButtonBox
+            style={{
+              ...getPosition({
+                topValue: 48.5,
+                heightValue: 6.5,
+                width: '18.7%',
+              }),
+              right: '5%',
+            }}
+          >
+            <A
+              target="_blank"
+              href={`${data?.[2]?.zoomLink}`}
+              rel="noopener noreferrer"
+              disabled={isLoading}
+              onClick={() => logConference(data?.[2]?.id, userData?.userToken)}
+            >
+              <ButtonImg
+                src="/images/conference/BTNCON3.png"
+                alt="hall_btn"
+              />
+            </A>
+          </ButtonBox>
+          <ButtonBox
+            style={{
+              ...getPosition({
+                topValue: 58.5,
+                heightValue: 6.5,
+                width: '18.7%',
+              }),
+              right: '5%',
+            }}
+          >
+            <A
+              target="_blank"
+              href={`${data?.[3]?.zoomLink}`}
+              rel="noopener noreferrer"
+              disabled={isLoading}
+              onClick={() => logConference(data?.[3]?.id, userData?.userToken)}
+            >
+              <ButtonImg
+                src="/images/conference/BTNCON4.png"
+                alt="hall_btn"
+              />
+            </A>
+          </ButtonBox>
+          <ButtonBox
+            style={{
+              ...getPosition({
+                topValue: 68.5,
+                heightValue: 6.5,
+                width: '18.7%',
+              }),
+              right: '5%',
+            }}
+          >
+            <A
+              target="_blank"
+              href={`${data?.[4]?.zoomLink}`}
+              rel="noopener noreferrer"
+              disabled={isLoading}
+              onClick={() => logConference(data?.[4]?.id, userData?.userToken)}
+            >
+              <ButtonImg
+                src="/images/conference/BTNCON5.png"
                 alt="hall_btn"
               />
             </A>
@@ -205,7 +279,7 @@ const Desktop = ({
           }}
         >
           {
-            conferencePreviewImages.map((src, index) => <ImageAntd key={`preview-${src}`} src={src} alt={`preview-${index}`} />)
+            imageData.map((src, index) => <ImageAntd key={`preview-${src}`} src={src} alt={`preview-${index}`} />)
           }
         </ImageAntd.PreviewGroup>
       </div>
@@ -223,6 +297,7 @@ Desktop.propTypes = {
   userData: PropTypes.shape({
     userToken: PropTypes.string,
   }),
+  imageData: PropTypes.arrayOf(PropTypes.string),
 }
 
 Desktop.defaultProps = {
@@ -230,6 +305,7 @@ Desktop.defaultProps = {
   isLoading: false,
   scrollPosition: {},
   userData: {},
+  imageData: [],
 }
 
 const MobileImageContainer = styled.div`
@@ -238,7 +314,7 @@ const MobileImageContainer = styled.div`
 
 const H2 = styled.h2`
   text-align: center;
-  color: ${colors.white};
+  color: ${colors.themeColor};
 `
 
 const ButtonContainer = styled.div`
@@ -249,20 +325,26 @@ const ButtonContainer = styled.div`
   margin: 20px auto;
   @media screen and (max-width: 345px) {
     grid-template-columns: auto;
+    .mobile-button {
+      grid-column: 1 !important;
+      width: 100% !important;
+    }
   }
 `
 
 const MobileButton = styled.a`
   border-radius: 10px;
-  background-color: ${colors.white};
-  display: flex;
-  align-items: center;
-  padding: 5px 10px;
+  background-color: ${colors.themeColor};
+  padding: 5px;
+  text-align: center;
+  margin: 5px;
+
   ${(props) => (props.disabled ? 'pointer-events: none;' : '')}
   h3 {
     margin: 0;
-    margin-left: 10px;
     line-height: normal;
+    color: ${colors.white};
+    font-size: 20px;
   }
   :hover {
     opacity: 0.8;
@@ -272,46 +354,53 @@ const MobileButton = styled.a`
   }
 `
 
-const ConferenceLogo = styled.img`
-  width: 20%;
-`
+const roomName = [
+  'Chamchuri 1',
+  'Chamchuri 2',
+  'Pandan 2',
+  'Galangal',
+  'Ginger',
+]
 
 const Mobile = ({
-  scrollPosition, data, isLoading, userData,
+  scrollPosition, data, isLoading, userData, imageData,
 }) => (
   <MobileLayout isShowTitle>
     <Image
-      src="https://thprsmeeting.s3.ap-southeast-1.amazonaws.com/ConferenceHall/ConferenceHallForWeb.jpg"
+      src="https://icsmeeting.s3.ap-southeast-1.amazonaws.com/conference/pageConferceFinal.jpg"
       alt="conference-bg"
       scrollPosition={scrollPosition}
     />
     <ButtonContainer>
-      <MobileButton
-        style={{ marginRight: '5px' }}
-        target="_blank"
-        href={`${data?.[0]?.zoomLink}`}
-        rel="noopener noreferrer"
-        disabled={isLoading}
-        onClick={() => logConference(data?.[0]?.id, userData?.userToken)}
-      >
-        <ConferenceLogo src="/images/conference/BTNConferenc.svg" />
-        <h3>CONFERENCE HALL 1</h3>
-      </MobileButton>
-      <MobileButton
-        style={{ marginLeft: '5px' }}
-        target="_blank"
-        href={`${data?.[1]?.zoomLink}`}
-        rel="noopener noreferrer"
-        disabled={isLoading}
-        onClick={() => logConference(data?.[1]?.id, userData?.userToken)}
-      >
-        <ConferenceLogo src="/images/conference/BTNConferenc.svg" />
-        <h3>CONFERENCE HALL 2</h3>
-      </MobileButton>
+      {
+        roomName.map((name, index) => (
+          <MobileButton
+            key={name}
+            target="_blank"
+            href={`${data?.[index]?.zoomLink}`}
+            onClick={() => logConference(data?.[index]?.id, userData?.userToken)}
+            rel="noopener noreferrer"
+            disabled={isLoading}
+            className="mobile-button"
+            style={
+              roomName.length % 2 !== 0 && (index + 1) === roomName.length
+                ? {
+                  gridColumn: '1 / span 2',
+                  width: '50%',
+                  margin: '5px auto',
+                }
+                : {}
+            }
+          >
+            <h3>Room</h3>
+            <h3>{name}</h3>
+          </MobileButton>
+        ))
+      }
     </ButtonContainer>
     <H2>PROGRAM BOARD</H2>
     {
-      conferencePreviewImages.map((src) => (
+      imageData.map((src) => (
         <MobileImageContainer>
           <Image
             key={`preview-${src}`}
@@ -335,6 +424,7 @@ Mobile.propTypes = {
   userData: PropTypes.shape({
     userToken: PropTypes.string,
   }),
+  imageData: PropTypes.arrayOf(PropTypes.string),
 }
 
 Mobile.defaultProps = {
@@ -342,11 +432,13 @@ Mobile.defaultProps = {
   isLoading: false,
   scrollPosition: {},
   userData: {},
+  imageData: [],
 }
 
 const Conference = ({ isMobile, ...props }) => {
   const [isLoading, setLoading] = useState(false)
   const [data, setData] = useState(undefined)
+  const [imageData, setImageData] = useState([])
   const router = useRouter()
   useEffect(() => {
     setLoading(true)
@@ -362,7 +454,18 @@ const Conference = ({ isMobile, ...props }) => {
         })
       })
   }, [])
-  return (isMobile ? <Mobile isLoading={isLoading} data={data} {...props} /> : <Desktop isLoading={isLoading} data={data} {...props} />)
+
+  useEffect(() => {
+    axios.post(`${API}/programboard/getallprogramboard`)
+      .then((response) => {
+        const { programBoards } = response?.data?.data || {}
+        if (programBoards) {
+          setImageData(programBoards.map((item) => item.imageLink))
+        }
+      })
+  }, [])
+
+  return (isMobile ? <Mobile isLoading={isLoading} data={data} imageData={imageData} {...props} /> : <Desktop isLoading={isLoading} data={data} imageData={imageData} {...props} />)
 }
 
 Conference.propTypes = {
