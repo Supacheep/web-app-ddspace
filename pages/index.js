@@ -115,7 +115,7 @@ const Desktop = ({ scrollPosition }) => {
               borderBottomLeftRadius: '10px',
             }}
           >
-            <a href="https://www.google.co.th/" target="_blank" rel="noopener noreferrer">
+            <a href="http://icsthailand2021.org/?ct=ct&mt=poster" target="_blank" rel="noopener noreferrer">
               <ButtonImg
                 src="/images/lobby/BTNEPoster.png"
                 alt="conference_btn"
@@ -134,7 +134,7 @@ const Desktop = ({ scrollPosition }) => {
               borderBottomLeftRadius: '10px',
             }}
           >
-            <a href="https://www.google.co.th/" target="_blank" rel="noopener noreferrer">
+            <a href="http://www.icsthailand2021.org/media/abstract_book/PROGRAM_ABSTRACT_BOOK.pdf" target="_blank" rel="noopener noreferrer">
               <ButtonImg
                 src="/images/lobby/BTNDownloadAbstact.png"
                 alt="conference_btn"
@@ -241,10 +241,10 @@ const Mobile = ({ scrollPosition }) => (
         </Button>
       </Link>
       <FlexContainer>
-        <SmallButton style={{ marginRight: 5 }} href="https://www.google.co.th/" target="_blank" rel="noopener noreferrer">
+        <SmallButton style={{ marginRight: 5 }} href="http://icsthailand2021.org/?ct=ct&mt=poster" target="_blank" rel="noopener noreferrer">
           E-Poster
         </SmallButton>
-        <SmallButton style={{ marginLeft: 5 }} href="https://www.google.co.th/" target="_blank" rel="noopener noreferrer">
+        <SmallButton style={{ marginLeft: 5 }} href="http://www.icsthailand2021.org/media/abstract_book/PROGRAM_ABSTRACT_BOOK.pdf" target="_blank" rel="noopener noreferrer">
           {'E-Program &\nAbstract Book'}
         </SmallButton>
       </FlexContainer>

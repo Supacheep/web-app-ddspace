@@ -129,19 +129,19 @@ const ImageComponent = ({ booths, scrollPosition }) => {
 
   const m2ndRowPosition = [
     {
-      ...getPosition({ ...basePosition, topValue: 78.4 }),
+      ...getPosition({ ...basePosition, topValue: 76 }),
       left: '26.5%',
     },
     {
-      ...getPosition({ ...basePosition, topValue: 78.4 }),
+      ...getPosition({ ...basePosition, topValue: 76 }),
       left: '39.5%',
     },
     {
-      ...getPosition({ ...basePosition, topValue: 78.4 }),
+      ...getPosition({ ...basePosition, topValue: 76 }),
       left: '52.5%',
     },
     {
-      ...getPosition({ ...basePosition, topValue: 78.4 }),
+      ...getPosition({ ...basePosition, topValue: 76 }),
       left: '65.5%',
     },
   ]
@@ -149,19 +149,19 @@ const ImageComponent = ({ booths, scrollPosition }) => {
   const m1stRowPosition = [
     {
       ...getPosition({ ...basePosition, topValue: 57.2 }),
-      left: '20%',
+      left: '26.5%',
     },
     {
       ...getPosition({ ...basePosition, topValue: 57.2 }),
-      left: '33%',
+      left: '39.5%',
     },
     {
       ...getPosition({ ...basePosition, topValue: 57.2 }),
-      left: '45.8%',
+      left: '52.5%',
     },
     {
       ...getPosition({ ...basePosition, topValue: 57.2 }),
-      left: '58.9%',
+      left: '65.5%',
     },
     {
       ...getPosition({ ...basePosition, topValue: 57.2 }),
@@ -195,7 +195,7 @@ const ImageComponent = ({ booths, scrollPosition }) => {
         scrollPosition={scrollPosition}
       />
       {
-          boothM.slice(5, 9).map((item, index) => {
+          boothM.slice(4, 8).map((item, index) => {
             if (!m2ndRowPosition[index]) return null
             return (
               <Box
@@ -214,7 +214,7 @@ const ImageComponent = ({ booths, scrollPosition }) => {
           })
         }
       {
-          boothM.slice(0, 5).map((item, index) => {
+          boothM.slice(0, 4).map((item, index) => {
             if (!m1stRowPosition[index]) return null
             return (
               <Box
