@@ -94,6 +94,7 @@ const CompanyCard = ({
       target="_blank"
       rel="noopener noreferrer"
       onClick={() => logBooth(id, user?.userToken)}
+      disabled={!bootLink}
     >
       <Logo
         src={logo || '/images/exbition/logoMock.svg'}
@@ -308,7 +309,12 @@ const Mobile = ({
   isLoading,
 }) => (
   <MobileLayout isShowTitle>
-    <ImageComponent booths={booths} scrollPosition={scrollPosition} />
+    {/* <ImageComponent booths={booths} scrollPosition={scrollPosition} /> */}
+    <Image
+      src="https://icsmeeting.s3.ap-southeast-1.amazonaws.com/Exhition/ExhitionHall2.jpg"
+      alt="exhibition-bg"
+      scrollPosition={scrollPosition}
+    />
     <Content>
       {
         ['Silver', 'Standard'].map((type) => (
