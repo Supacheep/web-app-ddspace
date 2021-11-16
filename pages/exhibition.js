@@ -90,10 +90,16 @@ const CompanyCard = ({
   const user = useContext(userContext)
   return (
     <LinkBTN
-      href={bootLink}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={() => logBooth(id, user?.userToken)}
+      {
+        ...bootLink
+          ? {
+            href: bootLink,
+            target: '_blank',
+            rel: 'noopener noreferrer',
+            onClick: () => logBooth(id, user?.userToken),
+          }
+          : {}
+      }
       disabled={!bootLink}
     >
       <Logo
