@@ -63,9 +63,9 @@ const ModalLogin = ({ visible, onFinish, error }) => {
     if (!value) {
       return Promise.reject('Please input your email')
     }
-    if (!value.match(PATTERN_EMAIL)) {
-      return Promise.reject('Invalid email')
-    }
+    // if (!value.match(PATTERN_EMAIL)) {
+    //   return Promise.reject('Invalid email')
+    // }
     return Promise.resolve()
   }
   return (
