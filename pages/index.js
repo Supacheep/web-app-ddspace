@@ -6,10 +6,11 @@ import styled from 'styled-components'
 import Link from 'next/link'
 import PropTypes from 'prop-types'
 import { LazyLoadImage, trackWindowScroll } from 'react-lazy-load-image-component'
+import { Button as ButtonAntd } from 'antd'
 import styles from '../styles/Home.module.css'
 import userContext from '../src/context/userContext'
 import {
-  ModalLogin, MobileLayout, ModalLoading,
+  ModalLogin, MobileLayout, ModalLoading, VideoPlayer,
 } from '../src/components'
 import useCalculateSize from '../src/libs/useCalculateSize'
 import { FullImageWrapper } from '../src/components/common'
@@ -267,9 +268,21 @@ Mobile.defaultProps = {
 const Lobby = ({ isMobile, ...props }) => {
   const user = useContext(userContext)
   const [errorMsg, setErrorMsg] = useState('')
+  const [videoVisible, setVideoVisible] = useState(false)
   return (
     <>
       {isMobile ? <Mobile user={user} {...props} /> : <Desktop user={user} {...props} />}
+      <ButtonAntd
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '46%',
+        }}
+        onClick={() => setVideoVisible(!videoVisible)}
+      >
+        Play !!!!!!!
+      </ButtonAntd>
+      {videoVisible && <VideoPlayer onCancel={() => setVideoVisible(false)} visible src="https://player.vimeo.com/video/646466718?h=84811e283c&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" />}
       <ModalLogin
         visible={!user.userData && !user.isLoading}
         error={errorMsg}
