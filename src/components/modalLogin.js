@@ -7,7 +7,7 @@ import {
 } from 'antd'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { PATTERN_EMAIL } from '../constants/validateValue'
+// import { PATTERN_EMAIL } from '../constants/validateValue'
 import { TitleH3 } from './common'
 import { colors } from '../configs/color'
 
