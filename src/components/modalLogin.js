@@ -7,7 +7,7 @@ import {
 } from 'antd'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { PATTERN_EMAIL } from '../constants/validateValue'
+// import { PATTERN_EMAIL } from '../constants/validateValue'
 import { TitleH3 } from './common'
 import { colors } from '../configs/color'
 
@@ -63,9 +63,9 @@ const ModalLogin = ({ visible, onFinish, error }) => {
     if (!value) {
       return Promise.reject('Please input your email')
     }
-    if (!value.match(PATTERN_EMAIL)) {
-      return Promise.reject('Invalid email')
-    }
+    // if (!value.match(PATTERN_EMAIL)) {
+    //   return Promise.reject('Invalid email')
+    // }
     return Promise.resolve()
   }
   return (

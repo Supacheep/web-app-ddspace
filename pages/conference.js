@@ -225,7 +225,7 @@ const Desktop = ({
           <ButtonBox
             style={{
               ...getPosition({
-                topValue: 58.5,
+                topValue: 59,
                 heightValue: 6.5,
                 width: '18.7%',
               }),
@@ -248,7 +248,7 @@ const Desktop = ({
           <ButtonBox
             style={{
               ...getPosition({
-                topValue: 68.5,
+                topValue: 69,
                 heightValue: 6.5,
                 width: '18.7%',
               }),

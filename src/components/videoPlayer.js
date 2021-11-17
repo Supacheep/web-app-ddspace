@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { Modal } from 'antd'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
@@ -10,6 +11,7 @@ const CustomModal = styled(Modal)`
 
   .ant-modal-body {
     padding: 0;
+    background-color: black;
   }
 
   .ant-modal-content {
@@ -39,39 +41,99 @@ const CustomModal = styled(Modal)`
   }
 `
 
-const Video = styled.video`
-  border-radius: 20px;
+// const Video = styled.video`
+//   border-radius: 20px;
+// `
+
+const Container = styled.div`
+  position: relative;
 `
 
-const VideoPlayer = ({ src }) => (
-  <CustomModal
-    visible
-    footer={null}
-    centered
-    destroyOnClose
-  >
-    <Video
-      id="vid"
-      width="100%"
-      height="100%"
-      controls
-      controlsList="nodownload"
-      autoplay
-      muted
+const VideoPlayer = ({ src, visible, onCancel }) => {
+  // <script src="https://player.vimeo.com/api/player.js%22%3E" /> add to _document
+
+  // const videoRef = useRef()
+  const containerRef = useRef()
+  const [eleWidth, setWidth] = useState()
+
+  const handleEvent = (e) => e.preventDefault()
+
+  useEffect(() => {
+    window.addEventListener('contextmenu', handleEvent)
+    return () => window.removeEventListener('contextmenu', handleEvent)
+  }, [])
+
+  const onResize = () => {
+    const el = containerRef?.current
+    if (el) {
+      setWidth(el.offsetWidth)
+    }
+  }
+
+  useEffect(() => {
+    onResize()
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  const getHeight = () => {
+    if (!eleWidth) return 0
+    const height = eleWidth / 1.76
+    return height
+  }
+
+  return (
+    <CustomModal
+      visible={visible}
+      footer={null}
+      centered
+      destroyOnClose
+      onCancel={() => {
+        onCancel()
+        // const video = document.getElementById('vid')
+        // URL.revokeObjectURL(video.src)
+      }}
     >
-      <source
-        src={src}
-      />
-      Your browser does not support the video tag.
-    </Video>
-  </CustomModal>
-)
+      {/* <Video
+        ref={videoRef}
+        id="vid"
+        width="100%"
+        height="100%"
+        controls
+        controlsList="nodownload"
+        oncontextmenu="return false;"
+      >
+        <source
+          src={src}
+        />
+        Your browser does not support the video tag.
+      </Video> */}
+      <Container ref={containerRef}>
+        <iframe
+          src={src}
+          frameBorder="0"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowFullScreen
+          title="video"
+          style={{
+            width: '100%',
+            height: getHeight(),
+          }}
+        />
+      </Container>
+    </CustomModal>
+  )
+}
 
 VideoPlayer.propTypes = {
   src: PropTypes.string.isRequired,
+  visible: PropTypes.bool,
+  onCancel: PropTypes.func,
 }
 
 VideoPlayer.defaultProps = {
+  visible: false,
+  onCancel: () => {},
 }
 
 export default VideoPlayer
