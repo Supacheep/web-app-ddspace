@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Modal } from 'antd'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
@@ -11,6 +11,7 @@ const CustomModal = styled(Modal)`
 
   .ant-modal-body {
     padding: 0;
+    background-color: black;
   }
 
   .ant-modal-content {
@@ -40,12 +41,20 @@ const CustomModal = styled(Modal)`
   }
 `
 
-const Video = styled.video`
-  border-radius: 20px;
+// const Video = styled.video`
+//   border-radius: 20px;
+// `
+
+const Container = styled.div`
+  position: relative;
 `
 
 const VideoPlayer = ({ src, visible, onCancel }) => {
-  const videoRef = useRef()
+  // <script src="https://player.vimeo.com/api/player.js%22%3E" /> add to _document
+
+  // const videoRef = useRef()
+  const containerRef = useRef()
+  const [eleWidth, setWidth] = useState()
 
   const handleEvent = (e) => e.preventDefault()
 
@@ -53,6 +62,25 @@ const VideoPlayer = ({ src, visible, onCancel }) => {
     window.addEventListener('contextmenu', handleEvent)
     return () => window.removeEventListener('contextmenu', handleEvent)
   }, [])
+
+  const onResize = () => {
+    const el = containerRef?.current
+    if (el) {
+      setWidth(el.offsetWidth)
+    }
+  }
+
+  useEffect(() => {
+    onResize()
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  const getHeight = () => {
+    if (!eleWidth) return 0
+    const height = eleWidth / 1.76
+    return height
+  }
 
   return (
     <CustomModal
@@ -62,11 +90,11 @@ const VideoPlayer = ({ src, visible, onCancel }) => {
       destroyOnClose
       onCancel={() => {
         onCancel()
-        const video = document.getElementById('vid')
-        URL.revokeObjectURL(video.src)
+        // const video = document.getElementById('vid')
+        // URL.revokeObjectURL(video.src)
       }}
     >
-      <Video
+      {/* <Video
         ref={videoRef}
         id="vid"
         width="100%"
@@ -79,7 +107,20 @@ const VideoPlayer = ({ src, visible, onCancel }) => {
           src={src}
         />
         Your browser does not support the video tag.
-      </Video>
+      </Video> */}
+      <Container ref={containerRef}>
+        <iframe
+          src={`${src}&amp;badge=0&amp;autopause=0`}
+          frameBorder="0"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowFullScreen
+          title="video"
+          style={{
+            width: '100%',
+            height: getHeight(),
+          }}
+        />
+      </Container>
     </CustomModal>
   )
 }

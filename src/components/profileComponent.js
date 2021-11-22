@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import { DownOutlined } from '@ant-design/icons'
 import { colors } from '../configs/color'
 
 const Avatar = styled.div`
@@ -26,6 +27,7 @@ const Name = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  margin-right: 10px;
 `
 
 const ProfileComponent = ({ name }) => {
@@ -34,6 +36,7 @@ const ProfileComponent = ({ name }) => {
     <ProfileContainer>
       <Avatar>{name[0]}</Avatar>
       <Name>{name}</Name>
+      <DownOutlined />
     </ProfileContainer>
   )
 }
